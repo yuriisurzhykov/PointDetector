@@ -9,6 +9,6 @@ class LocalDistanceCalculateService(private val mapper: Mapper<LatLng, com.googl
     DistanceCalculateService {
 
     override fun calculateDistance(coordinates1: LatLng, coordinates2: LatLng): Double {
-        return SphericalUtil.computeDistanceBetween(mapper.map(coordinates1), mapper.map(coordinates2)) / 1000
+        return SphericalUtil.computeDistanceBetween(mapper.map(coordinates1), mapper.map(coordinates2))
     }
 }

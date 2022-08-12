@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.domain.entities.Distance
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.OnItemClickListener
 import com.yuriisurzhykov.pointdetector.presentation.list.AbstractViewHolder
@@ -16,8 +17,7 @@ class PointsViewHolder(view: View) : AbstractViewHolder<Point>(view) {
 
     override fun bind(item: Point, clickListener: OnItemClickListener<Point>?) {
         addressText.text = item.address
-        distanceText.text =
-            String.format(itemView.context.getString(R.string.kilometers_format), item.distance)
+        distanceText.text = Distance.Kilometers(item.distance).getDistanceLocale(itemView.context)
         if (clickListener != null) {
             itemView.setOnClickListener { clickListener.onItemClick(item) }
         }

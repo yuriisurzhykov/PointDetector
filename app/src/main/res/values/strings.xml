@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PointDetector</string>
     <string name="hint_input_your_address">Input your address</string>
-    <string name="kilometers_format" translatable="false">%.2f km</string>
+    <string name="kilometers_format" translatable="false">%.3f km</string>
+    <string name="miles_format" translatable="false">%.2f mi</string>
 </resources>
