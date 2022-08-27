@@ -13,5 +13,7 @@
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/roboto</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="buttonStyle">@style/PointDetector.Button</item>
+        <item name="android:buttonStyle">@style/PointDetector.Button</item>
     </style>
 </resources>

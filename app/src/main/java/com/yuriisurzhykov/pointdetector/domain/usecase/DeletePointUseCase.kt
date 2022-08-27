@@ -15,7 +15,7 @@ interface DeletePointUseCase {
         private val mapper: Mapper<Point, PointCache>
     ) : DeletePointUseCase {
         override suspend fun delete(point: Point) {
-            pointsRepository.delete(mapper.map(point))
+            pointsRepository.deleteByAddressAndPlaceName(point.address, point.placeName)
         }
     }
 

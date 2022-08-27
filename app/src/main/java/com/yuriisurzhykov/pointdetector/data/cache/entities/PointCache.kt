@@ -15,5 +15,5 @@ data class PointCache(
     @ColumnInfo(defaultValue = "")
     val placeName: String,
     @ColumnInfo(defaultValue = "")
-    val workingHoursCache: WorkingHoursGroupCache = WorkingHoursGroupCache(emptyList())
+    val workingHoursCache: WorkingHoursGroupCache
 )

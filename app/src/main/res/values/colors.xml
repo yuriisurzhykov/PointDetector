@@ -10,11 +10,13 @@
     <color name="accent_color">#1B69FD</color>
     <color name="shadow_color">#42000000</color>
     <color name="color_input_default">#E7E7E7</color>
+    <color name="color_input_disabled">#D6D6D6</color>
     <color name="color_input_stroke_focused">#9FA3A3</color>
     <color name="text_cursor_color">@color/color_input_stroke_focused</color>
     <color name="active_text_color">@color/accent_color</color>
     <color name="option_menu_tint_color">#2B2B2B</color>
     <color name="card_view_background_color">#FFFFFF</color>
+    <color name="card_view_background_color_selected">#C6F9C8</color>
 
     <!--Button colors-->
     <color name="button_enabled_pressed_color">#2169C2</color>

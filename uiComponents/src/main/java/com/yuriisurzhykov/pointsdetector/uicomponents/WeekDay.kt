@@ -2,7 +2,12 @@ package com.yuriisurzhykov.pointsdetector.uicomponents
 
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.serialization.Serializable
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
+@Serializable
 data class WeekDay(
     val dayName: String,
     val dayValue: Int,
@@ -28,6 +33,8 @@ data class WeekDay(
         return 0
     }
 
+    fun isCorrect() = hoursFrom.isNotEmpty() && hoursTo.isNotEmpty() && hoursFrom.before(hoursTo)
+
     companion object CREATOR : Parcelable.Creator<WeekDay> {
         override fun createFromParcel(parcel: Parcel): WeekDay {
             return WeekDay(parcel)
@@ -38,4 +45,13 @@ data class WeekDay(
         }
     }
 
+}
+
+private fun String.before(hoursTo: String): Boolean {
+    val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return try {
+        timeFormatter.parse(this)?.before(timeFormatter.parse(hoursTo)) ?: false
+    } catch (e: Exception) {
+        false
+    }
 }

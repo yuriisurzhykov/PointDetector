@@ -10,4 +10,6 @@ interface NavigationCallback {
 
     fun removeCurrentFragment()
 
+    fun openMainFragment()
+
 }

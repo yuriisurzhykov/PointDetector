@@ -18,4 +18,13 @@
     <string name="title_location_permission_denied">Failed to get location permission</string>
     <string name="rationale_location_permission_text">Location permissions are needed in order the application works properly. &lt;br /&gt;Without permissions it will not be possible to calculate correct distance.</string>
     <string name="button_location_permissions_retry">Provide permissions</string>
+
+    <string name="hint_input_place_name">Type place name</string>
+    <string name="button_save">Save</string>
+    <string name="error_incorrect_selected_days">Incorrect time format for selected dates</string>
+    <string name="error_days_not_selected">Working days not selected</string>
+
+    <string name="label_point_open">Open</string>
+    <string name="label_point_closed">Closed</string>
+    <string name="label_point_successfully_created">Point successfully created</string>
 </resources>
