@@ -1,7 +1,10 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.create
 
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.core.SingleLiveEvent
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
@@ -9,6 +12,7 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
 import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.timerTask
@@ -24,9 +28,16 @@ class PointsCreateViewModel @Inject constructor(
     private val suggestedPoints = MutableLiveData<List<Point>>()
     private val creationState = MutableLiveData<PointCreateState>()
     private val selectedWorkingDays = MutableLiveData<List<WeekDay>>()
+    private val enteredPointName = ObservableField<String>()
+    private val errorMessage = MutableLiveData<Int>()
+    private val loading = ObservableBoolean()
 
     fun observeSuggestedPlaces(owner: LifecycleOwner, observer: Observer<List<Point>>) {
         suggestedPoints.observe(owner, observer)
+    }
+
+    fun observeErrorMessage(owner: LifecycleOwner, observer: Observer<Int>) {
+        errorMessage.observe(owner, observer)
     }
 
     fun observeCreationState(owner: LifecycleOwner, observer: Observer<PointCreateState>) {
@@ -34,22 +45,57 @@ class PointsCreateViewModel @Inject constructor(
     }
 
     fun updateEnteredPlaceName(name: String) {
+        loading.set(true)
         postTimerJob {
             val suggested = geoSuggestedPlaces.getSuggestedPlaces(name)
             suggestedPoints.postValue(suggested)
+            dispatchers.changeToUi { loading.set(false) }
         }
+    }
+
+    fun updateSelectedPlaceName(name: String) {
+        enteredPointName.set(name)
     }
 
     fun savePointWithDays(days: List<WeekDay>) {
         dispatchers.launchBackground(viewModelScope) {
-            selectedWorkingDays.postValue(days)
+            dispatchers.changeToUi { loading.set(true) }
+            if (days.isNotEmpty()) {
+                if (days.all { it.isCorrect() }) {
+                    selectedWorkingDays.postValue(days)
+                    saveSelectedPlace(enteredPointName.get().orEmpty(), days)
+                    creationState.postValue(PointCreateState.SavedPointState())
+                } else {
+                    postError(R.string.error_incorrect_selected_days)
+                }
+            } else {
+                postError(R.string.error_days_not_selected)
+            }
+            dispatchers.changeToUi { loading.set(false) }
         }
+    }
+
+    private suspend fun saveSelectedPlace(name: String, days: List<WeekDay>) {
+        val state = creationState.value as PointCreateState.PointSelectedState
+        val point = Point(
+            state.point.address,
+            state.point.coordinates,
+            state.point.distance,
+            name,
+            days,
+            false
+        )
+        savePlacesUseCase.save(point)
     }
 
     fun selectPoint(point: Point) {
         dispatchers.launchBackground(viewModelScope) {
             creationState.postValue(PointCreateState.PointSelectedState(point))
         }
+    }
+
+    private fun postError(errorRes: Int) {
+        errorMessage.postValue(errorRes)
     }
 
     private fun postTimerJob(block: suspend () -> Unit) {
@@ -59,7 +105,7 @@ class PointsCreateViewModel @Inject constructor(
             dispatchers.launchBackground(viewModelScope) {
                 block.invoke()
             }
-        }, 400)
+        }, 300)
     }
 
 }

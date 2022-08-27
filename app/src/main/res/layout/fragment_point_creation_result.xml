@@ -6,17 +6,21 @@
 
     <TextView
         android:id="@+id/result_text"
+        style="@style/PointDetector.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/label_point_successfully_created"
         app:layout_constraintBottom_toTopOf="@id/result_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView
         android:id="@+id/result_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
         android:src="@drawable/ic_success"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

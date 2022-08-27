@@ -2,8 +2,11 @@
 <resources>
     <color name="night_background">#14212D</color>
     <color name="color_input_default">#1C334A</color>
+    <color name="color_input_disabled">#182E44</color>
     <color name="color_input_stroke_focused">#271D56</color>
     <color name="text_cursor_color">#1E0B74</color>
     <color name="option_menu_tint_color">#DADADA</color>
     <color name="card_view_background_color">#1C2C3A</color>
+
+    <color name="card_view_background_color_selected">#5E785F</color>
 </resources>

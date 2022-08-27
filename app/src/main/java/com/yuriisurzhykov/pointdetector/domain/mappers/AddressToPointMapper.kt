@@ -22,7 +22,8 @@ class AddressToPointMapper @Inject constructor(
                 placeLatLng
             ),
             from.featureName.orEmpty(),
-            emptyList()
+            emptyList(),
+            false
         )
     }
 }

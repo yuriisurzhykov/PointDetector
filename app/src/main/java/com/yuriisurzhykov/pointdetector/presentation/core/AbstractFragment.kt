@@ -1,8 +1,11 @@
 package com.yuriisurzhykov.pointdetector.presentation.core
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import java.lang.IllegalStateException
 
 abstract class AbstractFragment : Fragment, NavigationCallback {
@@ -35,5 +38,19 @@ abstract class AbstractFragment : Fragment, NavigationCallback {
 
     override fun removeCurrentFragment() {
         navigationCallback?.removeCurrentFragment()
+    }
+
+    override fun openMainFragment() {
+        navigationCallback?.openMainFragment()
+    }
+
+    protected fun showErrorSnackbar(message: String) {
+        Snackbar
+            .make(requireView(), message, Snackbar.LENGTH_SHORT)
+            .apply {
+                view.setBackgroundColor(Color.RED)
+                setActionTextColor(Color.WHITE)
+                show()
+            }
     }
 }

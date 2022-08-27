@@ -1,0 +1,548 @@
+[
+  {
+    "address": "5901 San Juan Ave, Citrus Heights, CA 95610, USA",
+    "coordinates": {
+      "lat": 38.6730367,
+      "lng": -121.29334709999999
+    },
+    "distance": 2963.5517882108174,
+    "placeName": "Sunrise Christian Food Ministry",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "5810 Pecan Ave, Orangevale, CA 95662, USA",
+    "coordinates": {
+      "lat": 38.6712236,
+      "lng": -121.22069169999999
+    },
+    "distance": 3448.6782845954644,
+    "placeName": "7th Day Adventist Church",
+    "workingHours": [
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "5751 Locust Ave, Carmichael, CA 95608, USA",
+    "coordinates": {
+      "lat": 38.6428503,
+      "lng": -121.3301712
+    },
+    "distance": 7222.8160271314455,
+    "placeName": "St Vincent De Paul Food Locker",
+    "workingHours": [
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "10497 Coloma Rd, Rancho Cordova, CA 95670, USA",
+    "coordinates": {
+      "lat": 38.6020772,
+      "lng": -121.30023010000001
+    },
+    "distance": 9076.611304895465,
+    "placeName": "Cordova Community Food Locker",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "09:30",
+        "hoursTo": "13:30"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:30",
+        "hoursTo": "13:30"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "09:30",
+        "hoursTo": "13:30"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "4600 Winding Way, Sacramento, CA 95821, USA",
+    "coordinates": {
+      "lat": 38.642042,
+      "lng": -121.3561939
+    },
+    "distance": 9254.387127008942,
+    "placeName": "Carmichael Adventist Community Services",
+    "workingHours": [
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "6007 Watt Ave, North Highlands, CA 95660, USA",
+    "coordinates": {
+      "lat": 38.676081499999995,
+      "lng": -121.3833301
+    },
+    "distance": 10737.468508284051,
+    "placeName": "North Highland Christian Food Ministry",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "3213 Orange Grove Ave, North Highlands, CA 95660, USA",
+    "coordinates": {
+      "lat": 38.646637999999996,
+      "lng": -121.389227
+    },
+    "distance": 11756.057096480252,
+    "placeName": "Salvation Army",
+    "workingHours": [
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "2300 Edison Ave, Sacramento, CA 95821, USA",
+    "coordinates": {
+      "lat": 38.623357399999996,
+      "lng": -121.40967870000001
+    },
+    "distance": 14343.056539542791,
+    "placeName": "St Matthews",
+    "workingHours": [
+      {
+        "dayName": "Sat",
+        "dayValue": -1,
+        "hoursFrom": "11:00",
+        "hoursTo": "13:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "9470 Micron Ave, Sacramento, CA 95827, USA",
+    "coordinates": {
+      "lat": 38.5595839,
+      "lng": -121.34531929999999
+    },
+    "distance": 15057.538836161739,
+    "placeName": "Capital Christian Center",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "08:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "08:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "08:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "08:00",
+        "hoursTo": "12:00"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "08:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "890 Morse Ave, Sacramento, CA 95864, USA",
+    "coordinates": {
+      "lat": 38.5808514,
+      "lng": -121.39179419999999
+    },
+    "distance": 15709.308562570144,
+    "placeName": "Sierra Arden Neighborhood Food",
+    "workingHours": [
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "11:45"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "10:00",
+        "hoursTo": "11:45"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "16:00",
+        "hoursTo": "17:45"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "11:45"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "2771 Grove Ave, Sacramento, CA 95815, USA",
+    "coordinates": {
+      "lat": 38.618324199999996,
+      "lng": -121.4598565
+    },
+    "distance": 18582.320644505275,
+    "placeName": "Grove Avenue Church",
+    "workingHours": [
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "11:30",
+        "hoursTo": "11:31"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "1800 28th St, Sacramento, CA 95816, USA",
+    "coordinates": {
+      "lat": 38.5648935,
+      "lng": -121.4734221
+    },
+    "distance": 22386.007382665204,
+    "placeName": "River City Community Services",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "11:30",
+        "hoursTo": "15:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "1701 L St, Sacramento, CA 95811, USA",
+    "coordinates": {
+      "lat": 38.5758187,
+      "lng": -121.4844018
+    },
+    "distance": 22550.450046401485,
+    "placeName": "Central Downtown Food Basket",
+    "workingHours": [
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "6489 47th St, Sacramento, CA 95823, USA",
+    "coordinates": {
+      "lat": 38.5088838,
+      "lng": -121.45003980000001
+    },
+    "distance": 24989.930059017795,
+    "placeName": "Daughter Of Zion",
+    "workingHours": [
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "13:00",
+        "hoursTo": "15:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "7520 Stockton Blvd, Sacramento, CA 95823, USA",
+    "coordinates": {
+      "lat": 38.4843167,
+      "lng": -121.4242343
+    },
+    "distance": 25790.55187435999,
+    "placeName": "Southpoint Christian Center",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "07:30",
+        "hoursTo": "10:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "5625 24th St, Sacramento, CA 95822, USA",
+    "coordinates": {
+      "lat": 38.5239626,
+      "lng": -121.4823491
+    },
+    "distance": 25792.287056297013,
+    "placeName": "South Sacramento Interfaith Partnership",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "11:30"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "7580 Center Pkwy, Sacramento, CA 95823, USA",
+    "coordinates": {
+      "lat": 38.4831293,
+      "lng": -121.4445466
+    },
+    "distance": 26916.136621781974,
+    "placeName": "St Vincent De Paul",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "08:30",
+        "hoursTo": "08:31"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "2875 Meadowview Rd, Sacramento, CA 95832, USA",
+    "coordinates": {
+      "lat": 38.4818815,
+      "lng": -121.4732702
+    },
+    "distance": 28582.996137578433,
+    "placeName": "Cathedral Of Praise",
+    "workingHours": [
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "10:30",
+        "hoursTo": "13:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "1821 Meadowview Rd, Sacramento, CA 95832, USA",
+    "coordinates": {
+      "lat": 38.4818133,
+      "lng": -121.4963602
+    },
+    "distance": 29931.380298703127,
+    "placeName": "New Hope Community Church",
+    "workingHours": [
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "14:00",
+        "hoursTo": "16:00"
+      }
+    ],
+    "isPointAvailable": false
+  },
+  {
+    "address": "9820 Dino Dr #140, Elk Grove, CA 95624, USA",
+    "coordinates": {
+      "lat": 38.400632,
+      "lng": -121.35786399999998
+    },
+    "distance": 31927.980665591498,
+    "placeName": "Elk Grove Community Food Bank",
+    "workingHours": [
+      {
+        "dayName": "Mon",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Tue",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Wed",
+        "dayValue": 0,
+        "hoursFrom": "10:00",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Thu",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Fri",
+        "dayValue": -1,
+        "hoursFrom": "10:00",
+        "hoursTo": "15:00"
+      },
+      {
+        "dayName": "Sat",
+        "dayValue": -1,
+        "hoursFrom": "09:00",
+        "hoursTo": "12:00"
+      }
+    ],
+    "isPointAvailable": false
+  }
+]

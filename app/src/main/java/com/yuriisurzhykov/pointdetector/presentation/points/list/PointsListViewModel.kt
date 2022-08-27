@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
+import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,8 @@ fun emptyString(): String {
 class PointsListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val pointsListUseCase: FetchAllPointsUseCase,
-    private val searchPointUseCase: SearchPointUseCase
+    private val searchPointUseCase: SearchPointUseCase,
+    private val removePointUseCase: DeletePointUseCase
 ) : ViewModel() {
 
     private var searchCondition: String = emptyString()
@@ -80,5 +82,12 @@ class PointsListViewModel @Inject constructor(
 
     fun getSearchCondition(): CharSequence {
         return searchCondition
+    }
+
+    fun removeItem(item: Point) {
+        dispatchers.launchBackground(viewModelScope) {
+            removePointUseCase.delete(item)
+            startLoadPoints(searchCondition)
+        }
     }
 }

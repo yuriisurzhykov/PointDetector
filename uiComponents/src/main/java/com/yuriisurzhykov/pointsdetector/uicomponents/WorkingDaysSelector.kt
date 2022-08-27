@@ -7,10 +7,7 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.view.children
-import androidx.core.view.setPadding
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -55,6 +52,17 @@ class WorkingDaysSelector : LinearLayout {
         }
     }
 
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            child.updateLayoutParams {
+                height = measuredHeight / 7 - child.marginTop - child.marginBottom
+                width = ViewGroup.LayoutParams.MATCH_PARENT
+            }
+        }
+    }
+
     fun setSelectedDays(days: List<WeekDay>) {
         val localListener = selectedDaysChangedListener
         selectedDaysChangedListener = null
@@ -76,7 +84,7 @@ class WorkingDaysSelector : LinearLayout {
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             if (child.isSelected) {
-                list.add(weekDaysList[i])
+                list.add((child as WorkDayHoursSelector).getWeekDay())
             }
         }
         return list

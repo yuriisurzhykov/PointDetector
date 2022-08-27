@@ -2,8 +2,10 @@ package com.yuriisurzhykov.pointdetector.presentation.points.create
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
@@ -29,14 +31,20 @@ class PointsAdditionalInfoFragment : AbstractStyleFragment(R.layout.fragment_poi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         workDaySelector = view.findViewById(R.id.work_days_selector)
-        locationAddressView = view.findViewById(R.id.location_address)
-        locationNameView = view.findViewById(R.id.location_name)
+        locationAddressView = view.findViewById(R.id.place_address)
+        locationNameView = view.findViewById(R.id.place_name_input)
 
         view.findViewById<View>(R.id.button).setOnClickListener {
             viewModel.savePointWithDays(workDaySelector!!.getSelectedDays())
         }
+        view.findViewById<EditText>(R.id.place_name_input).addTextChangedListener {
+            viewModel.updateSelectedPlaceName(it.toString())
+        }
         viewModel.observeCreationState(viewLifecycleOwner) { state ->
             pointsCreateStateHandler.handleState(state, this)
+        }
+        viewModel.observeErrorMessage(viewLifecycleOwner) {
+            showErrorSnackbar(getString(it))
         }
     }
 
