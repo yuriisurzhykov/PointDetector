@@ -7,7 +7,9 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresPermission
 import com.google.android.gms.location.*
-import com.yuriisurzhykov.pointdetector.presentation.core.AbstractPermissionFragment
+import com.yuriisurzhykov.pointdetector.presentation.permissions.AbstractPermissionFragment
+import com.yuriisurzhykov.pointdetector.presentation.permissions.LocationPermissionResourceManager
+import com.yuriisurzhykov.pointdetector.presentation.permissions.PermissionDenialFragment
 import java.util.concurrent.Executors
 
 abstract class AbstractLocationFragment : AbstractPermissionFragment {
@@ -36,10 +38,11 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
 
     }
 
-    override fun getPermissionsArray() = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
+    override fun getPermissionsArray(): Array<String> {
+        return arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,13 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
     override fun onPermissionsGranted() {
         startListenLocationUpdates()
         sendLastLocation()
+    }
+
+    override fun onPermissionsDenied() {
+        openFragment(
+            PermissionDenialFragment.newInstance(LocationPermissionResourceManager(this)),
+            "denial_permission"
+        )
     }
 
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])

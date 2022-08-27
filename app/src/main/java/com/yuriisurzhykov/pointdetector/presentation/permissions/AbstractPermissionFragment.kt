@@ -1,13 +1,13 @@
-package com.yuriisurzhykov.pointdetector.presentation.core
+package com.yuriisurzhykov.pointdetector.presentation.permissions
 
 import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 
-abstract class AbstractPermissionFragment : AbstractStyleFragment {
+abstract class AbstractPermissionFragment : AbstractStyleFragment, PermissionsResource {
 
     constructor() : super()
     constructor(@LayoutRes layoutId: Int) : super(layoutId)
@@ -17,9 +17,7 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment {
             onRequestPermissionsResult(it)
         }
 
-    abstract fun getPermissionsArray(): Array<String>
-
-    open fun onPermissionsGranted() {}
+    override fun onPermissionsGranted() {}
 
     open fun onPermissionsDenied() {}
 
@@ -38,14 +36,14 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment {
         }
     }
 
-    private fun requestPermissions() {
+    override fun requestPermissions() {
         permissionsLauncher.launch(getPermissionsArray())
     }
 
     private fun onRequestPermissionsResult(
         grantResults: Map<String, Boolean>
     ) {
-        if (grantResults.all { it.value }) {
+        if (grantResults.isNotEmpty() && grantResults.all { it.value }) {
             onPermissionsGranted()
         } else {
             if (checkShowRationale()) {

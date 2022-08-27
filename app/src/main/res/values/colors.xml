@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="accent_color">#2881EF</color>
+    <color name="accent_color">#1B69FD</color>
     <color name="shadow_color">#42000000</color>
     <color name="color_input_default">#E7E7E7</color>
     <color name="color_input_stroke_focused">#9FA3A3</color>
@@ -23,5 +23,5 @@
     <color name="button_disabled_idle_color">#879BB4</color>
 
     <color name="button_enabled_text_color">#F1F1F1</color>
-    <color name="button_disabled_text_color">#002451</color>
+    <color name="button_disabled_text_color">#344151</color>
 </resources>
