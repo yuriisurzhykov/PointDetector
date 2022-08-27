@@ -6,6 +6,8 @@ import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.domain.services.IDateTimeSource
+import com.yuriisurzhykov.pointdetector.domain.source.DateFormatterType
 import com.yuriisurzhykov.pointdetector.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -60,6 +62,32 @@ object UseCaseModule {
         mapper: Mapper<List<PointCache>, List<Point>>
     ): SearchPointUseCase {
         return SearchPointUseCase.Base(mapper, repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckPointAvailabilityUseCase(
+        formatter: IDateTimeSource.LocalDateTimeSource,
+        useCase: CheckTimeAvailabilityUseCase
+    ): CheckPointAvailabilityUseCase {
+        return CheckPointAvailabilityUseCase.Base(formatter, useCase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckTimeAvailabilityUseCase(
+        formatter: DateFormatterType.TimeFormat
+    ): CheckTimeAvailabilityUseCase {
+        return CheckTimeAvailabilityUseCase.Base(formatter)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeletePointUseCase(
+        repository: PointsRepository,
+        mapper: Mapper<Point, PointCache>
+    ): DeletePointUseCase {
+        return DeletePointUseCase.Base(repository, mapper)
     }
 
 }

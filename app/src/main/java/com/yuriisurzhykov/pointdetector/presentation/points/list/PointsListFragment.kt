@@ -5,24 +5,26 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.MenuProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.core.TAG
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
-import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.lang.IllegalStateException
 
 @AndroidEntryPoint
@@ -54,6 +56,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         with(view.findViewById<RecyclerView>(R.id.recycler)) {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+            ItemTouchHelper(PointSwipeDeleteCallback(listAdapter, view.context)).attachToRecyclerView(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
             setText(viewModel.getSearchCondition())
@@ -66,8 +69,12 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
         }
+        listAdapter.setOnRemoveClickListener { point, _ ->
+            viewModel.removeItem(point)
+        }
         viewModel.observePointsList(viewLifecycleOwner) {
             listAdapter.submitList(it)
+            Log.e(TAG, "onViewCreated: ${Json.encodeToString(it)}")
         }
     }
 

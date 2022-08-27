@@ -17,4 +17,8 @@ class PointsCreateActivity : AbstractToolbarActivity() {
         openFragment(fragment, fragment.TAG)
     }
 
+    override fun openMainFragment() {
+        finish()
+    }
+
 }

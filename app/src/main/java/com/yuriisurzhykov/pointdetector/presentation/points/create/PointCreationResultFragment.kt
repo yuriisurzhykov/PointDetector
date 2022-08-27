@@ -13,6 +13,6 @@ class PointCreationResultFragment : AbstractStyleFragment(R.layout.fragment_poin
     }
 
     private fun scheduleClosing(scheduleTime: Long) {
-        Timer().schedule(timerTask { activity?.supportFragmentManager?.popBackStack() }, scheduleTime)
+        Timer().schedule(timerTask { openMainFragment() }, scheduleTime)
     }
 }

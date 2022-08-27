@@ -13,4 +13,12 @@
     <string name="hint_place_working_hours">Working hours</string>
     <string name="label_no_results_found">No results found</string>
     <string name="button_empty_state_add_record">Add new record</string>
+    <string name="hint_input_place_name">Type place name</string>
+    <string name="button_save">Save</string>
+    <string name="error_incorrect_selected_days">Incorrect time format for selected dates</string>
+    <string name="error_days_not_selected">Working days not selected</string>
+
+    <string name="label_point_open">Open</string>
+    <string name="label_point_closed">Closed</string>
+    <string name="label_point_successfully_created">Point successfully created</string>
 </resources>

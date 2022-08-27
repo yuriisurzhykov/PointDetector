@@ -50,8 +50,7 @@ class TimeEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) :
-    androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyle) {
+) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyle) {
     private val digits = IntArray(4)
     private var currentPosition = POSITION_NONE
     private var mImeOptions = 0

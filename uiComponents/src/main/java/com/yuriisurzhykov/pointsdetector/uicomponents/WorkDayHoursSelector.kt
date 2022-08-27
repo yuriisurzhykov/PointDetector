@@ -31,7 +31,6 @@ class WorkDayHoursSelector : ConstraintLayout {
         workDayView = findViewById(R.id.work_day_view)
         workDayView.setOnClickListener {
             it.isSelected = !it.isSelected
-            isSelected = !isSelected
             dayToggleChangeListener?.invoke(weekDay, it.isSelected)
             updateInputs()
         }
@@ -44,6 +43,10 @@ class WorkDayHoursSelector : ConstraintLayout {
         updateInputs()
     }
 
+    override fun isSelected(): Boolean {
+        return workDayView.isSelected
+    }
+
     fun setWeekDay(weekDay: WeekDay) {
         this.weekDay = weekDay
         if (workDayView is WorkDayView) {
@@ -52,6 +55,8 @@ class WorkDayHoursSelector : ConstraintLayout {
             workDayView.text = weekDay.dayName
         }
     }
+
+    fun getWeekDay(): WeekDay = weekDay!!
 
     private fun updateInputs() {
         fromTimeInput.isEnabled = isSelected

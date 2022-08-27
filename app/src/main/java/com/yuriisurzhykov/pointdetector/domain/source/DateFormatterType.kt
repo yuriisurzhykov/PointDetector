@@ -20,5 +20,5 @@ interface DateFormatterType {
     class OnlyWeekDayFormat @Inject constructor() : Abstract("EEE")
 
     @Singleton
-    class TimeFormat @Inject constructor() : Abstract("hh:mm")
+    class TimeFormat @Inject constructor() : Abstract("HH:mm")
 }
