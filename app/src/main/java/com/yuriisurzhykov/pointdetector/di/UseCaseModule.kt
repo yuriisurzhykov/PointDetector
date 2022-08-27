@@ -3,13 +3,10 @@ package com.yuriisurzhykov.pointdetector.di
 import android.content.Context
 import android.location.Address
 import com.yuriisurzhykov.pointdetector.core.Mapper
-import com.yuriisurzhykov.pointdetector.data.cache.PointCache
+import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointdetector.domain.usecase.IFetchAllPointsUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.IGeoDecodeUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.ISavePointUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.ISuggestedPlacesUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,8 +23,8 @@ object UseCaseModule {
     fun provideFetchAllPointsUseCase(
         pointsRepository: PointsRepository,
         mapper: Mapper<List<PointCache>, List<Point>>
-    ): IFetchAllPointsUseCase {
-        return IFetchAllPointsUseCase.Base(pointsRepository, mapper)
+    ): FetchAllPointsUseCase {
+        return FetchAllPointsUseCase.Base(pointsRepository, mapper)
     }
 
     @Provides
@@ -35,16 +32,16 @@ object UseCaseModule {
     fun provideSuggestedPlacesUseCase(
         @ApplicationContext context: Context,
         mapper: Mapper<Address, Point>
-    ): ISuggestedPlacesUseCase {
-        return ISuggestedPlacesUseCase.Base(context, 5, mapper)
+    ): SuggestedPlacesUseCase {
+        return SuggestedPlacesUseCase.Base(context, 5, mapper)
     }
 
     @Provides
     @Singleton
     fun provideGeoDecodeUseCase(
         @ApplicationContext context: Context
-    ): IGeoDecodeUseCase {
-        return IGeoDecodeUseCase.Base(context, 5)
+    ): GeoDecodeUseCase {
+        return GeoDecodeUseCase.Base(context, 5)
     }
 
     @Provides
@@ -52,8 +49,17 @@ object UseCaseModule {
     fun provideSavePointUseCase(
         repository: PointsRepository,
         mapper: Mapper<Point, PointCache>
-    ): ISavePointUseCase {
-        return ISavePointUseCase.Base(repository, mapper)
+    ): SavePointUseCase {
+        return SavePointUseCase.Base(repository, mapper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchPointUseCase(
+        repository: PointsRepository,
+        mapper: Mapper<List<PointCache>, List<Point>>
+    ): SearchPointUseCase {
+        return SearchPointUseCase.Base(mapper, repository)
     }
 
 }

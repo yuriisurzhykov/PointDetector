@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="false">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/shadow_color" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/card_view_background_color" />
+                    <corners android:radius="10dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

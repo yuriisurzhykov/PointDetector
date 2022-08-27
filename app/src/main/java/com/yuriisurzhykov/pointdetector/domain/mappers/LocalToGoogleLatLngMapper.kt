@@ -1,7 +1,7 @@
 package com.yuriisurzhykov.pointdetector.domain.mappers
 
 import com.yuriisurzhykov.pointdetector.core.Mapper
-import com.yuriisurzhykov.pointdetector.data.cache.LatLng
+import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import javax.inject.Inject
 
 class LocalToGoogleLatLngMapper @Inject constructor() :

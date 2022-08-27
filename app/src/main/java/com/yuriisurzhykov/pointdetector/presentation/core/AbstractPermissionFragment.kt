@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
-abstract class AbstractPermissionFragment : Fragment {
+abstract class AbstractPermissionFragment : AbstractStyleFragment {
 
     constructor() : super()
     constructor(@LayoutRes layoutId: Int) : super(layoutId)

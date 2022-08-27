@@ -3,4 +3,14 @@
     <string name="hint_input_your_address">Input your address</string>
     <string name="kilometers_format" translatable="false">%.3f km</string>
     <string name="miles_format" translatable="false">%.2f mi</string>
+    <string name="action_text_search_filter">Sort by</string>
+    <string name="title_points_list_screen">Places nearby</string>
+    <string name="title_points_add_screen">Looking for place</string>
+    <string name="title_points_add_info_screen">Saving new place</string>
+    <string name="button_add_point">Add new point</string>
+    <string name="hint_place_name">Place name</string>
+    <string name="hint_place_address">Place address</string>
+    <string name="hint_place_working_hours">Working hours</string>
+    <string name="label_no_results_found">No results found</string>
+    <string name="button_empty_state_add_record">Add new record</string>
 </resources>

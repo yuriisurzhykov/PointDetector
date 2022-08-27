@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.pointdetector.domain.services
 
-import com.yuriisurzhykov.pointdetector.data.cache.LatLng
+import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import javax.inject.Inject
 
 class UserLocationService @Inject constructor(

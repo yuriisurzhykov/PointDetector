@@ -1,9 +1,8 @@
 package com.yuriisurzhykov.pointdetector.data.remote
 
 import com.google.maps.android.SphericalUtil
-import com.google.maps.android.ktx.utils.sphericalDistance
 import com.yuriisurzhykov.pointdetector.core.Mapper
-import com.yuriisurzhykov.pointdetector.data.cache.LatLng
+import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 
 class LocalDistanceCalculateService(private val mapper: Mapper<LatLng, com.google.android.gms.maps.model.LatLng>) :
     DistanceCalculateService {

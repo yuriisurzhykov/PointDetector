@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WorkDaySelector">
+        <attr name="workDaySectionBackground" format="reference" />
+        <attr name="workDayRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="HourMinuteEditText">
+        <attr name="timeInputType" format="enum">
+            <enum name="hours" value="1" />
+            <enum name="minutes" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,16 +1,54 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.PointDetector" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <style name="Theme.PointDetector" parent="Theme.PointDetector.Base" />
+
+    <style name="Theme.PointDetector.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/accent_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/button_enabled_text_color</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="buttonStyle">@style/PointDetector.Button</item>
+        <item name="android:buttonStyle">@style/PointDetector.Button</item>
+    </style>
+
+    <style name="PointDetector" />
+
+    <style name="PointDetector.InputField" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/background_input_field</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+        <item name="android:drawablePadding">@dimen/default_padding</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/medium_padding</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
+    </style>
+
+    <style name="PointDetector.ActionText" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/active_text_color</item>
+    </style>
+
+    <style name="PointDetector.Title" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PointDetector.AvailabilityPoint" parent="PointDetector.Title">
+        <item name="android:textColor">@color/availability_state_color</item>
+    </style>
+
+    <style name="PointDetector.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/button_text_colors</item>
+        <item name="android:background">@drawable/button_background_drawable</item>
     </style>
 </resources>

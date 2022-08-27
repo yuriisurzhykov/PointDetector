@@ -1,7 +1,7 @@
 package com.yuriisurzhykov.pointdetector.data.repository
 
-import com.yuriisurzhykov.pointdetector.data.cache.PointCache
 import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
+import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -12,6 +12,10 @@ class PointsRepository @Inject constructor(
 
     override suspend fun delete(entity: PointCache) {
         pointsDao.delete(entity)
+    }
+
+    suspend fun deleteByAddressAndPlaceName(address: String, placeName: String) {
+        pointsDao.deleteByAddressAndName(address, placeName)
     }
 
     override suspend fun fetch(): Flow<List<PointCache>> {

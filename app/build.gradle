@@ -3,6 +3,7 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "dagger.hilt.android.plugin"
     id "kotlin-kapt"
+    id "kotlinx-serialization"
 }
 
 android {
@@ -10,12 +11,17 @@ android {
 
     defaultConfig {
         applicationId "com.yuriisurzhykov.pointdetector"
-        minSdk 23
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -34,6 +40,8 @@ android {
 }
 
 dependencies {
+
+    implementation project(":uiComponents")
 
     implementation "androidx.core:core-ktx:1.8.0"
     implementation "androidx.appcompat:appcompat:1.5.0"
@@ -65,6 +73,10 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-places:17.0.0"
     implementation "com.google.android.libraries.places:places:2.6.0"
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
+
 
     /*def lifecycle_version = "2.6.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
