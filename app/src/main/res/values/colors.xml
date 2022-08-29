@@ -26,4 +26,9 @@
 
     <color name="button_enabled_text_color">#F1F1F1</color>
     <color name="button_disabled_text_color">#344151</color>
+
+    <!--Special colors-->
+    <color name="error_color">#EE2929</color>
+    <color name="recycler_view_deletion_icon_color">@color/white</color>
+    <color name="recycler_view_background_deletion_color">#EE2929</color>
 </resources>

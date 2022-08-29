@@ -94,15 +94,8 @@ class TimeEditText @JvmOverloads constructor(
 
     private fun updateText() {
         val bold = if (currentPosition > 1) currentPosition + 1 else currentPosition
-        val color = textColors.defaultColor
         val text: Spannable = SpannableString(String.format("%02d:%02d", hour, minutes))
         if (bold >= 0) {
-            text.setSpan(
-                ForegroundColorSpan(color and 0xFFFFFF or -0x60000000),
-                0,
-                5,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
             text.setSpan(StyleSpan(Typeface.BOLD), bold, bold + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             text.setSpan(ForegroundColorSpan(Color.BLACK), bold, bold + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }

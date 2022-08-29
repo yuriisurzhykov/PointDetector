@@ -27,4 +27,6 @@
     <string name="label_point_open">Open</string>
     <string name="label_point_closed">Closed</string>
     <string name="label_point_successfully_created">Point successfully created</string>
+
+    <string name="button_create_new_point_label">Add new point!</string>
 </resources>

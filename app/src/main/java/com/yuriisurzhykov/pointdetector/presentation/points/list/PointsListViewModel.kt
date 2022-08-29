@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
+import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
 import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
@@ -57,14 +58,21 @@ class PointsListViewModel @Inject constructor(
 
     private suspend fun loadPlacesByCondition() {
         searchPointUseCase.searchPlaceByCondition(searchCondition)
-            .onEach { pointsList.postValue(sortPointsList(it)) }.collect()
+            .onEach { postPointsList(it) }.collect()
     }
 
     private fun loadAllPlaces() {
         dispatchers.launchBackground(viewModelScope) {
             pointsListUseCase.fetchPoints()
-                .onEach { pointsList.postValue(sortPointsList(it)) }.collect()
+                .onEach {
+                    postPointsList(it)
+                }.collect()
         }
+    }
+
+    private fun postPointsList(it: List<Point>) {
+        val points = if (it.isNotEmpty()) sortPointsList(it) else listOf(Point.empty())
+        pointsList.postValue(points)
     }
 
     private fun sortPointsList(list: List<Point>): List<Point> {

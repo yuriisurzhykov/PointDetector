@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.core.TAG
+import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
@@ -64,17 +65,18 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         }
         activity?.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner)
         listAdapter.setOnItemClickListener {
-            val gmmIntentUri = Uri.parse("geo:0,0?q=${it.address}")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            startActivity(mapIntent)
+            if (it.isEmpty()) {
+                onCreateNewPointClick()
+            } else {
+                openPointDetailsFragment(it)
+            }
         }
         listAdapter.setOnRemoveClickListener { point, _ ->
             viewModel.removeItem(point)
         }
         viewModel.observePointsList(viewLifecycleOwner) {
             listAdapter.submitList(it)
-            Log.e(TAG, "onViewCreated: ${Json.encodeToString(it)}")
+            listAdapter.notifyDataSetChanged()
         }
     }
 
@@ -90,6 +92,13 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     override fun onLocationReceived(location: Location) {
         viewModel.updateUserLocation(location)
+    }
+
+    private fun openPointDetailsFragment(item: Point) {
+        val gmmIntentUri = Uri.parse("geo:0,0?q=${item.address}")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        startActivity(mapIntent)
     }
 
     private val fragmentMenuProvider = object : MenuProvider {

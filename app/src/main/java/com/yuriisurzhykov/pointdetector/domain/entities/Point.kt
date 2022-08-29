@@ -18,4 +18,8 @@ data class Point(
     fun isEmpty(): Boolean {
         return address.isEmpty()
     }
+
+    companion object {
+        fun empty() = Point("", LatLng(0.0, 0.0), 0.0, "", emptyList(), false)
+    }
 }

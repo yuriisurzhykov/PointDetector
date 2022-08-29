@@ -11,4 +11,7 @@
             <enum name="minutes" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="RecyclerViewHolderCornerView">
+        <attr name="viewHolderSwipeCorner" format="dimension" />
+    </declare-styleable>
 </resources>
