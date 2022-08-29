@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
@@ -50,7 +51,9 @@ class PointsCreateFragment : AbstractStyleFragment(R.layout.fragment_points_crea
             layoutManager = LinearLayoutManager(context)
         }
         listAdapter.setOnItemClickListener {
-            viewModel.selectPoint(it)
+            if (it is Point) {
+                viewModel.selectPoint(it)
+            }
         }
         viewModel.observeCreationState(viewLifecycleOwner) { state ->
             pointCreateStateHandler.handleState(state, this)

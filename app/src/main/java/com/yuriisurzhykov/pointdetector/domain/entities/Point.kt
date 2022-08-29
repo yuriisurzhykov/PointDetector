@@ -1,7 +1,7 @@
 package com.yuriisurzhykov.pointdetector.domain.entities
 
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
-import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
 import java.io.Serializable
 
@@ -13,7 +13,15 @@ data class Point(
     val placeName: String,
     val workingHours: List<WeekDay>,
     val isPointAvailable: Boolean
-) : Serializable {
+) : Serializable, ViewHolderItem {
+
+    override fun areItemsTheSame(other: Any): Boolean {
+        return other == this
+    }
+
+    override fun areContentsTheSame(other: Any): Boolean {
+        return other is Point && other.address == this.address && other.workingHours == this.workingHours
+    }
 
     fun isEmpty(): Boolean {
         return address.isEmpty()

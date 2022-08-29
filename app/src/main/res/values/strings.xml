@@ -29,4 +29,8 @@
     <string name="label_point_successfully_created">Point successfully created</string>
 
     <string name="button_create_new_point_label">Add new point!</string>
+    <string name="title_empty_points_list">No data found</string>
+    <string name="description_empty_points_list">No records found in local data base. To see any items try to add record by click the button below.</string>
+    <string name="label_description_search_address">Try to start type location address into field upper and suggested places will be shown in the list</string>
+    <string name="label_empty_search_data">Not found any data</string>
 </resources>

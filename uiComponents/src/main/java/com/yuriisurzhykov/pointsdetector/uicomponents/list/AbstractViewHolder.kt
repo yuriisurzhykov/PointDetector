@@ -4,7 +4,7 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbstractViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
+abstract class AbstractViewHolder<out T>(view: View) : RecyclerView.ViewHolder(view) {
 
     private var item: T? = null
     private var onItemClickListener: OnItemClickListener<T>? = null
@@ -22,7 +22,7 @@ abstract class AbstractViewHolder<T>(view: View) : RecyclerView.ViewHolder(view)
     }
 
     @CallSuper
-    open fun bind(item: T, clickListener: OnItemClickListener<T>?) {
+    open fun bind(item: @UnsafeVariance T, clickListener: OnItemClickListener<T>?) {
         this.item = item
     }
 

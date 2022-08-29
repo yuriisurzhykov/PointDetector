@@ -5,7 +5,6 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -18,14 +17,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.core.TAG
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.PointSwipeDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.lang.IllegalStateException
 
 @AndroidEntryPoint
@@ -64,15 +63,15 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             addTextChangedListener { viewModel.startLoadPoints(it.toString()) }
         }
         activity?.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner)
-        listAdapter.setOnItemClickListener {
-            if (it.isEmpty()) {
+        listAdapter.setOnItemClickListener { item: ViewHolderItem ->
+            if (item is EmptyStateData) {
                 onCreateNewPointClick()
-            } else {
-                openPointDetailsFragment(it)
+            } else if (item is Point) {
+                openPointDetailsFragment(item)
             }
         }
-        listAdapter.setOnRemoveClickListener { point, _ ->
-            viewModel.removeItem(point)
+        listAdapter.setOnSwipeListener { point, _ ->
+            viewModel.removeItem(point as Point)
         }
         viewModel.observePointsList(viewLifecycleOwner) {
             listAdapter.submitList(it)

@@ -6,33 +6,33 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
-import com.yuriisurzhykov.pointdetector.core.SingleLiveEvent
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
+import com.yuriisurzhykov.pointdetector.presentation.list.StartSearchData
 import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.timerTask
 
 @HiltViewModel
 class PointsCreateViewModel @Inject constructor(
-    private val geoSuggestedPlaces: SuggestedPlacesUseCase,
+    private val geoSuggestedPlacesUseCase: SuggestedPlacesUseCase,
     private val savePlacesUseCase: SavePointUseCase,
     private val dispatchers: Dispatchers
 ) : ViewModel() {
 
     private var timer: Timer? = null
-    private val suggestedPoints = MutableLiveData<List<Point>>()
+    private val suggestedPoints = MutableLiveData<List<ViewHolderItem>>(listOf(StartSearchData()))
     private val creationState = MutableLiveData<PointCreateState>()
     private val selectedWorkingDays = MutableLiveData<List<WeekDay>>()
     private val enteredPointName = ObservableField<String>()
     private val errorMessage = MutableLiveData<Int>()
     private val loading = ObservableBoolean()
 
-    fun observeSuggestedPlaces(owner: LifecycleOwner, observer: Observer<List<Point>>) {
+    fun observeSuggestedPlaces(owner: LifecycleOwner, observer: Observer<List<ViewHolderItem>>) {
         suggestedPoints.observe(owner, observer)
     }
 
@@ -47,8 +47,8 @@ class PointsCreateViewModel @Inject constructor(
     fun updateEnteredPlaceName(name: String) {
         loading.set(true)
         postTimerJob {
-            val suggested = geoSuggestedPlaces.getSuggestedPlaces(name)
-            suggestedPoints.postValue(suggested)
+            val suggested = geoSuggestedPlacesUseCase.getSuggestedPlaces(name)
+            postData(suggested, name)
             dispatchers.changeToUi { loading.set(false) }
         }
     }
@@ -96,6 +96,13 @@ class PointsCreateViewModel @Inject constructor(
 
     private fun postError(errorRes: Int) {
         errorMessage.postValue(errorRes)
+    }
+
+    private fun postData(list: List<Point>, enteredPointName: String) {
+        val emptyList = if (enteredPointName.isEmpty()) {
+            listOf(StartSearchData())
+        } else listOf(EmptySearchData())
+        suggestedPoints.postValue(list.ifEmpty { emptyList })
     }
 
     private fun postTimerJob(block: suspend () -> Unit) {

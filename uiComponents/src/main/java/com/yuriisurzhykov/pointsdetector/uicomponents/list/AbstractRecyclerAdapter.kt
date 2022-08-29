@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
-abstract class AbstractRecyclerAdapter<T, VH : AbstractViewHolder<T>>(
+abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
     callback: DiffUtil.ItemCallback<T>,
     private val viewHolderTypeManager: ViewHolderTypeManager<T>
 ) : ListAdapter<T, VH>(callback), IRecyclerViewTypeAdapter<T> {

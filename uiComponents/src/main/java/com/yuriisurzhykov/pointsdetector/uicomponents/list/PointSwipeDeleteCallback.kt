@@ -1,4 +1,4 @@
-package com.yuriisurzhykov.pointdetector.presentation.points.list
+package com.yuriisurzhykov.pointsdetector.uicomponents.list
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,16 +7,13 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.core.TAG
-import com.yuriisurzhykov.pointsdetector.uicomponents.recycler.RecyclerViewHolderCornerView
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
 
-class PointSwipeDeleteCallback(private val adapter: PointsListAdapter, context: Context) :
-    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class PointSwipeDeleteCallback(private val adapter: BaseRecyclerViewAdapter, context: Context) :
+    ItemTouchHelper.Callback() {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete) as Drawable
     private val intrinsicWidth = deleteIcon.intrinsicWidth
@@ -24,6 +21,13 @@ class PointSwipeDeleteCallback(private val adapter: PointsListAdapter, context: 
     private val background = ColorDrawable()
     private val backgroundColor = context.getColor(R.color.recycler_view_background_deletion_color)
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        if (viewHolder is SwipableViewHolder && viewHolder.canSwipe()) {
+            return makeMovementFlags(0, ItemTouchHelper.LEFT)
+        }
+        return makeMovementFlags(0, 0)
+    }
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -36,16 +40,6 @@ class PointSwipeDeleteCallback(private val adapter: PointsListAdapter, context: 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val adapterPosition = viewHolder.absoluteAdapterPosition
         adapter.removeItem(adapterPosition)
-    }
-
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        super.onSelectedChanged(viewHolder, actionState)
-        val isInSwipe = actionState == ItemTouchHelper.ACTION_STATE_SWIPE
-        Log.e(TAG, "onSelectedChanged: state = $actionState, swipe = $isInSwipe")
-        (viewHolder?.itemView as? RecyclerViewHolderCornerView)?.let {
-            Log.e(TAG, "onSelectedChanged: setSwipe $isInSwipe")
-            it.setInDragState(isInSwipe)
-        }
     }
 
     override fun onChildDraw(

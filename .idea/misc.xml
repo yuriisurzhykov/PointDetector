@@ -31,6 +31,7 @@
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_create.xml" value="0.22" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_list.xml" value="0.33" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_empty_points_list.xml" value="0.18" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_entered_data_empty.xml" value="0.33" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point.xml" value="0.20742753623188406" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point_2_0.xml" value="0.33" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point_new.xml" value="0.1" />
@@ -38,6 +39,7 @@
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/menu/points_list_menu.xml" value="0.18554938007695596" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.245" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/elevation_drawable.xml" value="0.2775" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/ic_delete.xml" value="0.2395" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/shadowed_background.xml" value="0.1" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/time_input_background.xml" value="0.2775" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/font/roboto.xml" value="0.2526041666666667" />

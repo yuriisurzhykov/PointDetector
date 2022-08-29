@@ -8,36 +8,24 @@ import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.OnItemClickListener
-
-@ViewHolder(R.layout.list_item_empty_points_list)
-class EmptyPointViewHolder(view: View) : AbstractViewHolder<Point>(view) {
-
-    private val button by lazy(LazyThreadSafetyMode.NONE) {
-        itemView.findViewById<TextView>(R.id.empty_state_button)
-    }
-
-    override fun bind(item: Point, clickListener: OnItemClickListener<Point>?) {
-        super.bind(item, clickListener)
-        button.setText(R.string.button_create_new_point_label)
-        button.setOnClickListener {
-            clickListener?.onItemClick(item)
-        }
-    }
-
-}
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipableViewHolder
 
 @ViewHolder(R.layout.list_item_point_2_0)
-class PointsViewHolder(view: View) : AbstractViewHolder<Point>(view) {
+class PointsViewHolder(view: View) : AbstractViewHolder<Point>(view), SwipableViewHolder {
 
     private val addressText: TextView by lazy { itemView.findViewById(R.id.location_address) }
     private val addressName: TextView by lazy { itemView.findViewById(R.id.location_name) }
     private val distanceText: TextView by lazy { itemView.findViewById(R.id.location_distance) }
     private val availabilityState: TextView by lazy { itemView.findViewById(R.id.availability_state) }
+    private var canSwipe = false
+
+    override fun canSwipe() = canSwipe
 
     override fun bind(
         item: Point, clickListener: OnItemClickListener<Point>?
     ) {
         super.bind(item, clickListener)
+        canSwipe = !item.isEmpty()
         addressText.text = item.address
         addressName.text = item.placeName
         distanceText.text = Distance.Kilometers(item.distance).getDistanceLocale(itemView.context)

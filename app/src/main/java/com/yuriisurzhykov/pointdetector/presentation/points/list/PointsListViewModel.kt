@@ -4,12 +4,13 @@ import android.location.Location
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
-import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
 import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -31,7 +32,7 @@ class PointsListViewModel @Inject constructor(
 
     private var searchCondition: String = emptyString()
 
-    private val pointsList = MutableLiveData<List<Point>>()
+    private val pointsList = MutableLiveData<List<ViewHolderItem>>()
     private var timer: Timer? = null
 
     fun updateUserLocation(location: Location) {
@@ -41,7 +42,7 @@ class PointsListViewModel @Inject constructor(
         }
     }
 
-    fun observePointsList(owner: LifecycleOwner, observer: Observer<List<Point>>) {
+    fun observePointsList(owner: LifecycleOwner, observer: Observer<List<ViewHolderItem>>) {
         pointsList.observe(owner, observer)
     }
 
@@ -70,8 +71,8 @@ class PointsListViewModel @Inject constructor(
         }
     }
 
-    private fun postPointsList(it: List<Point>) {
-        val points = if (it.isNotEmpty()) sortPointsList(it) else listOf(Point.empty())
+    private fun postPointsList(list: List<Point>) {
+        val points = sortPointsList(list).ifEmpty { listOf(EmptyStateData()) }
         pointsList.postValue(points)
     }
 

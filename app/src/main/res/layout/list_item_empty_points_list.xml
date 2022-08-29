@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/empty_state_image"
+        android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_empty_state"
-        app:layout_constraintBottom_toTopOf="@id/empty_state_title"
+        app:layout_constraintBottom_toTopOf="@android:id/text1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,22 +17,34 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/empty_state_title"
+        android:id="@android:id/text1"
         style="@style/PointDetector.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_no_results_found"
+        app:layout_constraintBottom_toTopOf="@android:id/text2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@android:id/icon" />
+
+    <TextView
+        android:id="@android:id/text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/empty_state_image" />
+        app:layout_constraintTop_toBottomOf="@android:id/text1" />
 
     <Button
-        android:id="@+id/empty_state_button"
+        android:id="@android:id/button1"
         style="@style/PointDetector.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
