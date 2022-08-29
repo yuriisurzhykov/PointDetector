@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "163210330542",
+    "project_id": "point-detector",
+    "storage_bucket": "point-detector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163210330542:android:c5af8e56eed3052bcc083f",
+        "android_client_info": {
+          "package_name": "com.yuriisurzhykov.pointdetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjb1j63HORiU4TijJJa5I_-Z5lEa-0QAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163210330542:android:8b525f6d0aa47720cc083f",
+        "android_client_info": {
+          "package_name": "com.yuriisurzhykov.pointdetector.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjb1j63HORiU4TijJJa5I_-Z5lEa-0QAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
