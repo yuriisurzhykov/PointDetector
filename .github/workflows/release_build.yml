@@ -1,10 +1,10 @@
 name: Build Release App Bundle
 
-on:
-  push:
-    branches: [ "master", "develop" ]
-  pull_request:
-    branches: [ "master" ]
+#on:
+#  push:
+#    branches: [ "master", "develop" ]
+#  pull_request:
+#    branches: [ "master" ]
 
 jobs:
   build:
