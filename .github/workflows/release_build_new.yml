@@ -59,12 +59,6 @@ jobs:
           VERSION_CODE=$((INITIAL_VERSION_CODE + RUN_NUMBER))
           echo "version_code=$VERSION_CODE" >> $GITHUB_ENV
 
-      - name: Update version code
-        uses: chkfung/android-version-actions@v1.1
-        with:
-          gradlePath: android/app/build.gradle.kts
-          versionCode: ${{ env.version_code }}
-
       - name: Build & deploy Android release
         run: bundle exec fastlane android deploy
         env:
