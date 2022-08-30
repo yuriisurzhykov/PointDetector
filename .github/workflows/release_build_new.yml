@@ -42,9 +42,9 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: |
-            - ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab
-            - ${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk
+            - /app/build/outputs/bundle/release/app-release.aab
+            - /app/build/outputs/apk/release/app-release.apk
