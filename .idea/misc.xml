@@ -3,10 +3,48 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable-night/background_input_field.xml" value="0.225" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/backgroun_input_field.xml" value="0.224" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/background_input_field.xml" value="0.232" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/button_background_drawable.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/button_focused.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/button_unfocused.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/elevation_drawable.xml" value="0.232" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_back.xml" value="0.2365" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_garbage.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_plus.xml" value="0.2365" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_search.xml" value="0.225" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/ic_union__1_.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/shadowed_background.xml" value="0.257" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/text_cursor_drawable.xml" value="0.224" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/time_input_background.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/drawable/view_background.xml" value="0.231" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/font-v26/roboto_flex.xml" value="0.2515625" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/font/roboto_flex.xml" value="0.2515625" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/activity_main.xml" value="0.20742753623188406" />
-        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_create.xml" value="0.20742753623188406" />
-        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_list.xml" value="0.20742753623188406" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_denial_permissions.xml" value="0.22" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_info.xml" value="0.17" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_point_additional_info.xml" value="0.33" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_point_creation_result.xml" value="0.19673617407071622" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_create.xml" value="0.22" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/fragment_points_list.xml" value="0.33" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_empty_points_list.xml" value="0.18" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_entered_data_empty.xml" value="0.33" />
         <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point.xml" value="0.20742753623188406" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point_2_0.xml" value="0.33" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/list_item_point_new.xml" value="0.1" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/layout/toolbar.xml" value="0.15433946130825138" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/menu/points_list_menu.xml" value="0.18554938007695596" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.245" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/elevation_drawable.xml" value="0.2775" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/ic_delete.xml" value="0.2395" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/shadowed_background.xml" value="0.1" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/drawable/time_input_background.xml" value="0.2775" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/font/roboto.xml" value="0.2526041666666667" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/layout/view_time_selector.xml" value="0.25" />
+        <entry key="..\:/Study/AndroidDevStudy/PointDetector/uiComponents/src/main/res/layout/view_work_day_hours_selector.xml" value="0.2" />
       </map>
     </option>
   </component>

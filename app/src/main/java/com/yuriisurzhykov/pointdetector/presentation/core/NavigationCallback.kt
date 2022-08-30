@@ -6,6 +6,10 @@ interface NavigationCallback {
 
     fun openFragment(fragment: Fragment, tag: String)
 
+    fun openFragment(fragment: Fragment, tag: String, removeCurrentFragment: Boolean)
+
     fun removeCurrentFragment()
+
+    fun openMainFragment()
 
 }

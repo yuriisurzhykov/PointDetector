@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yuriisurzhykov.pointsdetector.uicomponents.recycler.RecyclerViewHolderCornerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/medium_padding"
+    android:background="@drawable/view_background"
+    android:elevation="@dimen/default_elevation_radius"
+    android:padding="@dimen/default_padding"
+    app:viewHolderSwipeCorner="@dimen/default_view_background_corner">
+
+    <TextView
+        android:id="@+id/location_name"
+        style="@style/PointDetector.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintEnd_toStartOf="@id/availability_state"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Location name" />
+
+    <TextView
+        android:id="@+id/location_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/location_distance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_name"
+        tools:text="Location address" />
+
+    <TextView
+        android:id="@+id/availability_state"
+        style="@style/PointDetector.AvailabilityPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/location_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Open" />
+
+    <TextView
+        android:id="@+id/location_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/location_address"
+        app:layout_constraintTop_toTopOf="@id/location_address"
+        tools:text="14mi away" />
+
+</com.yuriisurzhykov.pointsdetector.uicomponents.recycler.RecyclerViewHolderCornerView>

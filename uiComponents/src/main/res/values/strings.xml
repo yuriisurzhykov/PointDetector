@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="am_toggle_text">AM</string>
+    <string name="pm_toggle_text">PM</string>
+    <string name="title_working_hours_input">Select working hours</string>
+</resources>

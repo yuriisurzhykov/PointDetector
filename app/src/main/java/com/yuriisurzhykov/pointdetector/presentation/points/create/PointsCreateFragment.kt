@@ -5,22 +5,28 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.IllegalStateException
 
 @AndroidEntryPoint
-class PointsCreateFragment : Fragment(R.layout.fragment_points_create) {
+class PointsCreateFragment : AbstractStyleFragment(R.layout.fragment_points_create) {
 
-    private val viewModel: PointsCreateViewModel by viewModels()
+    private val viewModel: PointsCreateViewModel by viewModels(ownerProducer = { requireActivity() })
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
+    private val pointCreateStateHandler = PointCreateStateHandler()
+
+    override fun getTitle(): CharSequence {
+        return resources.getString(R.string.title_points_add_screen)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,10 +51,12 @@ class PointsCreateFragment : Fragment(R.layout.fragment_points_create) {
             layoutManager = LinearLayoutManager(context)
         }
         listAdapter.setOnItemClickListener {
-            viewModel.savePoint(it)
+            if (it is Point) {
+                viewModel.selectPoint(it)
+            }
         }
-        viewModel.observeSavedState(viewLifecycleOwner) {
-            navigationCallback?.removeCurrentFragment() ?: activity?.supportFragmentManager?.popBackStack()
+        viewModel.observeCreationState(viewLifecycleOwner) { state ->
+            pointCreateStateHandler.handleState(state, this)
         }
         viewModel.observeSuggestedPlaces(viewLifecycleOwner) {
             listAdapter.submitList(it)

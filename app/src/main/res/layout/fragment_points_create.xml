@@ -9,14 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.0" />
 
     <EditText
         android:id="@+id/points_name"
+        style="@style/PointDetector.InputField"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:hint="@string/hint_input_your_address"
+        android:imeOptions="actionSearch"
+        android:inputType="textPostalAddress"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_constraint" />

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_elevation_radius">10dp</dimen>
+    <dimen name="default_button_corner_radius">24dp</dimen>
+    <dimen name="default_view_background_corner">12dp</dimen>
+</resources>

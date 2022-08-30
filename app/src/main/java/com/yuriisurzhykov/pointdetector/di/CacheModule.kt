@@ -3,6 +3,7 @@ package com.yuriisurzhykov.pointdetector.di
 import android.content.Context
 import androidx.room.Room
 import com.yuriisurzhykov.pointdetector.data.cache.CacheDatabase
+import com.yuriisurzhykov.pointdetector.data.cache.configs.ConfigsDao
 import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,12 @@ object CacheModule {
     @Singleton
     fun providePlaceDao(database: CacheDatabase): PointsDao {
         return database.providePointsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideConfigsDao(database: CacheDatabase): ConfigsDao {
+        return database.provideConfigsDao()
     }
 
     object Constants {
