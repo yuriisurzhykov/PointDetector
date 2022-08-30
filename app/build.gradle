@@ -30,25 +30,13 @@ android {
     }
     signingConfigs {
         release {
-            /*def tempFilesPath = System.getProperty("user.home") + "/work/_temp/keystore"
-            def allFilesFromDir = new File(tempFilesPath).listFiles()
-            if (allFilesFromDir != null) {
-                def keystoreFile = allFilesFromDir.first()
-                keystoreFile.rename("keystore/points_detector.jks")
-            }*/
             def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"
             def allFilesFromDir = new File(tmpFilePath).listFiles()
-
             if (allFilesFromDir != null) {
                 def keystoreFile = allFilesFromDir.first()
-                keystoreFile.renameTo("keystore/your_keystore.jks")
+                keystoreFile.renameTo("keystore/${System.getenv("KEYSTORE_FILE")}")
             }
-
             storeFile = file("keystore/${System.getenv("KEYSTORE_FILE")}")
-
-            /*def signing = new Properties()
-            file("signing.properties").withInputStream { signing.load(it) }
-            storeFile file(signing.KEYSTORE_FILE)*/
             storePassword System.getenv("SIGNING_STORE_PASSWORD")
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
             keyPassword System.getenv("SIGNING_KEY_PASSWORD")
@@ -117,10 +105,4 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
     implementation 'com.google.firebase:firebase-analytics'
-}
-
-task getProperties() {
-    doLast {
-        println(System.getProperty("user.home"))
-    }
 }
