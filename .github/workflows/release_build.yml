@@ -9,10 +9,8 @@ jobs:
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
-        env:
-          KEYSTORE_FILE: ${{secrets.KEYSTORE_FILE}}
         with:
-          fileName: "keystore/" + ${{KEYSTORE_FILE}}
+          fileName: ${{format('keystore/{0}', secrets.KEYSTORE_FILE)}}
           encodedString: ${{ secrets.KEYSTORE }}
       - uses: actions/checkout@v3
       - name: set up JDK 1.8
