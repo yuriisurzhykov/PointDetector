@@ -64,7 +64,7 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
 
     override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
-        holder.onDetachedFromRecycler(this)
+        holder.onDetachedFromRecycler()
     }
 
     private fun layoutInflater(context: Context): LayoutInflater {

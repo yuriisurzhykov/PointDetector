@@ -8,7 +8,7 @@ abstract class AbstractViewHolder<out T>(view: View) : RecyclerView.ViewHolder(v
 
     private var item: T? = null
     private var onItemClickListener: OnItemClickListener<T>? = null
-    protected var adapter: RecyclerView.Adapter<*>? = null
+    private var adapter: RecyclerView.Adapter<*>? = null
 
     init {
         itemView.setOnClickListener {
@@ -32,7 +32,7 @@ abstract class AbstractViewHolder<out T>(view: View) : RecyclerView.ViewHolder(v
     }
 
     @CallSuper
-    fun onDetachedFromRecycler(recyclerView: RecyclerView.Adapter<*>) {
+    fun onDetachedFromRecycler() {
         adapter = null
     }
 
