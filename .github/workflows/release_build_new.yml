@@ -46,5 +46,4 @@ jobs:
         with:
           name: assets
           path: |
-            - ${{ github.workspace }}\app\build\outputs\bundle\release\app-release.aab
-            - ${{ github.workspace }}\app\build\outputs\apk\release\app-release.apk
+            - ${{ github.workspace }}/app/build/outputs/*
