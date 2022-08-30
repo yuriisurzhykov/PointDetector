@@ -1,43 +1,8 @@
-#name: Android binary build & upload
-#
-#on:
-#  push:
-#    branches: [ develop ]
-#
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-18.04
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: set up JDK 11
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '11'
-#          distribution: 'temurin'
-#          cache: gradle
-#
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Decode keystore and create jks and properties file for signing the app
-#        run: |
-#          echo "$KEYSTORE" | base64 --decode > app/keystore.jks
-#          echo "storeFile=keystore.jks" >> key.properties
-#          echo "keyAlias=$KEY_ALIAS" >> key.properties
-#          echo "storePassword=$KEYSTORE_PASSWORD" >> key.properties
-#          echo "keyPassword=$KEY_PASSWORD" >> key.properties
-#        env:
-#          PLAY_STORE_UPLOAD_KEY: ${{ secrets.KEYSTORE }}
-#          KEYSTORE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-#          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-#          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-#        working-directory: android
-#
 name: Android Build & Deploy
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 
 jobs:
   deploy:
@@ -67,7 +32,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Build & deploy Android release
-        run: ./gradlew build release
+        run: ./gradlew assemble bundle
         env:
           KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
           STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -79,4 +44,5 @@ jobs:
         with:
           name: assets
           path: |
-            ${{ github.workspace }}/app/build/outputs/bundle/release
+            - ${{ github.workspace }}/app/build/outputs/bundle/release/*.aab
+            - ${{ github.workspace }}/app/build/outputs/apk/release/*.apk
