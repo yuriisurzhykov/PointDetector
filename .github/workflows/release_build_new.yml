@@ -49,7 +49,7 @@ jobs:
         id: android_keystore
         with:
           fileName: "android_keystore.keystore"
-          encodedString: ${{ secrets.KEYSTORE_FILE }}
+          encodedString: ${{ secrets.KEYSTORE }}
 
       - name: Define version code with offset
         env:
@@ -62,7 +62,7 @@ jobs:
       - name: Update version code
         uses: chkfung/android-version-actions@v1.1
         with:
-          gradlePath: android/app/build.gradle
+          gradlePath: android/app/build.gradle.kts
           versionCode: ${{ env.version_code }}
 
       - name: Build & deploy Android release
