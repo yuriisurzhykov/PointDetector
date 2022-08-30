@@ -12,10 +12,16 @@ jobs:
     steps:
       - name: Decode Keystore
         id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: ${{format('keystore/{0}', secrets.KEYSTORE_FILE)}}
-          encodedString: ${{ secrets.KEYSTORE }}
+        #        uses: timheuer/base64-to-file@v1
+        #        with:
+        #          fileName: ${{format('keystore/{0}', secrets.KEYSTORE_FILE)}}
+        #          encodedString: ${{ secrets.KEYSTORE }}
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+          run: |
+            TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+            mkdir "${TMP_KEYSTORE_FILE_PATH}"
+            echo $ENCODED_STRING | base64 -di > format('{0}/{1}', TMP_KEYSTORE_FILE_PATH, secrets.KEYSTORE_FILE)
       - uses: actions/checkout@v3
       - name: set up JDK 1.8
         uses: actions/setup-java@v3
@@ -28,9 +34,9 @@ jobs:
       - name: build prod
         run: ./gradlew app:bundleRelease
         env:
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
