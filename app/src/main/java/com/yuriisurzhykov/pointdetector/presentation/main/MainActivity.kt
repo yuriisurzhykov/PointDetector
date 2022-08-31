@@ -1,6 +1,11 @@
 package com.yuriisurzhykov.pointdetector.presentation.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.core.view.MenuProvider
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractToolbarActivity
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
@@ -10,11 +15,37 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AbstractToolbarActivity(), NavigationCallback {
 
+    private val viewModel: MainViewModel by viewModels()
+    private var importMenuItem: MenuItem? = null
+
+    private val menuItemsProvider: MenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.menu_import_data, menu)
+            importMenuItem = menu.findItem(R.id.menu_item_import_data)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            if (menuItem.itemId == R.id.menu_item_import_data) {
+                viewModel.importData()
+                return true
+            }
+            return false
+        }
+    }
+
     override fun showHomeButtonByDefault() = false
 
     override fun onCreated(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_singlepane)
         openMainFragment()
+        viewModel.observeImportOptionVisibility(this) {
+            importMenuItem?.isVisible = it
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addMenuProvider(menuItemsProvider, this)
     }
 
     override fun openMainFragment() {

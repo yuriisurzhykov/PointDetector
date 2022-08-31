@@ -9,6 +9,7 @@
     <string name="title_points_add_screen">Поиск точек</string>
     <string name="title_points_add_info_screen">Сохранение точки</string>
     <string name="button_add_point">Добавить новую точку</string>
+    <string name="menu_button_import_data">Импорт данных</string>
     <string name="hint_place_name">Название точки</string>
     <string name="hint_place_address">Адрес точки</string>
     <string name="hint_place_working_hours">Рабочие часы</string>
@@ -17,7 +18,8 @@
 
     <!--Location permission-->
     <string name="title_location_permission_denied">Не удалось получить разрешения</string>
-    <string name="rationale_location_permission_text">Разрешения на получение локации необходимы для того чтобы приложение работало правильно. &lt;br/&gt;Без определения георасположения невозможо будет определить расстояние до точек.</string>
+    <string name="rationale_location_permission_text">Разрешения на получение локации необходимы для того чтобы приложение работало правильно.
+        Без определения георасположения невозможо будет определить расстояние до точек.</string>
     <string name="button_location_permissions_retry">Предоставить разрешения</string>
 
     <string name="hint_input_place_name">Введите название точки</string>
@@ -34,4 +36,8 @@
     <string name="description_empty_points_list">Нет записей в локальной базе данных. Для того чтобы увидеть записи попробуйте добавить ее нажав на кнопку снизу.</string>
     <string name="label_description_search_address">Начните печатать в поле выше и в списке начнут появлятся возможнные точки</string>
     <string name="label_empty_search_data">Ничего не найдено по запросу</string>
+    <string name="title_location_permission_request">Нет доступа к геоданным</string>
+    <string name="button_continue_anyway">Все равно продолжить</string>
+    <string name="button_provide_location_permissions_never_ask">Открыть настройки</string>
+    <string name="snackbar_location_permissions_denied">Для того, чтобы предоставить разрешения, откройте настройки.</string>
 </resources>

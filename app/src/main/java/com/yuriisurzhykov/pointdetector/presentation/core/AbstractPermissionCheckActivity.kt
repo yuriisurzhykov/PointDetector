@@ -1,25 +1,24 @@
 package com.yuriisurzhykov.pointdetector.presentation.core
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
-abstract class AbstractPermissionCheckActivity : AppCompatActivity() {
+abstract class AbstractPermissionCheckActivity : AbstractNavigationActivity() {
 
     abstract fun getPermissionsArray(): Array<String>
 
     open fun onPermissionsGranted() {}
 
-    open fun onPermissionsDenied() {}
+    open fun onPermissionsDenied(neverAskAgain: Boolean) {}
 
     open fun onShowPermissionsRationale() {}
 
-    protected fun checkPermissions() {
-        getPermissionsArray().all { checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }
+    protected fun checkPermissions(): Boolean {
+        return getPermissionsArray().all { checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }
     }
 
     protected fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, getPermissionsArray(), PERMISSION_REQUEST_CODE)
+        requestPermissions(getPermissionsArray(), PERMISSION_REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -29,19 +28,15 @@ abstract class AbstractPermissionCheckActivity : AppCompatActivity() {
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 onPermissionsGranted()
             } else {
-                if (checkShowRationale()) {
-                    onShowPermissionsRationale()
-                } else {
-                    onPermissionsDenied()
-                }
+                onPermissionsDenied(checkNeverAskAgain())
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun checkShowRationale(): Boolean {
+    protected fun checkNeverAskAgain(): Boolean {
         getPermissionsArray().forEach {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, it)) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, it)) {
                 return true
             }
         }

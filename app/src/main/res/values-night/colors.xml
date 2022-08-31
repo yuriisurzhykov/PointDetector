@@ -7,8 +7,18 @@
     <color name="text_cursor_color">#1E0B74</color>
     <color name="option_menu_tint_color">#DADADA</color>
     <color name="card_view_background_color">#1C2C3A</color>
+    <color name="accent_color">#053898</color>
+    <color name="active_text_color">@color/accent_color</color>
+    <color name="active_disabled_text_color">#607DB4</color>
 
     <color name="card_view_background_color_selected">#5E785F</color>
     <color name="recycler_view_deletion_icon_color">#B2B9C8</color>
     <color name="recycler_view_background_deletion_color">#5C1E1E</color>
+
+    <color name="button_enabled_pressed_color">#2169C2</color>
+    <color name="button_disabled_pressed_color">#667588</color>
+    <color name="button_disabled_idle_color">#879BB4</color>
+
+    <color name="button_enabled_text_color">#F1F1F1</color>
+    <color name="button_disabled_text_color">#344151</color>
 </resources>

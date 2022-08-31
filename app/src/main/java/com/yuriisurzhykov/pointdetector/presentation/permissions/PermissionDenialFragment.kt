@@ -34,7 +34,7 @@ class PermissionDenialFragment : AbstractPermissionFragment(R.layout.fragment_in
         dataSource?.onPermissionsGranted()
     }
 
-    override fun onPermissionsDenied() {
+    override fun onPermissionsDenied(shouldShowRationale: Boolean) {
         Log.e(TAG, "onPermissionsDenied: ")
     }
 

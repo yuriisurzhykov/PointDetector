@@ -11,7 +11,7 @@ import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderTypeManager
 
-class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolderItem>() {
+open class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolderItem>() {
 
     override fun getViewHolderTypeWithClass(item: ViewHolderItem): Pair<Int, Class<out AbstractViewHolder<ViewHolderItem>>> {
         return when (item) {
