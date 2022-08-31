@@ -33,6 +33,7 @@ class PointsListViewModel @Inject constructor(
     private var searchCondition: String = emptyString()
 
     private val pointsList = MutableLiveData<List<ViewHolderItem>>()
+    private val emptyStateDate = EmptyStateData()
     private var timer: Timer? = null
 
     fun updateUserLocation(location: Location) {
@@ -72,7 +73,7 @@ class PointsListViewModel @Inject constructor(
     }
 
     private fun postPointsList(list: List<Point>) {
-        val points = sortPointsList(list).ifEmpty { listOf(EmptyStateData()) }
+        val points = sortPointsList(list).ifEmpty { listOf(emptyStateDate) }
         pointsList.postValue(points)
     }
 

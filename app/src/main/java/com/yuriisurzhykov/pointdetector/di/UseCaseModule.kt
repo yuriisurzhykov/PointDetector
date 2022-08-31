@@ -7,6 +7,7 @@ import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.IDateTimeSource
+import com.yuriisurzhykov.pointdetector.domain.services.JsonAssetListFileReader
 import com.yuriisurzhykov.pointdetector.domain.source.DateFormatterType
 import com.yuriisurzhykov.pointdetector.domain.usecase.*
 import dagger.Module
@@ -88,6 +89,23 @@ object UseCaseModule {
         mapper: Mapper<Point, PointCache>
     ): DeletePointUseCase {
         return DeletePointUseCase.Base(repository, mapper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImportAssetsPointsUseCase(
+        jsonAssetListFileReader: JsonAssetListFileReader
+    ): ImportAssetsPointsUseCase {
+        return ImportAssetsPointsUseCase.Base(jsonAssetListFileReader)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveImportsUseCase(
+        importAssetsPointsUseCase: ImportAssetsPointsUseCase,
+        savePointUseCase: SavePointUseCase
+    ): SaveImportsUseCase<List<Point>> {
+        return SaveImportsUseCase.SavePoints(importAssetsPointsUseCase, savePointUseCase)
     }
 
 }

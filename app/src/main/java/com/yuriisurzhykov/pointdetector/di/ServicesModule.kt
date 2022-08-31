@@ -1,5 +1,6 @@
 package com.yuriisurzhykov.pointdetector.di
 
+import android.content.Context
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.configs.SortingTypeConfig
@@ -12,6 +13,7 @@ import com.yuriisurzhykov.pointdetector.domain.services.UserLocationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
@@ -37,6 +39,10 @@ object ServicesModule {
     fun provideDispatchers(): Dispatchers {
         return Dispatchers.Base()
     }
+
+    @Singleton
+    @Provides
+    fun provideContext(@ApplicationContext context: Context) = context
 
     /*@Provides
     @Singleton

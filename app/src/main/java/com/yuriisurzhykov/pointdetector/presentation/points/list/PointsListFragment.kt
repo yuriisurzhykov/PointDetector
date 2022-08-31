@@ -102,7 +102,6 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     private val fragmentMenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menu.clear()
             menuInflater.inflate(R.menu.points_list_menu, menu)
         }
 
