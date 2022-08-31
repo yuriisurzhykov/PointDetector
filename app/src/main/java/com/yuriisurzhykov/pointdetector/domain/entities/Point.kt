@@ -16,11 +16,15 @@ data class Point(
 ) : Serializable, ViewHolderItem {
 
     override fun areItemsTheSame(other: Any): Boolean {
-        return other == this
+        return other is Point && other.address == this.address
     }
 
     override fun areContentsTheSame(other: Any): Boolean {
-        return other is Point && other.address == this.address && other.workingHours == this.workingHours
+        return other is Point
+                && other.address == this.address
+                && other.workingHours == this.workingHours
+                && other.isPointAvailable == this.isPointAvailable
+                && other.distance == this.distance
     }
 
     fun isEmpty(): Boolean {
