@@ -17,7 +17,7 @@ class LocationPermissionResourceManager(parentFragment: AbstractPermissionFragme
         context.getString(R.string.rationale_location_permission_text)
 
     override fun getInfoImage(context: Context): Drawable? {
-        return ContextCompat.getDrawable(context, R.drawable.ic_no_gps_connection)
+        return ContextCompat.getDrawable(context, R.drawable.ic_location)
     }
 
     override fun getInfoTitle(context: Context) =

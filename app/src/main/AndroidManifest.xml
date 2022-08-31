@@ -21,16 +21,20 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".presentation.points.create.PointsCreateActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".presentation.permissions.PermissionsCheckActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.points.create.PointsCreateActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     </application>
 
 </manifest>
