@@ -1,3 +1,4 @@
 /build
+!/build/outputs/**
 point_detector.jks
 signing.properties
