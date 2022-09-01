@@ -43,15 +43,15 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload Artifact
-              uses: actions/upload-artifact@v2
-              with:
-                name: artifact
-                path: android/app/build/outputs/apk/release/app-release.apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: android/app/build/outputs/apk/release/app-release.apk
 
       - name: upload artifact to Firebase App Distribution
-              uses: wzieba/Firebase-Distribution-Github-Action@v1
-              with:
-                appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
-                token: ${{secrets.FIREBASE_TOKEN}}
-                groups: android-testers
-                file: app-release.apk
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: android-testers
+          file: app-release.apk
