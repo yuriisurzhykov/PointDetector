@@ -46,4 +46,4 @@ jobs:
         with:
           name: assets
           path: |
-            - ${{ github.workspace }}/app/build/outputs/*
+            - /github/workspace/app/build/outputs/*

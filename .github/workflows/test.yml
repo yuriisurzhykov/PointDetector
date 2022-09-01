@@ -1,9 +1,5 @@
 name: Android Build & Deploy
 
-on:
-  push:
-    branches: [ develop, firebase_publish ]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
