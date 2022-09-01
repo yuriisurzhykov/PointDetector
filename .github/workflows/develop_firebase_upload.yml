@@ -1,8 +1,8 @@
 name: Android Build & Deploy
 
-#on:
-#  push:
-#    branches: [ develop, firebase_publish ]
+on:
+  push:
+    branches: [ develop, firebase_publish ]
 
 jobs:
   deploy:
@@ -45,8 +45,10 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: assets
-          path: /github/workspace/app/build/outputs/apk/release/app-release.apk
+          name: assets-archive
+          path: |
+            - /github/workspace/app/build/outputs/apk/release/app-release.apk
+            - ${{ github.workspace }}/app/build/outputs/apk/
 
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
