@@ -42,11 +42,12 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: artifact
-          path: app/build/outputs/apk/release/app-release.apk
+          name: assets
+          path: |
+            - ${{ github.workspace }}/app/build/outputs/*
 
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
