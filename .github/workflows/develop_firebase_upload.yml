@@ -47,7 +47,7 @@ jobs:
         with:
           name: assets
           path: |
-            - ${{ github.workspace }}/app/build/outputs/*
+            - /app/build/outputs/*
 
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
