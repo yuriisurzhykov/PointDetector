@@ -1,8 +1,8 @@
 name: Android Build & Deploy
 
-on:
-  push:
-    branches: [ develop, firebase_publish ]
+#on:
+#  push:
+#    branches: [ develop, firebase_publish ]
 
 jobs:
   deploy:
