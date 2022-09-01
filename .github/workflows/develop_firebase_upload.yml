@@ -58,12 +58,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: /github/workspace/app/build/outputs/*
+          path: /github/workspace/app/build/outputs/apk/*
 
       - name: upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         with:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: android-testers
           file: /github/workspace/app/build/outputs/apk/*/*.apk
+          debug: true
