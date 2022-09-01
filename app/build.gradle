@@ -5,6 +5,7 @@ plugins {
     id "kotlin-kapt"
     id "kotlinx-serialization"
     id "com.google.gms.google-services"
+    id 'com.google.firebase.appdistribution'
 }
 
 android {

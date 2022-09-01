@@ -1,0 +1,57 @@
+name: Android Build & Deploy
+
+on:
+  push:
+    branches: [ develop, firebase_publish ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Decode Keystore File
+        uses: timheuer/base64-to-file@v1
+        id: android_keystore
+        with:
+          fileName: "android_keystore.jks"
+          encodedString: ${{ secrets.KEYSTORE }}
+
+      - name: Define version code with offset
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
+          INITIAL_VERSION_CODE: 1
+        run: |
+          VERSION_CODE=$((INITIAL_VERSION_CODE + RUN_NUMBER))
+          echo "version_code=$VERSION_CODE" >> $GITHUB_ENV
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build & deploy Android release
+        run: ./gradlew assembleRelease
+        env:
+          KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
+          STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload Artifact
+              uses: actions/upload-artifact@v2
+              with:
+                name: artifact
+                path: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: upload artifact to Firebase App Distribution
+              uses: wzieba/Firebase-Distribution-Github-Action@v1
+              with:
+                appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+                token: ${{secrets.FIREBASE_TOKEN}}
+                groups: android-testers
+                file: app-release.apk
