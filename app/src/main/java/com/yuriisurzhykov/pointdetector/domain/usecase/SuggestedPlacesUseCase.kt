@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 interface SuggestedPlacesUseCase {
 
-    suspend fun getSuggestedPlaces(planeName: String): List<Point>
+    suspend fun getSuggestedPlaces(placeName: String): List<Point>
 
     open class Base @Inject constructor(
         @ApplicationContext context: Context,
