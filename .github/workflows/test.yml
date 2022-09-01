@@ -20,12 +20,12 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build & deploy Android release
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleRelease
       - name: Fetch action
         id: pl
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: /github/workspace/app/build
+          path: /github/workspace/app/build/outputs
 
       - name: Output results
         run: |
