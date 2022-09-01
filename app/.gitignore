@@ -1,4 +1,3 @@
-!build/outputs/*
-build
+/build
 point_detector.jks
 signing.properties
