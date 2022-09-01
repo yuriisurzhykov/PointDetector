@@ -18,6 +18,7 @@
     <color name="button_enabled_pressed_color">#2169C2</color>
     <color name="button_disabled_pressed_color">#667588</color>
     <color name="button_disabled_idle_color">#879BB4</color>
+    <color name="button_ripple_effect_color">#803B4655</color>
 
     <color name="button_enabled_text_color">#F1F1F1</color>
     <color name="button_disabled_text_color">#344151</color>

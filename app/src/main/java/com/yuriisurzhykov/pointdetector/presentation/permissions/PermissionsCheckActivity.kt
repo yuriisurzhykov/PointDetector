@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat.createManageUnusedAppRestrictionsIntent
 import com.yuriisurzhykov.pointdetector.R
@@ -23,6 +22,7 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
 
     private var continueButton: Button? = null
     private var requestPermissionsButton: Button? = null
+    private var shouldShowRationale = false
 
     private val settingsLauncher = registerForActivityResult(SettingsActivityContract { this }) {
         if (it) {
@@ -45,11 +45,12 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
         with(findViewById<Button>(R.id.retry)) {
             requestPermissionsButton = this
             setText(R.string.button_location_permissions_retry)
-            setOnClickListener { if (checkNeverAskAgain()) openLocationSettings() else requestPermissions() }
+            setOnClickListener { if (shouldShowRationale) requestPermissions() else openLocationSettings() }
         }
         with(findViewById<Button>(R.id.continue_button)) {
             setText(R.string.button_continue_anyway)
             continueButton = this
+            continueButton?.visibility = View.GONE
             setOnClickListener { startMainScreen() }
         }
     }
@@ -59,10 +60,11 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
         startMainScreen()
     }
 
-    override fun onPermissionsDenied(neverAskAgain: Boolean) {
-        super.onPermissionsDenied(neverAskAgain)
-        continueButton?.visibility = View.VISIBLE
-        if (neverAskAgain) {
+    override fun onPermissionsDenied(shouldShowRationale: Boolean) {
+        super.onPermissionsDenied(shouldShowRationale)
+        this.shouldShowRationale = shouldShowRationale
+        if (!shouldShowRationale) {
+            continueButton?.visibility = View.VISIBLE
             requestPermissionsButton?.setText(R.string.button_provide_location_permissions_never_ask)
         }
     }

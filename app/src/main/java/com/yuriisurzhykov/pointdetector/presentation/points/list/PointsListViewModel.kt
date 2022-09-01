@@ -97,7 +97,6 @@ class PointsListViewModel @Inject constructor(
     fun removeItem(item: Point) {
         dispatchers.launchBackground(viewModelScope) {
             removePointUseCase.delete(item)
-            startLoadPoints(searchCondition)
         }
     }
 }

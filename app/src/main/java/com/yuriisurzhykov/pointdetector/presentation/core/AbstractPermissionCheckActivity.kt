@@ -9,7 +9,7 @@ abstract class AbstractPermissionCheckActivity : AbstractNavigationActivity() {
 
     open fun onPermissionsGranted() {}
 
-    open fun onPermissionsDenied(neverAskAgain: Boolean) {}
+    open fun onPermissionsDenied(shouldShowRationale: Boolean) {}
 
     open fun onShowPermissionsRationale() {}
 
@@ -28,15 +28,15 @@ abstract class AbstractPermissionCheckActivity : AbstractNavigationActivity() {
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 onPermissionsGranted()
             } else {
-                onPermissionsDenied(checkNeverAskAgain())
+                onPermissionsDenied(checkShowPermissionRationale())
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    protected fun checkNeverAskAgain(): Boolean {
+    protected fun checkShowPermissionRationale(): Boolean {
         getPermissionsArray().forEach {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, it)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, it)) {
                 return true
             }
         }

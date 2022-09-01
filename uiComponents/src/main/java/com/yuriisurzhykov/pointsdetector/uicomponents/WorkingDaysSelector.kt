@@ -56,11 +56,19 @@ class WorkingDaysSelector : LinearLayout {
         super.onLayout(changed, l, t, r, b)
         for (i in 0 until childCount) {
             val child = getChildAt(i)
+            val newMeasuredHeight = measuredHeight / 7 - child.marginTop - child.marginBottom
+            val heightParam =
+                if (isHorizontalOrientation()) ViewGroup.LayoutParams.WRAP_CONTENT else newMeasuredHeight
             child.updateLayoutParams {
-                height = measuredHeight / 7 - child.marginTop - child.marginBottom
+                height = heightParam
                 width = ViewGroup.LayoutParams.MATCH_PARENT
             }
+            child.minimumHeight = newMeasuredHeight
         }
+    }
+
+    private fun isHorizontalOrientation(): Boolean {
+        return measuredWidth > measuredHeight
     }
 
     fun setSelectedDays(days: List<WeekDay>) {

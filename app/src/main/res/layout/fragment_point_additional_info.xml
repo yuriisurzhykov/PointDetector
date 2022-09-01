@@ -6,69 +6,85 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_padding">
 
-    <TextView
-        android:id="@+id/place_address_hint"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/hint_place_address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/place_address"
-        style="@style/PointDetector.Title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/place_address_hint"
-        app:layout_constraintTop_toBottomOf="@id/place_address_hint"
-        tools:text="Location address" />
-
-    <TextView
-        android:id="@+id/place_name_hint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/hint_place_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/place_address" />
-
-    <EditText
-        android:id="@+id/place_name_input"
-        style="@style/PointDetector.InputField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_padding"
-        android:hint="@string/hint_input_place_name"
-        android:imeOptions="actionDone"
-        android:inputType="textCapWords"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/place_name_hint"
-        app:layout_constraintTop_toBottomOf="@id/place_name_hint" />
-
-    <TextView
-        android:id="@+id/place_working_hours_hint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/hint_place_working_hours"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/place_name_input" />
-
-    <com.yuriisurzhykov.pointsdetector.uicomponents.WorkingDaysSelector
-        android:id="@+id/work_days_selector"
-        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/small_padding"
-        android:layout_marginBottom="@dimen/default_padding"
         app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/place_working_hours_hint" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/place_address_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_place_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/place_address"
+                style="@style/PointDetector.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/place_address_hint"
+                app:layout_constraintTop_toBottomOf="@id/place_address_hint"
+                tools:text="Location address" />
+
+            <TextView
+                android:id="@+id/place_name_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/hint_place_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_address" />
+
+            <EditText
+                android:id="@+id/place_name_input"
+                style="@style/PointDetector.InputField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                android:hint="@string/hint_input_place_name"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/place_name_hint"
+                app:layout_constraintTop_toBottomOf="@id/place_name_hint" />
+
+            <TextView
+                android:id="@+id/place_working_hours_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/hint_place_working_hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_name_input" />
+
+            <com.yuriisurzhykov.pointsdetector.uicomponents.WorkingDaysSelector
+                android:id="@+id/work_days_selector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/default_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_working_hours_hint" />
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/button"

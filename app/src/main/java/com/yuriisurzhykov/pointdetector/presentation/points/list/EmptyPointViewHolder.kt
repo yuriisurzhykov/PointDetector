@@ -6,7 +6,7 @@ import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.*
 
 @ViewHolder(R.layout.list_item_empty_points_list)
-class EmptyPointViewHolder(view: View) : AbstractViewHolder<EmptyStateData>(view) {
+class EmptyPointViewHolder(view: View) : AbstractViewHolder<EmptyStateData>(view, false) {
 
     private val button by lazy(LazyThreadSafetyMode.NONE) {
         itemView.findViewById<TextView>(android.R.id.button1)

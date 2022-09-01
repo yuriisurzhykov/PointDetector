@@ -74,8 +74,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             viewModel.removeItem(point as Point)
         }
         viewModel.observePointsList(viewLifecycleOwner) {
-            listAdapter.submitList(it)
-            listAdapter.notifyDataSetChanged()
+            this@PointsListFragment.view?.post { listAdapter.submitList(it) }
         }
     }
 

@@ -36,14 +36,11 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
 
     fun setOnItemClickListener(listener: OnItemClickListener<T>) {
         onItemClickListener = listener
-        submitList(dataList)
     }
 
     fun removeItem(position: Int) {
         val itemToRemove = getItem(position)
-        dataList.remove(itemToRemove)
         onItemRemoved(position, itemToRemove)
-        submitList(dataList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
