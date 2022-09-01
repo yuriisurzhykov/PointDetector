@@ -41,12 +41,25 @@ jobs:
           STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      - name: Fetch action
+        id: pl
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: "app/build/outputs/release/apk/"
+          type: ".apk"
+
+      - name: Output results
+        run: |
+          echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.pl.outputs.paths }}; do
+          echo $i
+          done
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: /build/outputs/apk/release/app-release.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk
 
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
