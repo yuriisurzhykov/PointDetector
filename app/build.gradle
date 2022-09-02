@@ -107,9 +107,13 @@ dependencies {
 }
 
 def getDebugGoogleMapsApiKey() {
-    def configFile = new Properties()
-    file("keys.properties").withInputStream { configFile.load(it) }
-    return configFile.API_KEY ?: ""
+    try {
+        def configFile = new Properties()
+        file("keys.properties").withInputStream { configFile.load(it) }
+        return configFile.API_KEY ?: ""
+    } catch (ignored) {
+        return ""
+    }
 }
 
 static def getReleaseGoogleMapsApiKey() {
