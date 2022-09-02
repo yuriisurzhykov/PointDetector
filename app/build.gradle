@@ -110,12 +110,16 @@ def getDebugGoogleMapsApiKey() {
     try {
         def configFile = new Properties()
         file("keys.properties").withInputStream { configFile.load(it) }
-        return configFile.API_KEY ?: ""
+        return configFile.API_KEY ?: emptyString()
     } catch (ignored) {
-        return ""
+        return emptyString()
     }
 }
 
 static def getReleaseGoogleMapsApiKey() {
-    return System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
+    return System.getenv("GOOGLE_MAPS_API_KEY") ?: emptyString()
+}
+
+static def emptyString() {
+    return "\"\""
 }
