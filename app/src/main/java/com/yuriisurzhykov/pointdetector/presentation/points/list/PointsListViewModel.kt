@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.location.Location
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
@@ -30,15 +31,15 @@ class PointsListViewModel @Inject constructor(
     private val removePointUseCase: DeletePointUseCase
 ) : ViewModel() {
 
+    private val isRunningAvailable = ObservableBoolean(true)
     private var searchCondition: String = emptyString()
-
     private val pointsList = MutableLiveData<List<ViewHolderItem>>()
     private val emptyStateDate = EmptyStateData()
     private var timer: Timer? = null
 
     fun updateUserLocation(location: Location) {
         LocationManager.setLocation(location)
-        if (searchCondition.isEmpty()) {
+        if (searchCondition.isEmpty() && isRunningAvailable.get()) {
             startLoadPoints(searchCondition)
         }
     }
@@ -49,7 +50,7 @@ class PointsListViewModel @Inject constructor(
 
     fun startLoadPoints(condition: String = "") {
         searchCondition = condition
-        if (searchCondition.isNotEmpty()) {
+        if (searchCondition.isNotEmpty() && isRunningAvailable.get()) {
             postTimerTask(300) {
                 loadPlacesByCondition()
             }
@@ -98,5 +99,9 @@ class PointsListViewModel @Inject constructor(
         dispatchers.launchBackground(viewModelScope) {
             removePointUseCase.delete(item)
         }
+    }
+
+    fun setUpdatesAvailable(isUpdatesAvailable: Boolean) {
+        isRunningAvailable.set(isUpdatesAvailable)
     }
 }

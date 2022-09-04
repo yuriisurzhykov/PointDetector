@@ -39,4 +39,6 @@
     <string name="button_continue_anyway">Continue anyway</string>
     <string name="button_provide_location_permissions_never_ask">Open settings</string>
     <string name="snackbar_location_permissions_denied">To provide location permissions open settings and enable it there.</string>
+    <string name="label_point_deletec_action">Point was deleted. If it was wrong click on the button below</string>
+    <string name="button_undo">Undo</string>
 </resources>

@@ -16,6 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
@@ -24,6 +26,7 @@ import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragmen
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.PointSwipeDeleteCallback
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeRecyclerCallbacks
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.IllegalStateException
 
@@ -70,11 +73,41 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
                 openPointDetailsFragment(item)
             }
         }
-        listAdapter.setOnSwipeListener { point, _ ->
-            viewModel.removeItem(point as Point)
-        }
+        listAdapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
+            override fun onStartSwipe(viewHolder: RecyclerView.ViewHolder) {
+                viewModel.setUpdatesAvailable(false)
+            }
+
+            override fun onSwipeReleased(viewHolder: RecyclerView.ViewHolder) {
+                viewModel.setUpdatesAvailable(true)
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
+                showOnDeleteSnackbar(item, position)
+            }
+        })
         viewModel.observePointsList(viewLifecycleOwner) {
             this@PointsListFragment.view?.post { listAdapter.submitList(it) }
+        }
+    }
+
+    private fun showOnDeleteSnackbar(point: ViewHolderItem, position: Int) {
+        view?.let {
+            val snackbar = Snackbar
+                .make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
+                .setAction(R.string.button_undo) {
+                    listAdapter.insertItem(point, position)
+                }
+            snackbar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    if (point is Point && event != DISMISS_EVENT_ACTION) {
+                        viewModel.removeItem(point)
+                    }
+                    viewModel.setUpdatesAvailable(true)
+                    snackbar.removeCallback(this)
+                }
+            })
+            snackbar.show()
         }
     }
 

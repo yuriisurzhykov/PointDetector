@@ -99,7 +99,7 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
 
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     private fun sendLastLocation() {
-        locationService.lastLocation.addOnCompleteListener { onLocationReceived(it.result) }
+        locationService.lastLocation.addOnCompleteListener { if (it.result != null) onLocationReceived(it.result) }
     }
 
 }
