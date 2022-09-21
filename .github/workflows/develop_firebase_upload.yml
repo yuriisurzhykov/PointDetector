@@ -36,7 +36,7 @@ jobs:
 
       - name: Build & deploy Android release
         run: |
-          echo ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          echo "maps api key - ${{ secrets.GOOGLE_MAPS_API_KEY }}"
           ./gradlew assembleRelease
         env:
           KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
