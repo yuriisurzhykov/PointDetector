@@ -35,7 +35,9 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build & deploy Android release
-        run: ./gradlew assembleRelease
+        run: |
+          echo ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          ./gradlew assembleRelease
         env:
           KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
           STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
