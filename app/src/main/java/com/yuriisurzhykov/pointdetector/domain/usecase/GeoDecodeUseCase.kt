@@ -25,7 +25,7 @@ interface GeoDecodeUseCase {
         @Throws(Resources.NotFoundException::class)
         override suspend fun decodeToLocation(placeName: String): Address = withContext(Dispatchers.IO) {
             val decoded = geoDecoder.getFromLocationName(placeName, maxRelatedPlacesCount)
-            if (decoded.isNotEmpty()) {
+            if (!decoded.isNullOrEmpty()) {
                 return@withContext decoded.first()
             } else {
                 throw Resources.NotFoundException("Address with name $placeName not found!")
