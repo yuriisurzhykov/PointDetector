@@ -21,7 +21,9 @@ class MainViewModel @Inject constructor(
 
     init {
         dispatchers.launchBackground(viewModelScope) {
-            pointsListUseCase.fetchPoints().onEach { isImportOptionEnabled.postValue(it.isEmpty()) }.collect()
+            pointsListUseCase.fetchPoints().onEach {
+                isImportOptionEnabled.postValue(it.isEmpty())
+            }.collect()
         }
     }
 
@@ -34,4 +36,6 @@ class MainViewModel @Inject constructor(
             importDataUseCase.saveImports("sample1.json")
         }
     }
+
+    fun isImportEnabled() = isImportOptionEnabled.value ?: false
 }
