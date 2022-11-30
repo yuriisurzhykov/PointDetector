@@ -42,4 +42,8 @@
     <string name="snackbar_location_permissions_denied">Для того, чтобы предоставить разрешения, откройте настройки.</string>
     <string name="label_point_deletec_action">Point was deleted. If it was wrong click on the button below</string>
     <string name="button_undo">Undo</string>
+    <string name="title_point_details">Детали точки</string>
+    <string name="build_route">Build route</string>
+    <string name="share_address">Share address</string>
+    <string name="label_format_working_days">%s, %s - %s</string>
 </resources>

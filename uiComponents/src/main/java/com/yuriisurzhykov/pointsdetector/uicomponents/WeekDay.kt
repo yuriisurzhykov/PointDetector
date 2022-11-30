@@ -2,6 +2,7 @@ package com.yuriisurzhykov.pointsdetector.uicomponents
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import kotlinx.serialization.Serializable
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -13,7 +14,7 @@ data class WeekDay(
     val dayValue: Int,
     val hoursFrom: String,
     val hoursTo: String
-) : Parcelable {
+) : Parcelable, java.io.Serializable, ViewHolderItem {
 
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -31,6 +32,14 @@ data class WeekDay(
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun areContentsTheSame(other: Any): Boolean {
+        return other is WeekDay && other.dayName == dayName
+    }
+
+    override fun areItemsTheSame(other: Any): Boolean {
+        return other is WeekDay && other.dayName == dayName
     }
 
     fun isCorrect() = hoursFrom.isNotEmpty() && hoursTo.isNotEmpty() && hoursFrom.before(hoursTo)

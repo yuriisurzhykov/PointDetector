@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">PointDetector</string>
     <string name="hint_input_your_address">Input your address</string>
-    <string name="kilometers_format" translatable="false">%.3f km</string>
-    <string name="miles_format" translatable="false">%.2f mi</string>
+    <string name="kilometers_format">%.3f km</string>
+    <string name="miles_format">%.2f mi</string>
     <string name="action_text_search_filter">Sort by</string>
     <string name="title_points_list_screen">Places nearby</string>
     <string name="title_points_add_screen">Looking for place</string>
@@ -41,4 +41,8 @@
     <string name="snackbar_location_permissions_denied">To provide location permissions open settings and enable it there.</string>
     <string name="label_point_deletec_action">Point was deleted. If it was wrong click on the button below</string>
     <string name="button_undo">Undo</string>
+    <string name="title_point_details">Point details info</string>
+    <string name="build_route">Build route</string>
+    <string name="share_address">Share address</string>
+    <string name="label_format_working_days">%s, %s - %s</string>
 </resources>
