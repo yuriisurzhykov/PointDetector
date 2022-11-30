@@ -33,6 +33,9 @@ class PointDetailsFragment : AbstractLocationFragment(R.layout.fragment_point_de
         super.onViewCreated(view, savedInstanceState)
         pointName.text = pointInfo.placeName
         pointAddress.text = pointInfo.address
+        pointAddress.setOnClickListener(activity?.let { activity ->
+            BuildRouteClickListener(pointInfo, activity)
+        })
         buildRouteButton.setOnClickListener(activity?.let { activity ->
             BuildRouteClickListener(pointInfo, activity)
         })
