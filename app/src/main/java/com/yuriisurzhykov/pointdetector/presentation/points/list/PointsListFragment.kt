@@ -3,7 +3,6 @@ package com.yuriisurzhykov.pointdetector.presentation.points.list
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,14 +20,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
+import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.PointSwipeDeleteCallback
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeRecyclerCallbacks
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_list) {
@@ -59,7 +58,12 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         with(view.findViewById<RecyclerView>(R.id.recycler)) {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
-            ItemTouchHelper(PointSwipeDeleteCallback(listAdapter, view.context)).attachToRecyclerView(this)
+            ItemTouchHelper(
+                PointSwipeDeleteCallback(
+                    listAdapter,
+                    view.context
+                )
+            ).attachToRecyclerView(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
             setText(viewModel.getSearchCondition())
@@ -82,7 +86,11 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
                 viewModel.setUpdatesAvailable(true)
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                position: Int,
+                item: ViewHolderItem
+            ) {
                 showOnDeleteSnackbar(item, position)
             }
         })
@@ -126,10 +134,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     }
 
     private fun openPointDetailsFragment(item: Point) {
-        val gmmIntentUri = Uri.parse("geo:0,0?q=${item.address}")
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-        startActivity(mapIntent)
+        openFragment(PointDetailsFragment.newInstance(item), "point_details_stack_name")
     }
 
     private val fragmentMenuProvider = object : MenuProvider {
