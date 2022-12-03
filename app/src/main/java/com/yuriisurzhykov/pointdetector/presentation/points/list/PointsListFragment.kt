@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
@@ -36,9 +35,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
 
-    override fun getTitle(): CharSequence {
-        return resources.getString(R.string.title_points_list_screen)
-    }
+    override fun getTitle() = resources.getString(R.string.title_points_list_screen)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,10 +56,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(
-                PointSwipeDeleteCallback(
-                    listAdapter,
-                    view.context
-                )
+                PointSwipeDeleteCallback(listAdapter, view.context)
             ).attachToRecyclerView(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
@@ -78,20 +72,13 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             }
         }
         listAdapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
-            override fun onStartSwipe(viewHolder: RecyclerView.ViewHolder) {
-                viewModel.setUpdatesAvailable(false)
-            }
-
-            override fun onSwipeReleased(viewHolder: RecyclerView.ViewHolder) {
-                viewModel.setUpdatesAvailable(true)
-            }
-
             override fun onSwiped(
-                viewHolder: RecyclerView.ViewHolder,
-                position: Int,
-                item: ViewHolderItem
+                viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem
             ) {
-                showOnDeleteSnackbar(item, position)
+                if (item is Point) {
+                    viewModel.removeItem(item)
+                    showOnDeleteSnackbar(item, position)
+                }
             }
         })
         viewModel.observePointsList(viewLifecycleOwner) {
@@ -101,20 +88,14 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     private fun showOnDeleteSnackbar(point: ViewHolderItem, position: Int) {
         view?.let {
-            val snackbar = Snackbar
-                .make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
-                .setAction(R.string.button_undo) {
-                    listAdapter.insertItem(point, position)
-                }
-            snackbar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    if (point is Point && event != DISMISS_EVENT_ACTION) {
-                        viewModel.removeItem(point)
+            val snackbar =
+                Snackbar.make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.button_undo) {
+                        if (point is Point) {
+                            listAdapter.insertItem(point, position)
+                            viewModel.insertItem(point)
+                        }
                     }
-                    viewModel.setUpdatesAvailable(true)
-                    snackbar.removeCallback(this)
-                }
-            })
             snackbar.show()
         }
     }

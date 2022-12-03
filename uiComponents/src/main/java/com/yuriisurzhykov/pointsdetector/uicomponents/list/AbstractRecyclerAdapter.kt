@@ -63,13 +63,6 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
         dataList.addAll(list.orEmpty())
     }
 
-    override fun onStartSwipe(viewHolder: RecyclerView.ViewHolder) {
-    }
-
-    override fun onSwipeReleased(viewHolder: RecyclerView.ViewHolder) {
-
-    }
-
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {
         removeItem(item)
     }

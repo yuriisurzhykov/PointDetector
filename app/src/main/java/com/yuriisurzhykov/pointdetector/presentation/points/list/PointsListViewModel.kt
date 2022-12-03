@@ -9,6 +9,7 @@ import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
 import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
@@ -28,7 +29,8 @@ class PointsListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val pointsListUseCase: FetchAllPointsUseCase,
     private val searchPointUseCase: SearchPointUseCase,
-    private val removePointUseCase: DeletePointUseCase
+    private val removePointUseCase: DeletePointUseCase,
+    private val insertPointUserCase: SavePointUseCase
 ) : ViewModel() {
 
     private val isRunningAvailable = ObservableBoolean(true)
@@ -101,7 +103,9 @@ class PointsListViewModel @Inject constructor(
         }
     }
 
-    fun setUpdatesAvailable(isUpdatesAvailable: Boolean) {
-        isRunningAvailable.set(isUpdatesAvailable)
+    fun insertItem(point: Point) {
+        dispatchers.launchBackground(viewModelScope) {
+            insertPointUserCase.save(point)
+        }
     }
 }
