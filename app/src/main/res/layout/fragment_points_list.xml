@@ -27,6 +27,7 @@
         android:layout_marginStart="@dimen/default_padding"
         android:layout_marginEnd="@dimen/default_padding"
         android:text="@string/action_text_search_filter"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/search_text_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
