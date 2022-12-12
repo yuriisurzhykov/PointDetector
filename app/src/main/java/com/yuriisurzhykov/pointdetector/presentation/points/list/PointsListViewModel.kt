@@ -33,7 +33,6 @@ class PointsListViewModel @Inject constructor(
     private val insertPointUserCase: SavePointUseCase
 ) : ViewModel() {
 
-    private val isRunningAvailable = ObservableBoolean(true)
     private var searchCondition: String = emptyString()
     private val pointsList = MutableLiveData<List<ViewHolderItem>>()
     private val emptyStateDate = EmptyStateData()
@@ -41,7 +40,7 @@ class PointsListViewModel @Inject constructor(
 
     fun updateUserLocation(location: Location) {
         LocationManager.setLocation(location)
-        if (searchCondition.isEmpty() && isRunningAvailable.get()) {
+        if (searchCondition.isEmpty()) {
             startLoadPoints(searchCondition)
         }
     }
@@ -52,7 +51,7 @@ class PointsListViewModel @Inject constructor(
 
     fun startLoadPoints(condition: String = "") {
         searchCondition = condition
-        if (searchCondition.isNotEmpty() && isRunningAvailable.get()) {
+        if (searchCondition.isNotEmpty()) {
             postTimerTask(300) {
                 loadPlacesByCondition()
             }
