@@ -32,14 +32,14 @@ android {
         abortOnError false
     }
     signingConfigs {
-        release {
+        /*release {
             storeFile = file("${System.getenv("KEYSTORE_FILE")}")
             storePassword System.getenv("STORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")
-        }
+        }*/
 
-        localRelease {
+        release {
             def propertiesFile = new Properties()
             try {
                 file("signing.properties").withInputStream { stream ->
@@ -80,7 +80,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             buildConfigField "String", "GOOGLE_MAPS_API_KEY", getReleaseGoogleMapsApiKey()
-            signingConfig signingConfigs.localRelease
+            signingConfig signingConfigs.release
             matchingFallbacks = ["release"]
         }
     }
