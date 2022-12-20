@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="night_background">#14212D</color>
     <color name="color_input_default">#1C334A</color>
     <color name="color_input_disabled">#182E44</color>
     <color name="color_input_stroke_focused">#271D56</color>
