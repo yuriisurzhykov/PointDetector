@@ -2,7 +2,7 @@ name: Android Build & Deploy
 
 on:
   push:
-    branches: [ develop, firebase_publish ]
+    branches: [ all ]
 
 jobs:
   deploy:
@@ -15,21 +15,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Build & deploy Android release
-        run: ./gradlew assembleDebug
-      - name: Fetch action
-        id: pl
-        uses: Rishabh510/Path-lister-action@master
-        with:
-          path: /github/workspace/app/build/outputs
-
-      - name: Output results
         run: |
-          echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
-          for i in ${{ steps.pl.outputs.paths }}; do
-          echo $i
-          done
+          tree ${{HOME}}
+          tree ${{WORKSPACE}}
