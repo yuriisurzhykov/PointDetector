@@ -20,8 +20,8 @@ jobs:
           JKS_BASE64: ${{ secrets.KEYSTORE_FILE }}
           PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
         run: |
-          echo $JKS_BASE64 | base64 --decode >> ${WORKSPACE}/app/point_detector.jks
-          echo $PROPERTIES >> ${WORKSPACE}/app/signing.properties
+          echo $JKS_BASE64 | base64 --decode >> ${HOME}/app/point_detector.jks
+          echo $PROPERTIES >> ${HOME}/app/signing.properties
 
       - name: Build APK
         id: build
