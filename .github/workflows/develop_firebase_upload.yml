@@ -32,6 +32,9 @@ jobs:
       - name: Build APK
         id: build
         run: bash ./gradlew assembleRelease
+        env:
+            VERSION_CODE: ${{ GITHUB_RUN_NUMBER }}
+            VERSION_NAME: ${{ github.event.inputs.versionName }}
 
       - name: Sign APK
         id: sign_apk

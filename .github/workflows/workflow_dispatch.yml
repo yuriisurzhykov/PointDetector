@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        descripion: Log level
+        required: true
+        default: warning
+      tags:
+        description: Testing scenario tags
+      versionName:
+        description: Version name
+        required: true
+        default: 1.0

@@ -15,8 +15,8 @@ android {
         applicationId "com.yuriisurzhykov.pointdetector"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
 
         buildConfigField "String", "GOOGLE_MAPS_API_KEY", ""
 
@@ -32,13 +32,6 @@ android {
         abortOnError false
     }
     signingConfigs {
-        /*release {
-            storeFile = file("${System.getenv("KEYSTORE_FILE")}")
-            storePassword System.getenv("STORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
-        }*/
-
         release {
             def propertiesFile = new Properties()
             try {
@@ -49,7 +42,7 @@ android {
                 storePassword = propertiesFile.getProperty("storePassword").toString()
                 keyAlias = propertiesFile.getProperty("keyAlias").toString()
                 keyPassword = propertiesFile.getProperty("keyPassword").toString()
-            } catch(Exception e) {
+            } catch (Exception e) {
                 println("Exception: ${e}")
             }
         }
@@ -155,4 +148,24 @@ static def getReleaseGoogleMapsApiKey() {
 
 static def emptyString() {
     return "\"\""
+}
+
+static def getVersionCode() {
+    def versionCode = System.getenv("VERSION_CODE")
+    try {
+        return versionCode.toString().toInteger()
+    } catch (Exception e) {
+        println("Exception: ${e}")
+        return 1
+    }
+}
+
+static def getVersionName() {
+    def versionCode = System.getenv("VERSION_NAME")
+    try {
+        return versionCode.toString()
+    } catch (Exception e) {
+        println("Exception: ${e}")
+        return "1.0"
+    }
 }
