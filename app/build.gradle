@@ -41,13 +41,17 @@ android {
 
         localRelease {
             def propertiesFile = new Properties()
-            file("signing.properties").withInputStream { stream ->
-                propertiesFile.load(stream)
+            try {
+                file("signing.properties").withInputStream { stream ->
+                    propertiesFile.load(stream)
+                }
+                storeFile = file(propertiesFile.getProperty("KEYSTORE_FILE"))
+                storePassword = propertiesFile.getProperty("STORE_PASSWORD").toString()
+                keyAlias = propertiesFile.getProperty("KEY_ALIAS").toString()
+                keyPassword = propertiesFile.getProperty("KEY_PASSWORD").toString()
+            } catch(Exception e) {
+                println("Exception: ${e}")
             }
-            storeFile = file(propertiesFile.getProperty("KEYSTORE_FILE"))
-            storePassword = propertiesFile.getProperty("STORE_PASSWORD").toString()
-            keyAlias = propertiesFile.getProperty("KEY_ALIAS").toString()
-            keyPassword = propertiesFile.getProperty("KEY_PASSWORD").toString()
         }
     }
 
