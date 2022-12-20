@@ -20,7 +20,8 @@ jobs:
             base64 -d -i keystore.jks.b64 > app/keystore.jks
             echo "storeFile=keystore.jks" >> app/signing.properties
             echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> app/signing.properties
-            echo "storePassword=$KEYSTORE_PASSWORD" >> app/signing.properties
+            echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> app/signing.properties
+            echo "::debug::storePassword=$KEYSTORE_STORE_PASSWORD"
             echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> app/signing.properties
         env:
             ANDROID_KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
