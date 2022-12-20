@@ -1,7 +1,7 @@
 name: Release Build
 on:
   push:
-#    branches: [develop, release_1_0]
+    branches: [develop, release_1_0]
     tags:
       - 'v*'
 jobs:
@@ -14,18 +14,23 @@ jobs:
         id: var
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
-      - name: Prepare jks file
-        id: jks_prepare
-        env:
-          JKS_BASE64: ${{ secrets.KEYSTORE_FILE }}
-          PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
-        run: |
-          echo $JKS_BASE64 | base64 --decode >> ${HOME}/app/point_detector.jks
-          echo $PROPERTIES >> ${HOME}/app/signing.properties
+      - name: Configure Keystore
+          run: |
+            echo "$ANDROID_KEYSTORE_FILE" > keystore.jks.b64
+            base64 -d -i keystore.jks.b64 > app/keystore.jks
+            echo "storeFile=keystore.jks" >> app/signing.properties
+            echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> app/signing.properties
+            echo "storePassword=$KEYSTORE_PASSWORD" >> app/signing.properties
+            echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> app/signing.properties
+          env:
+            ANDROID_KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+            KEYSTORE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+            KEYSTORE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+            KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Build APK
-        id: build
-        run: bash ./gradlew assembleLocalRelease
+          id: build
+          run: bash ./gradlew assembleRelease
 
       - name: Sign APK
         id: sign_apk

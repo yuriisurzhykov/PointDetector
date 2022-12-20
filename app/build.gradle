@@ -45,10 +45,10 @@ android {
                 file("signing.properties").withInputStream { stream ->
                     propertiesFile.load(stream)
                 }
-                storeFile = file(propertiesFile.getProperty("KEYSTORE_FILE"))
-                storePassword = propertiesFile.getProperty("STORE_PASSWORD").toString()
-                keyAlias = propertiesFile.getProperty("KEY_ALIAS").toString()
-                keyPassword = propertiesFile.getProperty("KEY_PASSWORD").toString()
+                storeFile = file(propertiesFile.getProperty("storeFile"))
+                storePassword = propertiesFile.getProperty("storePassword").toString()
+                keyAlias = propertiesFile.getProperty("keyAlias").toString()
+                keyPassword = propertiesFile.getProperty("keyPassword").toString()
             } catch(Exception e) {
                 println("Exception: ${e}")
             }
