@@ -110,7 +110,7 @@ jobs:
         with:
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           appId: ${{ secrets.FIREBASE_APP_ID }}
-          groups: testers
+          groups: android-testers
           file: ${{steps.sign_apk.outputs.signedReleaseFile}}
 
 #      - name: Upload aab to play market
