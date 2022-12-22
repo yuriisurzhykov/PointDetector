@@ -106,3 +106,13 @@ jobs:
           asset_path: ${{steps.sign_aab.outputs.signedReleaseFile}}
           asset_name: app-release-signed-${{ steps.var.outputs.tag }}.aab
           asset_content_type: application/zip
+      - name: Upload apk to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          groups: testers
+          file: ${{steps.sign_apk.outputs.signedReleaseFile}}
+
+#      - name: Upload aab to play market
+#        uses:
