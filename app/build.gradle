@@ -15,8 +15,8 @@ android {
         applicationId "com.yuriisurzhykov.pointdetector"
         minSdk 26
         targetSdk 33
-        versionCode getVersionCode()
-        versionName getVersionName()
+        versionCode getReleaseVersionCode()
+        versionName getReleaseVersionName()
 
         buildConfigField "String", "GOOGLE_MAPS_API_KEY", ""
 
@@ -65,16 +65,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             buildConfigField "String", "GOOGLE_MAPS_API_KEY", getReleaseGoogleMapsApiKey()
             signingConfig signingConfigs.release
-        }
-
-        localRelease {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            buildConfigField "String", "GOOGLE_MAPS_API_KEY", getReleaseGoogleMapsApiKey()
-            signingConfig signingConfigs.release
-            matchingFallbacks = ["release"]
         }
     }
     compileOptions {
@@ -150,7 +140,7 @@ static def emptyString() {
     return "\"\""
 }
 
-static def getVersionCode() {
+static def getReleaseVersionCode() {
     def versionCode = System.getenv("VERSION_CODE")
     try {
         return versionCode.toString().toInteger()
@@ -160,7 +150,7 @@ static def getVersionCode() {
     }
 }
 
-static def getVersionName() {
+static def getReleaseVersionName() {
     def versionCode = System.getenv("VERSION_NAME")
     try {
         return versionCode.toString()
