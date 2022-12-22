@@ -6,6 +6,7 @@ plugins {
     id "kotlinx-serialization"
     id "com.google.gms.google-services"
     id 'com.google.firebase.appdistribution'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -59,7 +60,7 @@ android {
             buildConfigField "String", "GOOGLE_MAPS_API_KEY", getDebugGoogleMapsApiKey()
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
@@ -115,8 +116,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
 
-    implementation platform('com.google.firebase:firebase-bom:30.3.2')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     // reflection-free flavor
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6'
