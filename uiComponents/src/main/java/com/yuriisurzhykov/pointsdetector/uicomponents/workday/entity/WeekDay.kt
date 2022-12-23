@@ -1,4 +1,4 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity
 
 import android.os.Parcel
 import android.os.Parcelable

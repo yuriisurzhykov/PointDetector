@@ -1,14 +1,14 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.content.Context
 import android.graphics.*
 import android.os.Build
 import android.text.format.DateFormat.is24HourFormat
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 
 class WorkDayView : androidx.appcompat.widget.AppCompatTextView {
 

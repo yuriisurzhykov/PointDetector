@@ -8,10 +8,10 @@ import com.yuriisurzhykov.pointdetector.presentation.points.details.WorkingHours
 import com.yuriisurzhykov.pointdetector.presentation.points.list.EmptyPointViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderTypeManager
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 
 open class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolderItem>() {
 

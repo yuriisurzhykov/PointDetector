@@ -1,16 +1,15 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Bundle
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.*
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class WorkingDaysSelector : LinearLayout {
 
