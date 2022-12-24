@@ -1,13 +1,13 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 
 class WorkDayHoursSelector : ConstraintLayout {
 

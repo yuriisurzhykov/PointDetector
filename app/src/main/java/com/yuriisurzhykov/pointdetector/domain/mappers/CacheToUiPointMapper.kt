@@ -7,7 +7,7 @@ import com.yuriisurzhykov.pointdetector.data.remote.DistanceCalculateService
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import javax.inject.Inject
 
 class CacheToUiPointMapper @Inject constructor(

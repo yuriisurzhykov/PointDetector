@@ -1,16 +1,15 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Bundle
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.*
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class WorkingDaysSelector : LinearLayout {
 
@@ -56,11 +55,19 @@ class WorkingDaysSelector : LinearLayout {
         super.onLayout(changed, l, t, r, b)
         for (i in 0 until childCount) {
             val child = getChildAt(i)
+            val newMeasuredHeight = measuredHeight / 7 - child.marginTop - child.marginBottom
+            val heightParam =
+                if (isHorizontalOrientation()) ViewGroup.LayoutParams.WRAP_CONTENT else newMeasuredHeight
             child.updateLayoutParams {
-                height = measuredHeight / 7 - child.marginTop - child.marginBottom
+                height = heightParam
                 width = ViewGroup.LayoutParams.MATCH_PARENT
             }
+            child.minimumHeight = newMeasuredHeight
         }
+    }
+
+    private fun isHorizontalOrientation(): Boolean {
+        return measuredWidth > measuredHeight
     }
 
     fun setSelectedDays(days: List<WeekDay>) {

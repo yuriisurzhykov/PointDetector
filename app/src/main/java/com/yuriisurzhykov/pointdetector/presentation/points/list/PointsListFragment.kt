@@ -3,7 +3,6 @@ package com.yuriisurzhykov.pointdetector.presentation.points.list
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,16 +15,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
+import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.PointSwipeDeleteCallback
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeRecyclerCallbacks
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_list) {
@@ -34,9 +35,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
 
-    override fun getTitle(): CharSequence {
-        return resources.getString(R.string.title_points_list_screen)
-    }
+    override fun getTitle() = resources.getString(R.string.title_points_list_screen)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,7 +55,9 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         with(view.findViewById<RecyclerView>(R.id.recycler)) {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
-            ItemTouchHelper(PointSwipeDeleteCallback(listAdapter, view.context)).attachToRecyclerView(this)
+            ItemTouchHelper(
+                PointSwipeDeleteCallback(listAdapter, view.context)
+            ).attachToRecyclerView(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
             setText(viewModel.getSearchCondition())
@@ -70,12 +71,32 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
                 openPointDetailsFragment(item)
             }
         }
-        listAdapter.setOnSwipeListener { point, _ ->
-            viewModel.removeItem(point as Point)
-        }
+        listAdapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem
+            ) {
+                if (item is Point) {
+                    viewModel.removeItem(item)
+                    showOnDeleteSnackbar(item, position)
+                }
+            }
+        })
         viewModel.observePointsList(viewLifecycleOwner) {
-            listAdapter.submitList(it)
-            listAdapter.notifyDataSetChanged()
+            this@PointsListFragment.view?.post { listAdapter.submitList(it) }
+        }
+    }
+
+    private fun showOnDeleteSnackbar(point: ViewHolderItem, position: Int) {
+        view?.let {
+            val snackbar =
+                Snackbar.make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.button_undo) {
+                        if (point is Point) {
+                            listAdapter.insertItem(point, position)
+                            viewModel.insertItem(point)
+                        }
+                    }
+            snackbar.show()
         }
     }
 
@@ -94,15 +115,11 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     }
 
     private fun openPointDetailsFragment(item: Point) {
-        val gmmIntentUri = Uri.parse("geo:0,0?q=${item.address}")
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-        startActivity(mapIntent)
+        openFragment(PointDetailsFragment.newInstance(item), "point_details_stack_name")
     }
 
     private val fragmentMenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menu.clear()
             menuInflater.inflate(R.menu.points_list_menu, menu)
         }
 

@@ -2,7 +2,7 @@ package com.yuriisurzhykov.pointdetector.domain.mappers
 
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.WorkingHoursCache
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import javax.inject.Inject
 
 class WeekDayToWorkingHoursListMapper @Inject constructor() : Mapper<List<WeekDay>, List<WorkingHoursCache>> {

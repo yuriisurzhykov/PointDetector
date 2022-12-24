@@ -45,6 +45,7 @@ abstract class AbstractToolbarActivity : AbstractNavigationActivity() {
         supportFragmentManager.addOnBackStackChangedListener {
             manageToolbarTitle()
             manageToolbarIcon()
+            invalidateOptionsMenu()
         }
     }
 

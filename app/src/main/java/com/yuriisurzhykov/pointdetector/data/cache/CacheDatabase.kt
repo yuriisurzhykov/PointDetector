@@ -10,10 +10,10 @@ import com.yuriisurzhykov.pointdetector.data.cache.entities.ConfigEntity
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 
 @Database(
-    version = 6,
+    version = 1,
     entities = [PointCache::class, ConfigEntity::class],
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 5, to = 6)]
+    autoMigrations = []
 )
 @TypeConverters(WorkingHoursListConverter::class)
 abstract class CacheDatabase : RoomDatabase() {

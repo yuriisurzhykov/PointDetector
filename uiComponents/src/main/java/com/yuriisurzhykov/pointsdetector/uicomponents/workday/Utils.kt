@@ -1,4 +1,4 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.view.View
 

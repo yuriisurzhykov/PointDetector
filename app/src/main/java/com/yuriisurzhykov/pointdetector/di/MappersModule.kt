@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.pointdetector.di
 
 import android.location.Address
+import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
@@ -11,7 +12,7 @@ import com.yuriisurzhykov.pointdetector.domain.mappers.*
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
 import com.yuriisurzhykov.pointdetector.domain.services.WeekDaysListResource
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -77,4 +78,8 @@ object MappersModule {
         return WorkingHourToWeekDayListMapper(resource)
     }
 
+    @Provides
+    @Singleton
+    fun provideSnapshotToPointListMapper(): Mapper<DataSnapshot, List<Point>> =
+        DataSnapshotToPointsListMapper()
 }

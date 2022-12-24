@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.location.Location
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
@@ -8,6 +9,7 @@ import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
 import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
@@ -27,12 +29,13 @@ class PointsListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val pointsListUseCase: FetchAllPointsUseCase,
     private val searchPointUseCase: SearchPointUseCase,
-    private val removePointUseCase: DeletePointUseCase
+    private val removePointUseCase: DeletePointUseCase,
+    private val insertPointUserCase: SavePointUseCase
 ) : ViewModel() {
 
     private var searchCondition: String = emptyString()
-
     private val pointsList = MutableLiveData<List<ViewHolderItem>>()
+    private val emptyStateDate = EmptyStateData()
     private var timer: Timer? = null
 
     fun updateUserLocation(location: Location) {
@@ -72,7 +75,7 @@ class PointsListViewModel @Inject constructor(
     }
 
     private fun postPointsList(list: List<Point>) {
-        val points = sortPointsList(list).ifEmpty { listOf(EmptyStateData()) }
+        val points = sortPointsList(list).ifEmpty { listOf(emptyStateDate) }
         pointsList.postValue(points)
     }
 
@@ -96,7 +99,12 @@ class PointsListViewModel @Inject constructor(
     fun removeItem(item: Point) {
         dispatchers.launchBackground(viewModelScope) {
             removePointUseCase.delete(item)
-            startLoadPoints(searchCondition)
+        }
+    }
+
+    fun insertItem(point: Point) {
+        dispatchers.launchBackground(viewModelScope) {
+            insertPointUserCase.save(point)
         }
     }
 }

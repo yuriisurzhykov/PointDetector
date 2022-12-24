@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/ic_empty_state" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/PointDetector.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/rationale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Something wrong" />
+
+    <TextView
+        android:id="@+id/rationale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Something went wrong because of..." />
+
+    <Button
+        android:id="@+id/retry"
+        style="@style/PointDetector.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding"
+        app:layout_constraintBottom_toTopOf="@id/continue_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7"
+        tools:text="Provide permissions" />
+
+    <Button
+        android:id="@+id/continue_button"
+        style="@style/PointDetector.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Continue anyway"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

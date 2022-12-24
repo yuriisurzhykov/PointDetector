@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 interface SuggestedPlacesUseCase {
 
-    suspend fun getSuggestedPlaces(planeName: String): List<Point>
+    suspend fun getSuggestedPlaces(placeName: String): List<Point>
 
     open class Base @Inject constructor(
         @ApplicationContext context: Context,
@@ -26,7 +26,7 @@ interface SuggestedPlacesUseCase {
         @Suppress("BlockingMethodInNonBlockingContext")
         override suspend fun getSuggestedPlaces(placeName: String): List<Point> {
             return try {
-                geocoder.getFromLocationName(placeName, maxRelatedPlaceCount).map { mapper.map(it) }
+                geocoder.getFromLocationName(placeName, maxRelatedPlaceCount).orEmpty().map { mapper.map(it) }
             } catch (e: Exception) {
                 Log.e(TAG, "getSuggestedPlaces: error while decoding places", e)
                 emptyList()

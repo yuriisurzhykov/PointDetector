@@ -17,9 +17,16 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment, PermissionsRe
             onRequestPermissionsResult(it)
         }
 
+    private val settingsLauncher =
+        registerForActivityResult(PermissionsCheckActivity.SettingsActivityContract { requireContext() }) {
+            if (it) {
+                onPermissionsGranted()
+            }
+        }
+
     override fun onPermissionsGranted() {}
 
-    open fun onPermissionsDenied() {}
+    open fun onPermissionsDenied(shouldShowRationale: Boolean) {}
 
     open fun onShowPermissionsRationale() {}
 
@@ -40,17 +47,17 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment, PermissionsRe
         permissionsLauncher.launch(getPermissionsArray())
     }
 
+    protected fun openSettingsScreen() {
+        settingsLauncher.launch(getPermissionsArray())
+    }
+
     private fun onRequestPermissionsResult(
         grantResults: Map<String, Boolean>
     ) {
         if (grantResults.isNotEmpty() && grantResults.all { it.value }) {
             onPermissionsGranted()
         } else {
-            if (checkShowRationale()) {
-                onShowPermissionsRationale()
-            } else {
-                onPermissionsDenied()
-            }
+            onPermissionsDenied(checkShowRationale())
         }
     }
 

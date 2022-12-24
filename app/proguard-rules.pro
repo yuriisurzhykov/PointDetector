@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepclassmembers class * extends com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder {
+    public <init>();
+    public<init>(android.view.View);
+}
+
+-keepattributes Signature
+
+-keepclasseswithmembers class com.yuriisurzhykov.pointdetector.data.cache.entities.** {
+    public ** component1();
+    <fields>;
+}
+-keepclassmembers class com.google.firebase.database.GenericTypeIndicator { *; }
+-keep class * extends com.google.firebase.database.GenericTypeIndicator { *; }

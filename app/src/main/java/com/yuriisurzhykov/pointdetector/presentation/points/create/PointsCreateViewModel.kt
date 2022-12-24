@@ -10,8 +10,8 @@ import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
 import com.yuriisurzhykov.pointdetector.presentation.list.StartSearchData
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
@@ -64,7 +64,7 @@ class PointsCreateViewModel @Inject constructor(
                 if (days.all { it.isCorrect() }) {
                     selectedWorkingDays.postValue(days)
                     saveSelectedPlace(enteredPointName.get().orEmpty(), days)
-                    creationState.postValue(PointCreateState.SavedPointState())
+                    creationState.postValue(PointCreateState.SavedPointState)
                 } else {
                     postError(R.string.error_incorrect_selected_days)
                 }

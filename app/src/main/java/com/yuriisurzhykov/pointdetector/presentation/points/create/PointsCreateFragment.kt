@@ -14,7 +14,6 @@ import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class PointsCreateFragment : AbstractStyleFragment(R.layout.fragment_points_create) {

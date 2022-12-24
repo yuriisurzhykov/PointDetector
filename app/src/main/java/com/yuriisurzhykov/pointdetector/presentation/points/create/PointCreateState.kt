@@ -1,10 +1,9 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.create
 
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointsdetector.uicomponents.WeekDay
 
 sealed class PointCreateState {
-    class SearchState(val suggestedList: List<Point>) : PointCreateState()
+    object SearchState : PointCreateState()
     class PointSelectedState(val point: Point) : PointCreateState()
-    class SavedPointState : PointCreateState()
+    object SavedPointState : PointCreateState()
 }

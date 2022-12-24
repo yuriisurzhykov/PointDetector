@@ -1,9 +1,12 @@
-package com.yuriisurzhykov.pointsdetector.uicomponents
+package com.yuriisurzhykov.pointsdetector.uicomponents.workday
 
 import android.content.Context
 import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
+import com.yuriisurzhykov.pointsdetector.uicomponents.HoursInputFilter
+import com.yuriisurzhykov.pointsdetector.uicomponents.MinutesInputFilter
+import com.yuriisurzhykov.pointsdetector.uicomponents.R
 
 class HourMinuteEditText : androidx.appcompat.widget.AppCompatEditText {
 

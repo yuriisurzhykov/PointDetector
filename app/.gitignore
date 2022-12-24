@@ -1,3 +1,4 @@
 /build
-point_detector.jks
+keystore.jks
 signing.properties
+keys.properties

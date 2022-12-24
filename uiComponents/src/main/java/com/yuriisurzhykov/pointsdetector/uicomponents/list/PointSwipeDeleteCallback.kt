@@ -39,7 +39,18 @@ class PointSwipeDeleteCallback(private val adapter: BaseRecyclerViewAdapter, con
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val adapterPosition = viewHolder.absoluteAdapterPosition
-        adapter.removeItem(adapterPosition)
+        adapter.removeItem(viewHolder, adapterPosition)
+    }
+
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        super.onSelectedChanged(viewHolder, actionState)
+        if (viewHolder is SwipableViewHolder && viewHolder.canSwipe()) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                adapter.onStartSwipe(viewHolder)
+            } else if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+                adapter.onSwipeReleased(viewHolder)
+            }
+        }
     }
 
     override fun onChildDraw(

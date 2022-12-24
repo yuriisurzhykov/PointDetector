@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">PointDetector</string>
     <string name="hint_input_your_address">Input your address</string>
-    <string name="kilometers_format" translatable="false">%.3f km</string>
-    <string name="miles_format" translatable="false">%.2f mi</string>
+    <string name="kilometers_format">%.3f km</string>
+    <string name="miles_format">%.2f mi</string>
     <string name="action_text_search_filter">Sort by</string>
     <string name="title_points_list_screen">Places nearby</string>
     <string name="title_points_add_screen">Looking for place</string>
     <string name="title_points_add_info_screen">Saving new place</string>
     <string name="button_add_point">Add new point</string>
+    <string name="menu_button_import_data">Import points</string>
     <string name="hint_place_name">Place name</string>
     <string name="hint_place_address">Place address</string>
     <string name="hint_place_working_hours">Working hours</string>
@@ -16,7 +17,8 @@
 
     <!--Location permission-->
     <string name="title_location_permission_denied">Failed to get location permission</string>
-    <string name="rationale_location_permission_text">Location permissions are needed in order the application works properly. &lt;br /&gt;Without permissions it will not be possible to calculate correct distance.</string>
+    <string name="rationale_location_permission_text">Location permissions are needed in order the application works properly.
+        Without permissions it will not be possible to calculate correct distance.</string>
     <string name="button_location_permissions_retry">Provide permissions</string>
 
     <string name="hint_input_place_name">Type place name</string>
@@ -33,4 +35,14 @@
     <string name="description_empty_points_list">No records found in local data base. To see any items try to add record by click the button below.</string>
     <string name="label_description_search_address">Try to start type location address into field upper and suggested places will be shown in the list</string>
     <string name="label_empty_search_data">Not found any data</string>
+    <string name="title_location_permission_request">Location permissions not granted</string>
+    <string name="button_continue_anyway">Continue anyway</string>
+    <string name="button_provide_location_permissions_never_ask">Open settings</string>
+    <string name="snackbar_location_permissions_denied">To provide location permissions open settings and enable it there.</string>
+    <string name="label_point_deletec_action">Point was deleted. If it was wrong click on the button below</string>
+    <string name="button_undo">Undo</string>
+    <string name="title_point_details">Point details info</string>
+    <string name="build_route">Build route</string>
+    <string name="share_address">Share address</string>
+    <string name="label_format_working_days">%s, %s - %s</string>
 </resources>

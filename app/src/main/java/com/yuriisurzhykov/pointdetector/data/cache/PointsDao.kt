@@ -1,5 +1,6 @@
 package com.yuriisurzhykov.pointdetector.data.cache
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 
@@ -16,7 +17,7 @@ interface PointsDao {
     suspend fun clearAll()
 
     @Query("SELECT * FROM pointcache")
-    suspend fun fetchAll(): List<PointCache>
+    fun fetchAll(): LiveData<List<PointCache>>
 
     @Query("SELECT * FROM PointCache WHERE address LIKE '%' || :value || '%' OR placeName LIKE '%' || :value || '%'")
     suspend fun fetchByPlaceContains(value: String): List<PointCache>

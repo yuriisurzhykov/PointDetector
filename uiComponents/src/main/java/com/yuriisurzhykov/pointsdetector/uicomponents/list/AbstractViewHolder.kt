@@ -4,15 +4,17 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbstractViewHolder<out T>(view: View) : RecyclerView.ViewHolder(view) {
+abstract class AbstractViewHolder<out T>(view: View, shouldSetClickListener: Boolean = true) : RecyclerView.ViewHolder(view) {
 
     private var item: T? = null
     private var onItemClickListener: OnItemClickListener<T>? = null
     private var adapter: RecyclerView.Adapter<*>? = null
 
     init {
-        itemView.setOnClickListener {
-            item?.let { item -> onItemClickListener?.onItemClick(item) }
+        if (shouldSetClickListener) {
+            itemView.setOnClickListener {
+                item?.let { item -> onItemClickListener?.onItemClick(item) }
+            }
         }
     }
 
