@@ -1,5 +1,6 @@
 package com.yuriisurzhykov.pointdetector.domain.entities
 
+import com.google.firebase.database.PropertyName
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
@@ -7,12 +8,12 @@ import java.io.Serializable
 
 @kotlinx.serialization.Serializable
 data class Point(
-    val address: String,
-    val coordinates: LatLng,
-    val distance: Double,
-    val placeName: String,
-    val workingHours: List<WeekDay>,
-    val isPointAvailable: Boolean
+    @PropertyName("address") var address: String = "",
+    @PropertyName("coordinates") var coordinates: LatLng = LatLng(0.0, 0.0),
+    @PropertyName("distance") var distance: Double = 0.0,
+    @PropertyName("placeName") var placeName: String = "",
+    @PropertyName("workingHours") var workingHours: List<WeekDay> = emptyList(),
+    @PropertyName("isPointAvailable") var isPointAvailable: Boolean = false
 ) : Serializable, ViewHolderItem {
 
     override fun areItemsTheSame(other: Any): Boolean {

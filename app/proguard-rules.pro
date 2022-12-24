@@ -23,3 +23,12 @@
     public <init>();
     public<init>(android.view.View);
 }
+
+-keepattributes Signature
+
+-keepclasseswithmembers class com.yuriisurzhykov.pointdetector.data.cache.entities.** {
+    public ** component1();
+    <fields>;
+}
+-keepclassmembers class com.google.firebase.database.GenericTypeIndicator { *; }
+-keep class * extends com.google.firebase.database.GenericTypeIndicator { *; }

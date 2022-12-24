@@ -2,6 +2,8 @@ package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
 import android.location.Address
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
@@ -99,13 +101,21 @@ object UseCaseModule {
         return ImportAssetsPointsUseCase.Base(jsonAssetListFileReader)
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     fun provideSaveImportsUseCase(
         importAssetsPointsUseCase: ImportAssetsPointsUseCase,
         savePointUseCase: SavePointUseCase
     ): SaveImportsUseCase<List<Point>> {
         return SaveImportsUseCase.SavePoints(importAssetsPointsUseCase, savePointUseCase)
+    }*/
+
+    @Provides
+    @Singleton
+    fun provideSaveImportsUseCase(
+        fetchListener: PointsFetchValueListener
+    ): SaveImportsUseCase<List<Point>> {
+        return SaveImportsUseCase.FirebaseImportPoints(Firebase.database, fetchListener)
     }
 
 }

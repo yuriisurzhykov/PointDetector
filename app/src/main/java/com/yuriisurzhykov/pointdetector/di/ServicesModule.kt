@@ -1,21 +1,23 @@
 package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
+import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.core.Mapper
-import com.yuriisurzhykov.pointdetector.data.cache.configs.SortingTypeConfig
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.data.remote.DistanceCalculateService
 import com.yuriisurzhykov.pointdetector.data.remote.LocalDistanceCalculateService
+import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
-import com.yuriisurzhykov.pointdetector.domain.services.PointsSortingTypeService
 import com.yuriisurzhykov.pointdetector.domain.services.UserLocationService
+import com.yuriisurzhykov.pointdetector.domain.usecase.PointsFetchValueListener
+import com.yuriisurzhykov.pointdetector.domain.usecase.PointsFirebaseListFetchListener
+import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
 
 @Module
@@ -53,4 +55,14 @@ object ServicesModule {
             }
         }
     }*/
+
+    @Singleton
+    @Provides
+    fun providePointsFetchValueListener(
+        listMapper: Mapper<DataSnapshot, List<Point>>,
+        useCase: SavePointUseCase,
+        dispatchers: Dispatchers
+    ): PointsFetchValueListener {
+        return PointsFirebaseListFetchListener(listMapper, dispatchers, useCase)
+    }
 }

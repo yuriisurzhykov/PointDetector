@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.pointdetector.di
 
 import android.location.Address
+import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
@@ -77,4 +78,8 @@ object MappersModule {
         return WorkingHourToWeekDayListMapper(resource)
     }
 
+    @Provides
+    @Singleton
+    fun provideSnapshotToPointListMapper(): Mapper<DataSnapshot, List<Point>> =
+        DataSnapshotToPointsListMapper()
 }

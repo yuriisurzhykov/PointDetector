@@ -4,16 +4,15 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import kotlinx.serialization.Serializable
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Serializable
 data class WeekDay(
-    val dayName: String,
-    val dayValue: Int,
-    val hoursFrom: String,
-    val hoursTo: String
+    var dayName: String = "",
+    var dayValue: Int = 0,
+    var hoursFrom: String = "",
+    var hoursTo: String = ""
 ) : Parcelable, java.io.Serializable, ViewHolderItem {
 
     constructor(parcel: Parcel) : this(
