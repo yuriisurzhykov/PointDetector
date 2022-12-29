@@ -16,7 +16,7 @@ And general diagram of layers is the next </br>
 <img alt="The application is now available in play market!" width="200px" src="https://user-images.githubusercontent.com/44873047/209905834-538bf8e3-931d-469d-8a3a-69d2071275f0.jpg"/>
 
 # Example of using
-
+[Example of using v1.0.1](https://user-images.githubusercontent.com/44873047/209906415-040cec0c-3818-429b-82ae-5626a16f12f8.webm)
 
 
 The application is now available on Google Play Market! <br>
