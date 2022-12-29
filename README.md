@@ -1,6 +1,9 @@
 <h1 align="center">PointDetector</h1>
 <p align="center">Point Detector - is an application that may help you to find closest places to your current location. The app built using modern tech-stack tools such as Room, Firebase, Dagger 2 and MVVM for the architechture.</p>
 
+The application is now available on Google Play Market! <br>
+[<img alt="The application is now available in play market!" width="190px" src="https://github.com/mhemmings/play-store-button/blob/master/play-store-button.svg" />](https://play.google.com/store/apps/details?id=com.yuriisurzhykov.pointdetector)
+
 # Tech-stack description
 * [Room](https://developer.android.com/jetpack/androidx/releases/room) - is using to cache data from remote source of data and to store user created data.
 * [Dagger 2](https://developer.android.com/training/dependency-injection/hilt-android) - is using to manage the dependencies for each component in project.
@@ -18,6 +21,3 @@ And general diagram of layers is the next </br>
 # Example of using
 [Example of using v1.0.1](https://user-images.githubusercontent.com/44873047/209906415-040cec0c-3818-429b-82ae-5626a16f12f8.webm)
 
-
-The application is now available on Google Play Market! <br>
-[<img alt="The application is now available in play market!" width="190px" src="https://github.com/mhemmings/play-store-button/blob/master/play-store-button.svg" />](https://play.google.com/store/apps/details?id=com.yuriisurzhykov.pointdetector)
