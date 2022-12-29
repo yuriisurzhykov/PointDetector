@@ -2,14 +2,18 @@
 <p align="center">Point Detector - is an application that may help you to find closest places to your current location. The app built using modern tech-stack tools such as Room, Firebase, Dagger 2 and MVVM for the architechture.</p>
 
 # Tech-stack description
-* [Room](https://developer.android.com/jetpack/androidx/releases/room) - 
-* [Dagger 2](https://developer.android.com/training/dependency-injection/hilt-android) -
-* [Firebase RealtimeDatabase](https://firebase.google.com/docs/database) - 
-* [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) -
+* [Room](https://developer.android.com/jetpack/androidx/releases/room) - is using to cache data from remote source of data and to store user created data.
+* [Dagger 2](https://developer.android.com/training/dependency-injection/hilt-android) - is using to manage the dependencies for each component in project.
+* [Firebase RealtimeDatabase](https://firebase.google.com/docs/database) - is using as a remote data store; in application used only to cache localy data about food banks points.
+* [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - is using for asynchronous jobs.
 * [GitHub Actions](https://github.com/features/actions) - is using for CI/CD
 
 # Application architecture
-* MVVM as the architecture
+* Clean + MVVM artchitechture </br>
+You can see that project contains core, data, domain and presentation layers. Core and data layers are independent from other layers. </br>
+<img alt="The application is now available in play market!" width="200px" src="https://user-images.githubusercontent.com/44873047/209905238-b4dcc3be-84c5-4f2e-8d18-97fe94fcfa46.png"/>
+And general diagram of layers is the next </br>
+<img alt="The application is now available in play market!" width="200px" src="https://user-images.githubusercontent.com/44873047/209905834-538bf8e3-931d-469d-8a3a-69d2071275f0.jpg"/>
 
 # Example of using
 
