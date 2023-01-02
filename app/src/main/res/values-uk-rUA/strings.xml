@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PointDetector</string>
+    <string name="hint_input_your_address">Введіть адресу</string>
+    <string name="kilometers_format">%.3f км</string>
+    <string name="miles_format">%.2f мілі</string>
+    <string name="action_text_search_filter">Фільтр</string>
+    <string name="title_points_list_screen">Найближчі точки</string>
+    <string name="title_points_add_screen">Пошук точок</string>
+    <string name="title_points_add_info_screen">Зберігання точки</string>
+    <string name="button_add_point">Додати нову точку</string>
+    <string name="menu_button_import_data">Імпорт даних</string>
+    <string name="hint_place_name">Назва точки</string>
+    <string name="hint_place_address">Адреса точки</string>
+    <string name="hint_place_working_hours">Часи роботи</string>
+    <string name="label_no_results_found">Нічого не знайдено</string>
+    <string name="button_empty_state_add_record">Додати новий запис</string>
+    <string name="title_location_permission_denied">Не вдалося отримати дозвіл</string>
+    <string name="rationale_location_permission_text">Дозвіл на отримання локації необхіден для коректної роботи додатку.
+        Без дозволу додаток може не правильно розраховувати відстань до точки.</string>
+    <string name="button_location_permissions_retry">Надати дозвіл</string>
+    <string name="hint_input_place_name">Введіть назву точки</string>
+    <string name="button_save">Зберегти</string>
+    <string name="error_incorrect_selected_days">Невірний формат часу для заданих дат</string>
+    <string name="error_days_not_selected">Дні роботи не вибрані</string>
+    <string name="label_point_open">Відкрито</string>
+    <string name="label_point_closed">Зачинено</string>
+    <string name="label_point_successfully_created">Точку успішно додана!</string>
+    <string name="button_create_new_point_label">Додати нову точку!</string>
+    <string name="title_empty_points_list">Нічого не знайдено</string>
+    <string name="description_empty_points_list">Немає записів в локальній базі даних. Щоби побачити записи спробуйте додати їх, натиснувши на кнопку внизу.</string>
+    <string name="label_description_search_address">Почніть печатати адресу в полі зверху, щоби побачити пропоновані точки у списку</string>
+    <string name="label_empty_search_data">Нічого не знайдено за запитом</string>
+    <string name="title_location_permission_request">Немає доступу до геоданих</string>
+    <string name="button_continue_anyway">Все одно продовжити</string>
+    <string name="button_provide_location_permissions_never_ask">Відкрити налаштування</string>
+    <string name="snackbar_location_permissions_denied">Для дого щоб надати дозвіл до геоданих, відкрийте налаштування та увімкніть доступ до геоданих там.</string>
+    <string name="label_point_deletec_action">Точка видалена. Якщо це вийшло за помилкою, натисніть кнопки знизу.</string>
+    <string name="button_undo">Відмінити</string>
+    <string name="title_point_details">Деталі точки</string>
+    <string name="build_route">Побудувати маршрут</string>
+    <string name="share_address">Поділитися адресою</string>
+    <string name="label_format_working_days">%s, %s - %s</string>
+</resources>
