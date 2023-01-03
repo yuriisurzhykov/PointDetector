@@ -12,6 +12,7 @@ import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -8,12 +8,13 @@ import com.yuriisurzhykov.pointdetector.data.cache.configs.ConfigsDao
 import com.yuriisurzhykov.pointdetector.data.cache.converters.WorkingHoursListConverter
 import com.yuriisurzhykov.pointdetector.data.cache.entities.ConfigEntity
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
+import com.yuriisurzhykov.pointdetector.data.cache.migrations.MigrationV1ToV2Spec
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [PointCache::class, ConfigEntity::class],
     exportSchema = true,
-    autoMigrations = []
+    autoMigrations = [AutoMigration(from = 1, to = 2, spec = MigrationV1ToV2Spec::class)]
 )
 @TypeConverters(WorkingHoursListConverter::class)
 abstract class CacheDatabase : RoomDatabase() {

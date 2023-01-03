@@ -10,7 +10,7 @@ class ConfigsRepository @Inject constructor(
     private val configsDao: ConfigsDao
 ) : Save<ConfigEntity>,
     Fetch<Flow<List<ConfigEntity>>>,
-    ConditionFetch<String, ConfigEntity>,
+    ConditionFetch<String, ConfigEntity?>,
     Delete<ConfigEntity> {
 
     override suspend fun delete(entity: ConfigEntity) {
@@ -21,7 +21,7 @@ class ConfigsRepository @Inject constructor(
         return configsDao.fetchAllConfigs().asFlow()
     }
 
-    override suspend fun fetchByCondition(condition: String): ConfigEntity {
+    override suspend fun fetchByCondition(condition: String): ConfigEntity? {
         return configsDao.findConfig(condition)
     }
 

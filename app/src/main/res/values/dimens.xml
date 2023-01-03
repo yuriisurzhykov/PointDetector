@@ -3,4 +3,10 @@
     <dimen name="default_elevation_radius">10dp</dimen>
     <dimen name="default_button_corner_radius">24dp</dimen>
     <dimen name="default_view_background_corner">12dp</dimen>
+
+    <dimen name="text_size_page_title">20sp</dimen>
+    <dimen name="text_size_default_text">14sp</dimen>
+    <dimen name="text_size_subhead_text">16sp</dimen>
+    <dimen name="text_size_big">18sp</dimen>
+    <dimen name="text_size_button_text">16sp</dimen>
 </resources>

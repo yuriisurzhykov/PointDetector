@@ -41,4 +41,10 @@
     <string name="build_route">Побудувати маршрут</string>
     <string name="share_address">Поділитися адресою</string>
     <string name="label_format_working_days">%s, %s - %s</string>
+    <string name="label_sorting_type">Варіант сортування</string>
+    <string name="label_measure_type">Одиниці виміру</string>
+    <string name="button_apply_filters">Застосувати фільтри</string>
+    <string name="title_working_hours_input">Оберіть часи работи</string>
+    <string name="label_nothing_selected">Нічого не задано</string>
+    <string name="title_filter_screen">Filters</string>
 </resources>

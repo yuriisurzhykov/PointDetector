@@ -1,14 +1,14 @@
 package com.yuriisurzhykov.pointdetector.domain.mappers
 
-import com.yuriisurzhykov.pointdetector.core.Mapper
+import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import javax.inject.Inject
 
-class CacheToUiListPointsMapper @Inject constructor(private val mapper: Mapper<PointCache, Point>) :
-    Mapper<List<PointCache>, List<Point>> {
+class CacheToUiListPointsMapper @Inject constructor(private val mapper: SuspendMapper<PointCache, PointUi>) :
+    SuspendMapper<List<PointCache>, List<PointUi>> {
 
-    override fun map(from: List<PointCache>): List<Point> {
+    override suspend fun map(from: List<PointCache>): List<PointUi> {
         return from.map { mapper.map(it) }
     }
 }

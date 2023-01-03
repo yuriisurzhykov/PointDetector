@@ -3,7 +3,7 @@
     <string name="hint_input_your_address">Input your address</string>
     <string name="kilometers_format">%.3f km</string>
     <string name="miles_format">%.2f mi</string>
-    <string name="action_text_search_filter">Sort by</string>
+    <string name="action_text_search_filter">Filters</string>
     <string name="title_points_list_screen">Places nearby</string>
     <string name="title_points_add_screen">Looking for place</string>
     <string name="title_points_add_info_screen">Saving new place</string>
@@ -45,4 +45,9 @@
     <string name="build_route">Build route</string>
     <string name="share_address">Share address</string>
     <string name="label_format_working_days">%s, %s - %s</string>
+    <string name="label_sorting_type">Sorting type</string>
+    <string name="label_measure_type">Measure units</string>
+    <string name="button_apply_filters">Apply filters</string>
+    <string name="label_nothing_selected">Empty options</string>
+    <string name="title_filter_screen">Filters</string>
 </resources>
