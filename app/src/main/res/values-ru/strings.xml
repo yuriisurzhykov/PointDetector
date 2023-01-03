@@ -52,4 +52,6 @@
     <string name="title_working_hours_input">Выберите часы работы</string>
     <string name="label_nothing_selected">Ничего не задано</string>
     <string name="title_filter_screen">Фильтры</string>
+    <string name="message_dialog_import_places">Ничего не найдено в локально базе данных. Хотите загрузить точки онлайн?</string>
+    <string name="title_dialog_import_data">Пустое локальное хранилище</string>
 </resources>

@@ -50,4 +50,6 @@
     <string name="button_apply_filters">Apply filters</string>
     <string name="label_nothing_selected">Empty options</string>
     <string name="title_filter_screen">Filters</string>
+    <string name="message_dialog_import_places">There is nothing in your local database. Do you want to fetch places from remote source?</string>
+    <string name="title_dialog_import_data">Empty local storage</string>
 </resources>

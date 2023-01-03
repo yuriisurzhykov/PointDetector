@@ -46,5 +46,7 @@
     <string name="button_apply_filters">Застосувати фільтри</string>
     <string name="title_working_hours_input">Оберіть часи работи</string>
     <string name="label_nothing_selected">Нічого не задано</string>
-    <string name="title_filter_screen">Filters</string>
+    <string name="title_filter_screen">Фільтри</string>
+    <string name="message_dialog_import_places">Нічого не знайдено в локальному сховищі. Хочете загрузити точки онлайн?</string>
+    <string name="title_dialog_import_data">В локальному сховищі пусто</string>
 </resources>
