@@ -5,13 +5,14 @@ import android.location.Address
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.yuriisurzhykov.pointdetector.core.Mapper
+import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointdetector.domain.services.IDateTimeSource
 import com.yuriisurzhykov.pointdetector.domain.services.JsonAssetListFileReader
 import com.yuriisurzhykov.pointdetector.domain.source.DateFormatterType
 import com.yuriisurzhykov.pointdetector.domain.usecase.*
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ object UseCaseModule {
     @Singleton
     fun provideFetchAllPointsUseCase(
         pointsRepository: PointsRepository,
-        mapper: Mapper<List<PointCache>, List<Point>>
+        mapper: SuspendMapper<List<PointCache>, List<PointUi>>
     ): FetchAllPointsUseCase {
         return FetchAllPointsUseCase.Base(pointsRepository, mapper)
     }
@@ -53,27 +54,17 @@ object UseCaseModule {
     @Singleton
     fun provideSavePointUseCase(
         repository: PointsRepository,
-        mapper: Mapper<Point, PointCache>
     ): SavePointUseCase {
-        return SavePointUseCase.Base(repository, mapper)
+        return SavePointUseCase.Base(repository)
     }
 
     @Provides
     @Singleton
     fun provideSearchPointUseCase(
         repository: PointsRepository,
-        mapper: Mapper<List<PointCache>, List<Point>>
+        mapper: SuspendMapper<List<PointCache>, List<PointUi>>
     ): SearchPointUseCase {
         return SearchPointUseCase.Base(mapper, repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCheckPointAvailabilityUseCase(
-        formatter: IDateTimeSource.LocalDateTimeSource,
-        useCase: CheckTimeAvailabilityUseCase
-    ): CheckPointAvailabilityUseCase {
-        return CheckPointAvailabilityUseCase.Base(formatter, useCase)
     }
 
     @Provides
@@ -88,9 +79,8 @@ object UseCaseModule {
     @Singleton
     fun provideDeletePointUseCase(
         repository: PointsRepository,
-        mapper: Mapper<Point, PointCache>
     ): DeletePointUseCase {
-        return DeletePointUseCase.Base(repository, mapper)
+        return DeletePointUseCase.Base(repository)
     }
 
     @Provides

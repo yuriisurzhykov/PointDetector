@@ -14,15 +14,16 @@ abstract class AbstractConfigService<T : Any>(
     private fun getFullConfigName() = "config_${getConfigName()}"
 
     suspend fun createConfig(configValue: T) {
-        dataProvider.save(
-            ConfigEntity(
-                0, getFullConfigName(), gson.toJson(configValue), configValue::class.java.name.orEmpty()
-            )
+        val entity = ConfigEntity(
+            getFullConfigName(), gson.toJson(configValue), configValue::class.java.name.orEmpty()
         )
+        dataProvider.save(entity)
     }
 
-    suspend fun getConfigValue(): T {
-        val config = dataProvider.fetchByCondition(getFullConfigName())
-        return gson.fromJson<T>(config.configValue, Class.forName(config.configDataType))
+    open suspend fun getConfigValue(): T? {
+        val config: ConfigEntity? = dataProvider.fetchByCondition(getFullConfigName())
+        return if (config != null) {
+            gson.fromJson<T>(config.configValue, Class.forName(config.configDataType))
+        } else null
     }
 }

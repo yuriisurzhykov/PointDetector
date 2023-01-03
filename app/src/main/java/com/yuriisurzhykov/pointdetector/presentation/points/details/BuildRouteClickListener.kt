@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractActivityClickListener
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 
 class BuildRouteClickListener constructor(
-    private val point: Point,
+    private val point: PointUi,
     activity: Activity
 ): AbstractActivityClickListener(activity) {
 

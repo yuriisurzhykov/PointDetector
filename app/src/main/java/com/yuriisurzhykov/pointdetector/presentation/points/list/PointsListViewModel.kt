@@ -1,18 +1,19 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.location.Location
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.domain.config.ProjectSortTypeBuilder
+import com.yuriisurzhykov.pointdetector.domain.mappers.PointUiToCacheMapper
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
 import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +31,9 @@ class PointsListViewModel @Inject constructor(
     private val pointsListUseCase: FetchAllPointsUseCase,
     private val searchPointUseCase: SearchPointUseCase,
     private val removePointUseCase: DeletePointUseCase,
-    private val insertPointUserCase: SavePointUseCase
+    private val insertPointUserCase: SavePointUseCase,
+    private val pointsSorter: ProjectSortTypeBuilder,
+    private val uiPointMapper: PointUiToCacheMapper
 ) : ViewModel() {
 
     private var searchCondition: String = emptyString()
@@ -74,13 +77,13 @@ class PointsListViewModel @Inject constructor(
         }
     }
 
-    private fun postPointsList(list: List<Point>) {
+    private suspend fun postPointsList(list: List<PointUi>) {
         val points = sortPointsList(list).ifEmpty { listOf(emptyStateDate) }
         pointsList.postValue(points)
     }
 
-    private fun sortPointsList(list: List<Point>): List<Point> {
-        return list.sortedBy { point -> point.distance }
+    private suspend fun sortPointsList(list: List<PointUi>): List<PointUi> {
+        return ArrayList(pointsSorter.performSort(list))
     }
 
     private fun postTimerTask(scheduleTime: Long, block: suspend () -> Unit) {
@@ -96,15 +99,15 @@ class PointsListViewModel @Inject constructor(
         return searchCondition
     }
 
-    fun removeItem(item: Point) {
+    fun removeItem(item: PointUi) {
         dispatchers.launchBackground(viewModelScope) {
-            removePointUseCase.delete(item)
+            removePointUseCase.delete(uiPointMapper.map(item))
         }
     }
 
-    fun insertItem(point: Point) {
+    fun insertItem(point: PointUi) {
         dispatchers.launchBackground(viewModelScope) {
-            insertPointUserCase.save(point)
+            insertPointUserCase.save(uiPointMapper.map(point))
         }
     }
 }

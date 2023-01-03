@@ -17,7 +17,7 @@ interface ConfigsDao {
     suspend fun delete(entity: ConfigEntity)
 
     @Query("SELECT * FROM configentity WHERE config_name=:configName")
-    suspend fun findConfig(configName: String): ConfigEntity
+    suspend fun findConfig(configName: String): ConfigEntity?
 
     @Query("SELECT * FROM configentity")
     fun fetchAllConfigs(): LiveData<List<ConfigEntity>>
