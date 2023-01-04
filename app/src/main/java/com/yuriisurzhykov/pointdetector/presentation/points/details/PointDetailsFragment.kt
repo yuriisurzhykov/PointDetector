@@ -3,23 +3,21 @@ package com.yuriisurzhykov.pointdetector.presentation.points.details
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.delegate.serializableArgument
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PointDetailsFragment : AbstractLocationFragment(R.layout.fragment_point_details) {
 
-    private val viewModel: PointDetailsViewModel by viewModels()
-    private val pointInfo: Point by serializableArgument(ARG_ENTITY)
+    private val pointInfo: PointUi by serializableArgument(ARG_ENTITY)
 
     private val pointName: TextView by findView(R.id.point_name_view)
     private val pointAddress: TextView by findView(R.id.point_address_view)
@@ -51,7 +49,7 @@ class PointDetailsFragment : AbstractLocationFragment(R.layout.fragment_point_de
     companion object {
         private const val ARG_ENTITY = "argument_name"
 
-        fun newInstance(point: Point) = PointDetailsFragment().apply {
+        fun newInstance(point: PointUi) = PointDetailsFragment().apply {
             arguments = Bundle().apply {
                 putSerializable(ARG_ENTITY, point)
             }

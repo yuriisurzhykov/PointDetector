@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.MenuProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -17,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
+import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
+import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
+import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
@@ -34,6 +37,8 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     private val viewModel: PointsListViewModel by viewModels()
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
+
+    private val filterButton: TextView by findView(R.id.search_filter)
 
     override fun getTitle() = resources.getString(R.string.title_points_list_screen)
 
@@ -63,11 +68,12 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             setText(viewModel.getSearchCondition())
             addTextChangedListener { viewModel.startLoadPoints(it.toString()) }
         }
+        filterButton.setOnClickListener(filterClickListener)
         activity?.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner)
         listAdapter.setOnItemClickListener { item: ViewHolderItem ->
             if (item is EmptyStateData) {
                 onCreateNewPointClick()
-            } else if (item is Point) {
+            } else if (item is PointUi) {
                 openPointDetailsFragment(item)
             }
         }
@@ -75,7 +81,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             override fun onSwiped(
                 viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem
             ) {
-                if (item is Point) {
+                if (item is PointUi) {
                     viewModel.removeItem(item)
                     showOnDeleteSnackbar(item, position)
                 }
@@ -91,7 +97,7 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             val snackbar =
                 Snackbar.make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
                     .setAction(R.string.button_undo) {
-                        if (point is Point) {
+                        if (point is PointUi) {
                             listAdapter.insertItem(point, position)
                             viewModel.insertItem(point)
                         }
@@ -114,8 +120,12 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         viewModel.updateUserLocation(location)
     }
 
-    private fun openPointDetailsFragment(item: Point) {
+    private fun openPointDetailsFragment(item: PointUi) {
         openFragment(PointDetailsFragment.newInstance(item), "point_details_stack_name")
+    }
+
+    private val filterClickListener = View.OnClickListener {
+        openFragment(SearchFilterFragment(), "filters_screen")
     }
 
     private val fragmentMenuProvider = object : MenuProvider {
