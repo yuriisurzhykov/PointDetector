@@ -1,6 +1,5 @@
 package com.yuriisurzhykov.pointdetector.domain.usecase
 
-import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
