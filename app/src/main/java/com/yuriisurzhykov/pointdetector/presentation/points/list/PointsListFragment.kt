@@ -39,6 +39,9 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
     private var navigationCallback: NavigationCallback? = null
 
     private val filterButton: TextView by findView(R.id.search_filter)
+    private val fragmentMenuProvider = PointListMenuProvider {
+        onCreateNewPointClick()
+    }
 
     override fun getTitle() = resources.getString(R.string.title_points_list_screen)
 
@@ -126,20 +129,6 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     private val filterClickListener = View.OnClickListener {
         openFragment(SearchFilterFragment(), "filters_screen")
-    }
-
-    private val fragmentMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.points_list_menu, menu)
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            if (menuItem.itemId == R.id.add_point) {
-                onCreateNewPointClick()
-                return true
-            }
-            return false
-        }
     }
 
 }
