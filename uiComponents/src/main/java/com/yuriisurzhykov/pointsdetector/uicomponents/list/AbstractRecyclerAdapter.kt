@@ -90,7 +90,7 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
 
     override fun getItemCount(): Int = dataList.size
 
-    private fun getItem(position: Int): T {
+    fun getItem(position: Int): T {
         return dataList[position]
     }
 

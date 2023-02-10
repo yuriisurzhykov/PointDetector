@@ -9,4 +9,6 @@
     <dimen name="text_size_subhead_text">16sp</dimen>
     <dimen name="text_size_big">18sp</dimen>
     <dimen name="text_size_button_text">16sp</dimen>
+
+    <dimen name="favorite_max_swipe_offset">100dp</dimen>
 </resources>

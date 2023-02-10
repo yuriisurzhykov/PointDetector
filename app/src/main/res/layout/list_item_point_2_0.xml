@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/medium_padding"
+    android:animateLayoutChanges="true"
     android:background="@drawable/view_background"
     android:elevation="@dimen/default_elevation_radius"
-    android:padding="@dimen/default_padding"
     app:viewHolderSwipeCorner="@dimen/default_view_background_corner">
 
     <TextView
@@ -15,9 +15,10 @@
         style="@style/PointDetector.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:layout_marginEnd="@dimen/default_margin"
         app:layout_constraintEnd_toStartOf="@id/availability_state"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/favorite_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Location name" />
 
@@ -25,13 +26,14 @@
         android:id="@+id/location_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:layout_marginTop="@dimen/default_padding"
         android:layout_marginEnd="@dimen/default_margin"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/location_distance"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/favorite_icon"
         app:layout_constraintTop_toBottomOf="@id/location_name"
         tools:text="Location address" />
 
@@ -40,15 +42,27 @@
         style="@style/PointDetector.AvailabilityPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/location_name"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Open" />
 
+    <ImageView
+        android:id="@+id/favorite_icon"
+        android:layout_width="10dp"
+        android:layout_height="0dp"
+        android:src="@drawable/background_favorite_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/location_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/location_address"

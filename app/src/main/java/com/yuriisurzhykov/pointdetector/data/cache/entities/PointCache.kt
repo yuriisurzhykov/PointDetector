@@ -15,5 +15,7 @@ data class PointCache(
     @ColumnInfo(defaultValue = "")
     val placeName: String,
     @ColumnInfo(defaultValue = "")
-    val workingHoursCache: WorkingHoursGroupCache
+    val workingHoursCache: WorkingHoursGroupCache,
+    @ColumnInfo(defaultValue = "0")
+    val isFavorite: Boolean
 )

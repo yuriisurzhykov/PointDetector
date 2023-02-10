@@ -34,4 +34,5 @@
     <color name="error_color">#EE2929</color>
     <color name="recycler_view_deletion_icon_color">@color/white</color>
     <color name="recycler_view_background_deletion_color">#EE2929</color>
+    <color name="favorite_background_color">#FFC107</color>
 </resources>
