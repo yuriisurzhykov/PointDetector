@@ -9,10 +9,15 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.presentation.IVibrationService
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractSwipeCallback
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.BaseRecyclerViewAdapter
 
-class FavoriteSwipeCallback(adapter: BaseRecyclerViewAdapter, context: Context) :
+class FavoriteSwipeCallback(
+    adapter: BaseRecyclerViewAdapter,
+    context: Context,
+    vibration: IVibrationService
+) :
     AbstractSwipeCallback(adapter) {
 
     private val favoriteIcon = ContextCompat.getDrawable(context, R.drawable.ic_favorite) as Drawable
@@ -20,7 +25,9 @@ class FavoriteSwipeCallback(adapter: BaseRecyclerViewAdapter, context: Context) 
     private val intrinsicHeight = favoriteIcon.intrinsicHeight
     private val backgroundColor = context.getColor(R.color.favorite_background_color)
     private val maxFavoriteSwipeThreshold =
-        (context.resources.displayMetrics.widthPixels - context.resources.getDimensionPixelSize(R.dimen.favorite_max_swipe_offset))
+        context.resources.getDimensionPixelSize(R.dimen.favorite_max_swipe_offset)
+    private val swipeVibrator: SwipeVibrateManager =
+        SwipeVibrateManager.Base(vibration, maxFavoriteSwipeThreshold)
 
     init {
         favoriteIcon.setTint(context.getColor(R.color.white))
@@ -44,12 +51,10 @@ class FavoriteSwipeCallback(adapter: BaseRecyclerViewAdapter, context: Context) 
         canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
         actionState: Int, isCurrentlyActive: Boolean
     ) {
-        val newDx = if (isCurrentlyActive) {
-            if (dX > maxFavoriteSwipeThreshold) maxFavoriteSwipeThreshold else dX
-        } else dX
         super.onChildDraw(
-            canvas, recyclerView, viewHolder, newDx.toFloat(), dY, actionState, isCurrentlyActive
+            canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
         )
+        swipeVibrator.tryVibrateOnDraw(dX, recyclerView.context)
         val itemView = viewHolder.itemView
         val itemHeight = itemView.bottom - itemView.top
 
