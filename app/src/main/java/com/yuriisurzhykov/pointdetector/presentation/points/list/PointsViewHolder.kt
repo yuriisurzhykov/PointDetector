@@ -1,10 +1,9 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.domain.entities.Distance
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
@@ -18,6 +17,7 @@ class PointsViewHolder(view: View) : AbstractViewHolder<PointUi>(view), Swipable
     private val addressName: TextView by lazy { itemView.findViewById(R.id.location_name) }
     private val distanceText: TextView by lazy { itemView.findViewById(R.id.location_distance) }
     private val availabilityState: TextView by lazy { itemView.findViewById(R.id.availability_state) }
+    private val favoriteStateDrawable: ImageView by lazy { itemView.findViewById(R.id.favorite_icon) }
     private var canSwipe = false
 
     override fun canSwipe() = canSwipe
@@ -39,5 +39,6 @@ class PointsViewHolder(view: View) : AbstractViewHolder<PointUi>(view), Swipable
         if (clickListener != null) {
             itemView.setOnClickListener { clickListener.onItemClick(item) }
         }
+        item.favoriteState.apply(favoriteStateDrawable)
     }
 }

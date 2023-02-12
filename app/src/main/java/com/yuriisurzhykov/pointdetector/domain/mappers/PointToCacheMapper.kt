@@ -15,7 +15,8 @@ class PointToCacheMapper @Inject constructor(
             from.address,
             from.coordinates,
             from.placeName,
-            WorkingHoursGroupCache(from.workingHours.map { mapper.map(it) })
+            WorkingHoursGroupCache(from.workingHours.map { mapper.map(it) }),
+            false
         )
     }
 }

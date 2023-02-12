@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
+import com.yuriisurzhykov.pointdetector.data.repository.FavoritesRepository
 import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.JsonAssetListFileReader
@@ -106,6 +107,33 @@ object UseCaseModule {
         fetchListener: PointsFetchValueListener
     ): SaveImportsUseCase<List<Point>> {
         return SaveImportsUseCase.FirebaseImportPoints(Firebase.database, fetchListener)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesFetchUseCase(
+        pointsRepository: FavoritesRepository,
+        mapper: SuspendMapper<PointCache, PointUi>
+    ): FavoritesFetchUseCase {
+        return FavoritesFetchUseCase.Base(mapper, pointsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesRemoveUseCase(
+        pointsRepository: FavoritesRepository,
+        mapper: Mapper<PointUi, PointCache>
+    ): FavoritesRemoveUseCase {
+        return FavoritesRemoveUseCase.Base(mapper, pointsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesApplyUseCase(
+        pointsRepository: FavoritesRepository,
+        mapper: Mapper<PointUi, PointCache>
+    ): FavoritesApplyUseCase {
+        return FavoritesApplyUseCase.Base(mapper, pointsRepository)
     }
 
 }

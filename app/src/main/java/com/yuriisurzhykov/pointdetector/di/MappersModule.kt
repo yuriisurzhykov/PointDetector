@@ -94,4 +94,9 @@ object MappersModule {
     @Singleton
     fun provideSnapshotToPointListMapper(): Mapper<DataSnapshot, List<Point>> =
         DataSnapshotToPointsListMapper()
+
+    @Provides
+    @Singleton
+    fun providePointUiToCacheMapper(mapper: WeekDayToCacheMapper): Mapper<PointUi, PointCache> =
+        PointUiToCacheMapper(mapper)
 }

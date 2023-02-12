@@ -34,7 +34,7 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
 
     fun removeItem(holder: RecyclerView.ViewHolder, position: Int) {
         val itemToRemove = getItem(position)
-        onSwiped(holder, position, itemToRemove)
+        onSwipedToLeft(holder, position, itemToRemove)
     }
 
     override fun removeItem(item: T) {
@@ -63,7 +63,7 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
         dataList.addAll(list.orEmpty())
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {
+    override fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {
         removeItem(item)
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
 
     override fun getItemCount(): Int = dataList.size
 
-    private fun getItem(position: Int): T {
+    fun getItem(position: Int): T {
         return dataList[position]
     }
 

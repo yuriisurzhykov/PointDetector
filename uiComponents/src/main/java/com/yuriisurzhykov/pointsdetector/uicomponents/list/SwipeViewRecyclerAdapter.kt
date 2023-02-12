@@ -21,13 +21,13 @@ open class SwipeViewRecyclerAdapter(viewHolderTypeManager: ViewHolderTypeManager
         onSwipedCallback?.onSwipeReleased(viewHolder)
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
-        super.onSwiped(viewHolder, position, item)
-        onSwipedCallback?.onSwiped(viewHolder, position, item)
+    override fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
+        super.onSwipedToLeft(viewHolder, position, item)
+        onSwipedCallback?.onSwipedToLeft(viewHolder, position, item)
     }
 
     override fun onItemRemoved(holder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
         super.onItemRemoved(holder, position, item)
-        onSwipedCallback?.onSwiped(holder, position, item)
+        onSwipedCallback?.onSwipedToLeft(holder, position, item)
     }
 }

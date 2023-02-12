@@ -6,5 +6,6 @@ interface SwipeRecyclerCallbacks<T : Any> {
 
     fun onStartSwipe(viewHolder: RecyclerView.ViewHolder) {}
     fun onSwipeReleased(viewHolder: RecyclerView.ViewHolder) {}
-    fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {}
+    fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {}
+    fun onSwipedToRight(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {}
 }

@@ -149,7 +149,7 @@ static def getReleaseVersionCode() {
         return versionCode.toString().toInteger()
     } catch (Exception e) {
         println("Exception: ${e}")
-        return 1
+        return 2
     }
 }
 
@@ -157,11 +157,11 @@ static def getReleaseVersionName() {
     def versionName = System.getenv("VERSION_NAME")
     try {
         if (versionName.isEmpty()) {
-            versionName = "1.0"
+            versionName = "1.2"
         }
         return versionName.toString() + "." + getReleaseVersionCode().toString()
     } catch (Exception e) {
         println("Exception: ${e}")
-        return "1.0"
+        return "1.2"
     }
 }

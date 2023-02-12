@@ -13,7 +13,8 @@ data class PointUi(
     val distanceDouble: Double,
     val placeName: String,
     val workingHours: List<WeekDay>,
-    val isPointAvailable: Boolean = false
+    val isPointAvailable: Boolean = false,
+    val favoriteState: FavoriteState
 ) : Serializable, ViewHolderItem {
 
     override fun areItemsTheSame(other: Any): Boolean {
@@ -22,10 +23,12 @@ data class PointUi(
 
     override fun areContentsTheSame(other: Any): Boolean {
         return other is PointUi
+                && other.placeName == this.placeName
                 && other.address == this.address
                 && other.workingHours == this.workingHours
                 && other.isPointAvailable == this.isPointAvailable
                 && other.distanceString == this.distanceString
+                && other.favoriteState == this.favoriteState
     }
 
     fun isEmpty(): Boolean {

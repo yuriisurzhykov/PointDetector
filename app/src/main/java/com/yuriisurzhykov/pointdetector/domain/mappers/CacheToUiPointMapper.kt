@@ -10,6 +10,7 @@ import com.yuriisurzhykov.pointdetector.domain.entities.Distance
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.ConfigUnifiedSource
+import com.yuriisurzhykov.pointdetector.presentation.entities.FavoriteState
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,7 +40,8 @@ class CacheToUiPointMapper @Inject constructor(
             distance,
             from.placeName,
             workingHourToWeekDaysMapper.map(from.workingHoursCache.workingHours),
-            availabilityService.isPointAvailableNow(from)
+            availabilityService.isPointAvailableNow(from),
+            FavoriteState.Factory.build(from.isFavorite)
         )
     }
 }
