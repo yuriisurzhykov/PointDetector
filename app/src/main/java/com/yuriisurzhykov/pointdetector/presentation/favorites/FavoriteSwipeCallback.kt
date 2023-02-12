@@ -17,10 +17,9 @@ class FavoriteSwipeCallback(
     adapter: BaseRecyclerViewAdapter,
     context: Context,
     vibration: IVibrationService
-) :
-    AbstractSwipeCallback(adapter) {
+) : AbstractSwipeCallback(adapter) {
 
-    private val favoriteIcon = ContextCompat.getDrawable(context, R.drawable.ic_favorite) as Drawable
+    private var favoriteIcon = ContextCompat.getDrawable(context, R.drawable.ic_favorite) as Drawable
     private val intrinsicWidth = favoriteIcon.intrinsicWidth
     private val intrinsicHeight = favoriteIcon.intrinsicHeight
     private val backgroundColor = context.getColor(R.color.favorite_background_color)
@@ -51,9 +50,13 @@ class FavoriteSwipeCallback(
         canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
         actionState: Int, isCurrentlyActive: Boolean
     ) {
-        super.onChildDraw(
-            canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-        )
+        super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        /*if (favoriteIcon.intrinsicHeight > viewHolder.itemView.height) {
+            val size =
+                viewHolder.itemView.height - viewHolder.itemView.paddingTop - viewHolder.itemView.paddingBottom
+            favoriteIcon =
+                DrawableScale.Base(viewHolder.itemView.context.resources).scale(favoriteIcon, size, size)
+        }*/
         swipeVibrator.tryVibrateOnDraw(dX, recyclerView.context)
         val itemView = viewHolder.itemView
         val itemHeight = itemView.bottom - itemView.top
