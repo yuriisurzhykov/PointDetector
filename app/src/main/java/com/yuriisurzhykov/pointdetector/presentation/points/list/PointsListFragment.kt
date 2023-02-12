@@ -4,37 +4,35 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.view.MenuProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
+import com.yuriisurzhykov.pointdetector.presentation.favorites.BothSideSwipeCallback
+import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
 import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
+import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteSwipeCallback
+import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.PointSwipeDeleteCallback
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeRecyclerCallbacks
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.presentation.vibration.VibrationService
+import com.yuriisurzhykov.pointsdetector.uicomponents.list.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_list) {
 
     private val viewModel: PointsListViewModel by viewModels()
+    private val favoritesViewModel: FavoriteListViewModel by viewModels()
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
 
@@ -62,9 +60,13 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         super.onViewCreated(view, savedInstanceState)
         with(view.findViewById<RecyclerView>(R.id.recycler)) {
             adapter = listAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LayoutManagerFactory().produce(view.context)
             ItemTouchHelper(
-                PointSwipeDeleteCallback(listAdapter, view.context)
+                BothSideSwipeCallback(
+                    FavoriteSwipeCallback(listAdapter, view.context, VibrationService()),
+                    SwipeDeleteCallback(listAdapter, view.context),
+                    listAdapter
+                )
             ).attachToRecyclerView(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
@@ -80,8 +82,11 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
                 openPointDetailsFragment(item)
             }
         }
+        listAdapter.favoritesApply = FavoritesApply { holderItem ->
+            (holderItem as? PointUi)?.let { pointUi -> favoritesViewModel.applyFavorite(pointUi) }
+        }
         listAdapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
-            override fun onSwiped(
+            override fun onSwipedToLeft(
                 viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem
             ) {
                 if (item is PointUi) {

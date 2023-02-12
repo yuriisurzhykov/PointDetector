@@ -18,7 +18,8 @@ class UiToCachePointMapper @Inject constructor(
             from.address,
             from.coordinates,
             from.placeName,
-            WorkingHoursGroupCache(workingHoursMapper.map(from.workingHours))
+            WorkingHoursGroupCache(workingHoursMapper.map(from.workingHours)),
+            false
         )
     }
 }
