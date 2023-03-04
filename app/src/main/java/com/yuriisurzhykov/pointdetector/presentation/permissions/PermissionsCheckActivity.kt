@@ -1,17 +1,12 @@
 package com.yuriisurzhykov.pointdetector.presentation.permissions
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.content.ContextCompat
-import androidx.core.content.IntentCompat.createManageUnusedAppRestrictionsIntent
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractPermissionCheckActivity
 import com.yuriisurzhykov.pointdetector.presentation.main.MainActivity
@@ -22,10 +17,10 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
 
     private var continueButton: Button? = null
     private var requestPermissionsButton: Button? = null
-    private var shouldShowRationale = false
+    private var shouldShowRationale = true
 
     private val settingsLauncher = registerForActivityResult(SettingsActivityContract { this }) {
-        if (it) {
+        if (it || checkPermissions()) {
             startMainScreen()
         }
     }
@@ -72,11 +67,6 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
     override fun openMainFragment() {
     }
 
-    override fun onStart() {
-        super.onStart()
-        requestPermissions()
-    }
-
     private fun startMainScreen() {
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         mainActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -86,26 +76,6 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
 
     private fun openLocationSettings() {
         settingsLauncher.launch(getPermissionsArray())
-    }
-
-    class SettingsActivityContract(private val contextProvider: () -> Context) :
-        ActivityResultContract<Array<String>, Boolean>() {
-        override fun createIntent(context: Context, input: Array<String>): Intent {
-            return createManageUnusedAppRestrictionsIntent(context, context.packageName).apply {
-                putExtra("permission_array", input)
-            }
-        }
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            val permissionsArray = intent?.getStringArrayExtra("permissions_array")
-            if (permissionsArray != null) {
-                return permissionsArray.all {
-                    ContextCompat.checkSelfPermission(contextProvider.invoke(), it) ==
-                            PackageManager.PERMISSION_GRANTED
-                }
-            }
-            return false
-        }
     }
 
     companion object {
