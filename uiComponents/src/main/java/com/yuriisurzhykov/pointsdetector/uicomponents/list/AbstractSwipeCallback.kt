@@ -26,7 +26,7 @@ abstract class AbstractSwipeCallback(protected val adapter: BaseRecyclerViewAdap
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         if (viewHolder is SwipableViewHolder && viewHolder.canSwipe()) {
-            return makeMovementFlags(ItemTouchHelper.ACTION_STATE_SWIPE, makeSideMovementFlag())
+            return makeMovementFlags(0, makeSideMovementFlag())
         }
         return makeMovementFlags(0, 0)
     }

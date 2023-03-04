@@ -20,7 +20,8 @@ interface DrawableScale {
         override fun scale(drawable: Drawable): Drawable {
             val bitmap = madeBitmap(drawable)
             val sizes = makeBitmapSize(bitmap)
-            val resizedBitmap: Bitmap = Bitmap.createScaledBitmap(bitmap, sizes.first, sizes.second, false)
+            val resizedBitmap: Bitmap =
+                Bitmap.createScaledBitmap(bitmap, sizes.first, sizes.second, false)
             return BitmapDrawable(resources, resizedBitmap)
         }
     }
@@ -31,13 +32,16 @@ interface DrawableScale {
         }
     }
 
-    abstract class AspectRatioResize constructor(
+    class VectorAspectRatioResize constructor(
         resources: Resources,
         private val ratioScaleFactor: Float
     ) : VectorDrawableResize(resources) {
 
         override fun makeBitmapSize(bitmap: Bitmap): Pair<Int, Int> {
-            return Pair((bitmap.height * ratioScaleFactor).toInt(), (bitmap.width * ratioScaleFactor).toInt())
+            return Pair(
+                (bitmap.height * ratioScaleFactor).toInt(),
+                (bitmap.width * ratioScaleFactor).toInt()
+            )
         }
     }
 }
