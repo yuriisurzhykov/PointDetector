@@ -22,6 +22,7 @@ class FavoriteListViewModel @Inject constructor(
 ) : ViewModel(), FavoritesRemove<PointUi>, FavoritesApply<PointUi> {
 
     private val liveData = MutableLiveData<List<ViewHolderItem>>()
+    private val isEmptyLiveData = MutableLiveData<Boolean>()
 
     init {
         dispatchers.launchBackground(viewModelScope) {
@@ -29,12 +30,17 @@ class FavoriteListViewModel @Inject constructor(
         }
     }
 
-    private fun postResult(it: List<PointUi>?) {
-        if (it.isNullOrEmpty()) {
+    private fun postResult(list: List<PointUi>?) {
+        isEmptyLiveData.postValue(list.isNullOrEmpty())
+        if (list.isNullOrEmpty()) {
             liveData.postValue(listOf(EmptyStateData()))
         } else {
-            liveData.postValue(it)
+            liveData.postValue(list)
         }
+    }
+
+    fun observeEmptiness(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        isEmptyLiveData.observe(owner, observer)
     }
 
     fun observe(owner: LifecycleOwner, observer: Observer<List<ViewHolderItem>>) {

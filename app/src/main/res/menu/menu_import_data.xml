@@ -7,4 +7,12 @@
         android:iconTint="@color/option_menu_tint_color"
         android:title="@string/button_add_point"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_item_favorites"
+        android:icon="@drawable/ic_favorite_outlined"
+        android:iconTint="@color/option_menu_tint_color"
+        android:title="@string/button_open_favorites"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>

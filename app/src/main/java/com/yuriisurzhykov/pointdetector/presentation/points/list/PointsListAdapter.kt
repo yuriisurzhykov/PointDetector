@@ -2,6 +2,7 @@ package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.favorites.IFavoriteAdapter
+import com.yuriisurzhykov.pointdetector.presentation.favorites.IFavoriteViewHolderItem
 import com.yuriisurzhykov.pointdetector.presentation.list.BaseViewHolderTypeManager
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeViewRecyclerAdapter
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
@@ -11,6 +12,9 @@ class PointsListAdapter : SwipeViewRecyclerAdapter(BaseViewHolderTypeManager()),
     var favoritesApply: FavoritesApply<ViewHolderItem>? = null
     override fun markFavorite(position: Int) {
         val item = getItem(position)
+        if (item is IFavoriteViewHolderItem) {
+            item.switchFavorite()
+        }
         favoritesApply?.applyFavorite(item)
     }
 }

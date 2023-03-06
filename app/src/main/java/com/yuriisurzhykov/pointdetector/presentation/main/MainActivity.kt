@@ -11,29 +11,41 @@ import androidx.lifecycle.Lifecycle
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractToolbarActivity
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
+import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
+import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesListFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AbstractToolbarActivity(), NavigationCallback {
 
+    private val favoritesViewModel: FavoriteListViewModel by viewModels()
     private val viewModel: MainViewModel by viewModels()
     private var importMenuItem: MenuItem? = null
+    private var favoritesMenuItem: MenuItem? = null
 
     private val menuItemsProvider: MenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             menuInflater.inflate(R.menu.menu_import_data, menu)
             importMenuItem = menu.findItem(R.id.menu_item_import_data)
             importMenuItem?.isVisible = viewModel.isImportEnabled()
+            favoritesMenuItem = menu.findItem(R.id.menu_item_favorites)
         }
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             if (menuItem.itemId == R.id.menu_item_import_data) {
                 viewModel.importData()
                 return true
+            } else if (menuItem.itemId == R.id.menu_item_favorites) {
+                openFavoritesScreen()
+                return true
             }
             return false
         }
+    }
+
+    private fun openFavoritesScreen() {
+        openFragment(FavoritesListFragment(), "favorites_fragment")
     }
 
     override fun showHomeButtonByDefault() = false
@@ -45,6 +57,9 @@ class MainActivity : AbstractToolbarActivity(), NavigationCallback {
         viewModel.observeImportOptionVisibility(this) { isImportEnabled ->
             showImportDialogFragment(isImportEnabled)
             importMenuItem?.isVisible = isImportEnabled
+        }
+        favoritesViewModel.observeEmptiness(this) { isEmptyFavList ->
+            favoritesMenuItem?.isVisible = !isEmptyFavList
         }
     }
 

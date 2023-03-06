@@ -8,6 +8,8 @@ interface FavoriteState {
 
     fun apply(imageView: ImageView)
 
+    fun getInverted(): FavoriteState
+
     abstract class AbstractResourceState(@DrawableRes private val drawableId: Int) : FavoriteState {
         override fun apply(imageView: ImageView) {
             imageView.setImageResource(drawableId)
@@ -35,8 +37,17 @@ interface FavoriteState {
         }
     }
 
-    class FavoriteEnabled : AbstractVisibilityState(View.VISIBLE)
-    class FavoriteDisabled : AbstractVisibilityState(View.GONE)
+    class FavoriteEnabled : AbstractVisibilityState(View.VISIBLE) {
+        override fun getInverted(): FavoriteState {
+            return FavoriteDisabled()
+        }
+    }
+
+    class FavoriteDisabled : AbstractVisibilityState(View.GONE) {
+        override fun getInverted(): FavoriteState {
+            return FavoriteEnabled()
+        }
+    }
 
     object Factory {
         fun build(enabled: Boolean): FavoriteState {

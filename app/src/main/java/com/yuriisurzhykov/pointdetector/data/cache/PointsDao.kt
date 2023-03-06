@@ -3,6 +3,7 @@ package com.yuriisurzhykov.pointdetector.data.cache
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PointsDao {
@@ -13,7 +14,7 @@ interface PointsDao {
     @Delete
     suspend fun delete(entity: PointCache)
 
-    @Update(onConflict = OnConflictStrategy.ABORT)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(entity: PointCache)
 
     @Query("DELETE FROM PointCache")
@@ -29,6 +30,6 @@ interface PointsDao {
     suspend fun deleteByAddressAndName(addressValue: String, name: String)
 
     @Query("SELECT * FROM PointCache WHERE isFavorite=1")
-    suspend fun fetchFavorites(): List<PointCache>
+    fun fetchFavorites(): Flow<List<PointCache>>
 
 }

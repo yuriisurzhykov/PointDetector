@@ -1,12 +1,12 @@
 package com.yuriisurzhykov.pointdetector.data.repository
 
 import com.yuriisurzhykov.pointdetector.core.Favorites
+import com.yuriisurzhykov.pointdetector.core.asFlow
 import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesRemove
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ interface FavoritesRepository :
 
     abstract class Abstract(private val pointsDao: PointsDao) : FavoritesRepository {
         override suspend fun fetchFavorites(): Flow<List<PointCache>> {
-            return flow { emit(pointsDao.fetchFavorites()) }
+            return pointsDao.fetchFavorites()
         }
 
         override fun applyFavorite(item: PointCache) = runBlocking {

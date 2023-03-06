@@ -29,7 +29,11 @@ class FavoritesListFragment : AbstractStyleFragment(R.layout.fragment_favorite_l
         recycler.layoutManager = LinearLayoutManager(view.context)
         recycler.adapter = adapter
         adapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
-            override fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
+            override fun onSwipedToLeft(
+                viewHolder: RecyclerView.ViewHolder,
+                position: Int,
+                item: ViewHolderItem
+            ) {
                 super.onSwipedToLeft(viewHolder, position, item)
                 (item as? PointUi)?.let { viewModel.remove(it) }
             }

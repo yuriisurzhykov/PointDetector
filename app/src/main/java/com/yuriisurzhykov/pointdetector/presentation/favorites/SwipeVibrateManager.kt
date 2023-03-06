@@ -1,30 +1,34 @@
 package com.yuriisurzhykov.pointdetector.presentation.favorites
 
-import android.content.Context
 import com.yuriisurzhykov.pointdetector.presentation.IVibrationService
 
-interface SwipeVibrateManager {
-
-    fun tryVibrateOnDraw(dx: Float, context: Context)
+interface SwipeVibrateManager : OnSwipeActionControl {
 
     abstract class Abstract(
-        private val vibrateService: IVibrationService,
-        private val vibrateDxThreshold: Int
+        private val vibrateDxThreshold: Int,
+        private val action: () -> Unit
     ) : SwipeVibrateManager {
 
         private var wasVibration = false
 
-        override fun tryVibrateOnDraw(dx: Float, context: Context) {
-            if (dx < 2f) {
+        override fun tryCallOnSwipe(dX: Float) {
+            if (dX < 2f) {
                 wasVibration = false
             }
-            if (dx > vibrateDxThreshold && !wasVibration) {
+            if (dX > vibrateDxThreshold && !wasVibration) {
                 wasVibration = true
-                vibrateService.vibrate(context)
+                action.invoke()
             }
         }
     }
 
-    class Base(vibrateService: IVibrationService, vibrateDxThreshold: Int) :
-        Abstract(vibrateService, vibrateDxThreshold)
+    class VibrateAction(
+        private val vibrateService: IVibrationService,
+        vibrateDxThreshold: Int
+    ) : Abstract(vibrateDxThreshold, action = {
+        vibrateService.vibrate()
+    })
+
+    class CallbackAction(vibrateDxThreshold: Int, callback: () -> Unit) :
+        Abstract(vibrateDxThreshold, callback)
 }

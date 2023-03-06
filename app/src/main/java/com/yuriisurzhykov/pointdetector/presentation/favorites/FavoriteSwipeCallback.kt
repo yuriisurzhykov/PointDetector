@@ -10,11 +10,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.IVibrationService
-import com.yuriisurzhykov.pointsdetector.uicomponents.drawable.DrawableScale
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractSwipeCallback
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.BaseRecyclerViewAdapter
-import kotlin.math.max
-import kotlin.math.min
 
 class FavoriteSwipeCallback(
     adapter: BaseRecyclerViewAdapter, context: Context, vibration: IVibrationService
@@ -26,7 +23,8 @@ class FavoriteSwipeCallback(
     private val maxFavoriteSwipeThreshold =
         context.resources.getDimensionPixelSize(R.dimen.favorite_max_swipe_offset)
     private val swipeVibrator: SwipeVibrateManager =
-        SwipeVibrateManager.Base(vibration, maxFavoriteSwipeThreshold)
+        SwipeVibrateManager.VibrateAction(vibration, maxFavoriteSwipeThreshold)
+    private var wasCallingAction: Boolean = false
 
     init {
         favoriteIcon.setTint(context.getColor(R.color.white))
@@ -41,6 +39,9 @@ class FavoriteSwipeCallback(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val adapterPosition = viewHolder.absoluteAdapterPosition
+        if (viewHolder is IFavoriteViewHolderItem) {
+            viewHolder.switchFavorite()
+        }
         if (adapter is IFavoriteAdapter) {
             (adapter as IFavoriteAdapter).markFavorite(adapterPosition)
         }
@@ -56,7 +57,14 @@ class FavoriteSwipeCallback(
         isCurrentlyActive: Boolean
     ) {
         super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        swipeVibrator.tryVibrateOnDraw(dX, recyclerView.context)
+        swipeVibrator.tryCallOnSwipe(dX)
+        if (dX < 2f) {
+            wasCallingAction = false
+        }
+        if (dX > maxFavoriteSwipeThreshold && !wasCallingAction) {
+            wasCallingAction = true
+            onSwiped(viewHolder, actionState)
+        }
         val itemView = viewHolder.itemView
         val itemHeight = itemView.bottom - itemView.top
 

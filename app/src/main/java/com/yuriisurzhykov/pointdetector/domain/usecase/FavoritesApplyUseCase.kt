@@ -14,10 +14,13 @@ interface FavoritesApplyUseCase : FavoritesApply<PointUi> {
         private val repository: FavoritesRepository
     ) : FavoritesApplyUseCase {
         override fun applyFavorite(item: PointUi) {
-            repository.remove(mapper.map(item))
+            repository.applyFavorite(mapper.map(item))
         }
     }
 
-    class Base @Inject constructor(mapper: Mapper<PointUi, PointCache>, repository: FavoritesRepository) :
+    class Base @Inject constructor(
+        mapper: Mapper<PointUi, PointCache>,
+        repository: FavoritesRepository
+    ) :
         Abstract(mapper, repository)
 }

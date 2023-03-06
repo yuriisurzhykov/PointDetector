@@ -5,14 +5,15 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 
 interface IVibrationService {
-    fun vibrate(context: Context)
+    fun vibrate()
 
-    abstract class Abstract : IVibrationService {
+    abstract class Abstract constructor(private val applicationContext: Context) :
+        IVibrationService {
 
         abstract fun getVibrator(context: Context): Vibrator
 
-        override fun vibrate(context: Context) {
-            val vibrator = getVibrator(context)
+        override fun vibrate() {
+            val vibrator = getVibrator(applicationContext)
             vibrator.vibrate(VibrationEffect.createOneShot(40, 200))
         }
     }
