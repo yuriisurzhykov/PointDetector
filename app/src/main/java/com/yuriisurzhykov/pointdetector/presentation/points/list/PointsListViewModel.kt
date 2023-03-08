@@ -98,16 +98,4 @@ class PointsListViewModel @Inject constructor(
     fun getSearchCondition(): CharSequence {
         return searchCondition
     }
-
-    fun removeItem(item: PointUi) {
-        dispatchers.launchBackground(viewModelScope) {
-            removePointUseCase.delete(uiPointMapper.map(item))
-        }
-    }
-
-    fun insertItem(point: PointUi) {
-        dispatchers.launchBackground(viewModelScope) {
-            insertPointUserCase.save(uiPointMapper.map(point))
-        }
-    }
 }

@@ -1,10 +1,8 @@
 package com.yuriisurzhykov.pointdetector.data.repository
 
-import com.yuriisurzhykov.pointdetector.core.asFlow
 import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PointsRepository @Inject constructor(
@@ -20,11 +18,11 @@ class PointsRepository @Inject constructor(
     }
 
     override suspend fun fetch(): Flow<List<PointCache>> {
-        return pointsDao.fetchAll().asFlow()
+        return pointsDao.fetchAll()
     }
 
     override suspend fun fetchByCondition(condition: String): Flow<List<PointCache>> {
-        return flow { emit(pointsDao.fetchByPlaceContains(condition)) }
+        return pointsDao.fetchByPlaceContains(condition)
     }
 
     override suspend fun save(entity: PointCache) {

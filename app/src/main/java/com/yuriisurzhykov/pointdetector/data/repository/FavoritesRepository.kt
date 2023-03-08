@@ -1,7 +1,6 @@
 package com.yuriisurzhykov.pointdetector.data.repository
 
 import com.yuriisurzhykov.pointdetector.core.Favorites
-import com.yuriisurzhykov.pointdetector.core.asFlow
 import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply

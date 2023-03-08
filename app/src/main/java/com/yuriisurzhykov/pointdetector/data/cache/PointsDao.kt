@@ -21,10 +21,10 @@ interface PointsDao {
     suspend fun clearAll()
 
     @Query("SELECT * FROM pointcache")
-    fun fetchAll(): LiveData<List<PointCache>>
+    fun fetchAll(): Flow<List<PointCache>>
 
     @Query("SELECT * FROM PointCache WHERE address LIKE '%' || :value || '%' OR placeName LIKE '%' || :value || '%'")
-    suspend fun fetchByPlaceContains(value: String): List<PointCache>
+    fun fetchByPlaceContains(value: String): Flow<List<PointCache>>
 
     @Query("DELETE FROM PointCache WHERE address=:addressValue AND placeName=:name")
     suspend fun deleteByAddressAndName(addressValue: String, name: String)
