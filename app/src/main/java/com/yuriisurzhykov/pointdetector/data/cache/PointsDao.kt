@@ -14,8 +14,8 @@ interface PointsDao {
     @Delete
     suspend fun delete(entity: PointCache)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(entity: PointCache)
+    @Query("UPDATE PointCache SET isFavorite=:isFavorite WHERE id=:entityId")
+    suspend fun update(entityId: Long, isFavorite: Boolean)
 
     @Query("DELETE FROM PointCache")
     suspend fun clearAll()
@@ -29,7 +29,7 @@ interface PointsDao {
     @Query("DELETE FROM PointCache WHERE address=:addressValue AND placeName=:name")
     suspend fun deleteByAddressAndName(addressValue: String, name: String)
 
-    @Query("SELECT * FROM PointCache WHERE isFavorite=1")
+    @Query("SELECT * FROM PointCache WHERE isFavorite=='1'")
     fun fetchFavorites(): Flow<List<PointCache>>
 
 }

@@ -21,11 +21,11 @@ interface FavoritesRepository :
 
         override fun applyFavorite(item: PointCache) = runBlocking {
             val isFavorite = item.isFavorite.not()
-            pointsDao.update(item.copy(isFavorite = isFavorite))
+            pointsDao.update(item.id, isFavorite)
         }
 
         override fun remove(item: PointCache) = runBlocking {
-            pointsDao.update(item.copy(isFavorite = false))
+            pointsDao.update(item.id, false)
         }
     }
 
