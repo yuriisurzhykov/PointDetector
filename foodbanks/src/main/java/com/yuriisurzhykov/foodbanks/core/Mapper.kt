@@ -2,7 +2,7 @@ package com.yuriisurzhykov.foodbanks.core
 
 interface Mapper<I : Any, O : Any> {
 
-    fun map(input: I): O
+
 
     abstract class Abstract<I : Any, O : Any> : Mapper<I, O> {
         protected inline fun <reified O> exception(input: I): Exception {
