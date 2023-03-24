@@ -3,6 +3,7 @@ package com.yuriisurzhykov.foodbanks.data.point.cloud
 import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.foodbanks.core.FirebaseTypeIndicator
 import com.yuriisurzhykov.foodbanks.core.Mapper
+import javax.inject.Inject
 
 interface SnapshotPointMapper : Mapper<DataSnapshot, PointCloud> {
 
@@ -13,5 +14,5 @@ interface SnapshotPointMapper : Mapper<DataSnapshot, PointCloud> {
         }
     }
 
-    class Base : Abstract()
+    class Base @Inject constructor() : Abstract()
 }

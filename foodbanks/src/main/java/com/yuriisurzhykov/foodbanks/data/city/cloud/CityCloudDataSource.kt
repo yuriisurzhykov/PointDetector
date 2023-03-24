@@ -2,15 +2,13 @@ package com.yuriisurzhykov.foodbanks.data.city.cloud
 
 import com.google.firebase.database.FirebaseDatabase
 import com.yuriisurzhykov.foodbanks.core.map
-import com.yuriisurzhykov.foodbanks.data.point.cloud.PointCloud
-import com.yuriisurzhykov.foodbanks.data.point.cloud.PointCloudDataSource
-import com.yuriisurzhykov.foodbanks.data.point.cloud.SnapshotPointMapper
+import javax.inject.Inject
 
 interface CityCloudDataSource {
 
     suspend fun cities(): List<CityCloud>
 
-    class Base(
+    class Base @Inject constructor(
         private val database: FirebaseDatabase,
         private val snapshotMapper: SnapshotCityMapper
     ) : CityCloudDataSource {
