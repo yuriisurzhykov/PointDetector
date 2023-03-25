@@ -6,10 +6,11 @@ import javax.inject.Inject
 
 interface PointsCacheDataSource {
 
-    suspend fun points(): Flow<PointCache>
+    suspend fun points(): Flow<List<PointCache>>
 
     abstract class Abstract(
-        private val cityPreference: SelectedCityPreference, private val pointsDao: PointsDao
+        private val cityPreference: SelectedCityPreference,
+        private val pointsDao: PointsDao
     ) : PointsCacheDataSource {
 
         override suspend fun points() = pointsDao.pointsByCity(cityPreference.getPrefValue())

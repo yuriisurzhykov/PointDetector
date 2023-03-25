@@ -23,7 +23,6 @@ data class PointCache(
     val cityPointId: Long,
     val address: String,
     val placeName: String,
-    val isFavorite: Boolean,
     @Embedded
     val coordinates: LatLng,
     @Embedded
