@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.data.point.cache
 
 import com.yuriisurzhykov.foodbanks.data.prefs.SelectedCityPreference
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface PointsCacheDataSource {
@@ -13,7 +14,9 @@ interface PointsCacheDataSource {
         private val pointsDao: PointsDao
     ) : PointsCacheDataSource {
 
-        override suspend fun points() = pointsDao.pointsByCity(cityPreference.getPrefValue())
+        override suspend fun points() = flow {
+            emit(pointsDao.pointsByCity(cityPreference.getPrefValue()))
+        }
     }
 
     class Base @Inject constructor(

@@ -1,7 +1,7 @@
 package com.yuriisurzhykov.foodbanks.data.city.cloud
 
 import com.google.firebase.database.FirebaseDatabase
-import com.yuriisurzhykov.foodbanks.core.map
+import com.yuriisurzhykov.foodbanks.core.data.map
 import com.yuriisurzhykov.foodbanks.data.RemoteDataException
 import javax.inject.Inject
 

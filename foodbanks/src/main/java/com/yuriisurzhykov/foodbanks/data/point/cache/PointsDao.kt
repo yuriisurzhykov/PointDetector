@@ -10,11 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PointsDao {
 
-    @Query("SELECT * FROM PointCache WHERE cityPointId=:cityId")
-    fun pointsByCity(cityId: Long): Flow<List<PointCache>>
+    @Query("SELECT * FROM PointCache WHERE cityCodeId=:cityId")
+    fun pointsByCity(cityId: String): List<PointCache>
 
     @Insert
     suspend fun insert(point: PointCache)
+
+    @Insert
+    suspend fun insert(point: List<PointCache>)
 
     @Delete
     suspend fun delete(point: PointCache)

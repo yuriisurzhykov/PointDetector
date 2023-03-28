@@ -1,15 +1,16 @@
 package com.yuriisurzhykov.foodbanks.data.prefs
 
-import com.yuriisurzhykov.foodbanks.core.DataStringConverter
+import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
 import javax.inject.Inject
 
-interface SelectedCityPreference : PreferenceDataSource<Long> {
+interface SelectedCityPreference : PreferenceDataSource<String> {
 
     class Base @Inject constructor(
         stringConverter: DataStringConverter,
         preferencesDao: PreferencesDao
-    ) : SelectedCityPreference,
-        PreferenceDataSource.Abstract<Long>(stringConverter, preferencesDao, Long::class.java) {
+    ) : PreferenceDataSource.Abstract<String>(
+        stringConverter, preferencesDao, String::class.java
+    ), SelectedCityPreference {
 
         override fun prefName(): String = "preference_selected_city"
     }

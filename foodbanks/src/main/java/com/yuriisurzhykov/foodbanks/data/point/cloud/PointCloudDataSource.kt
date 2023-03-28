@@ -1,7 +1,8 @@
 package com.yuriisurzhykov.foodbanks.data.point.cloud
 
 import com.google.firebase.database.FirebaseDatabase
-import com.yuriisurzhykov.foodbanks.core.map
+import com.yuriisurzhykov.foodbanks.core.data.map
+import com.yuriisurzhykov.foodbanks.data.RemoteDataException
 import javax.inject.Inject
 
 interface PointCloudDataSource {
@@ -13,11 +14,12 @@ interface PointCloudDataSource {
         private val snapshotMapper: SnapshotPointMapper
     ) : PointCloudDataSource {
         override suspend fun getPoints(cityId: String): List<PointCloud> {
-            return database.getReference("cities")
+            val task = database.getReference("cities")
                 .child(cityId)
                 .get()
-                .result
-                .children.map { child -> child.map(snapshotMapper) }
+            if (task.isSuccessful && !task.isCanceled) {
+                return task.result.children.map { it.map(snapshotMapper) }
+            } else throw RemoteDataException(task.exception!!)
         }
     }
 }

@@ -21,6 +21,9 @@ interface CityDao {
     @Insert
     suspend fun insert(city: List<CityCache>)
 
+    @Insert
+    suspend fun insert(city: CityCache)
+
     @Delete
     suspend fun delete(city: CityCache)
 

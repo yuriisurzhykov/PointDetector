@@ -12,15 +12,15 @@ import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
     tableName = "PointCache",
     foreignKeys = [ForeignKey(
         entity = CityCache::class,
-        parentColumns = ["cityId"],
-        childColumns = ["cityPointId"],
+        parentColumns = ["nameCode"],
+        childColumns = ["cityCodeId"],
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class PointCache(
     @PrimaryKey(autoGenerate = true)
     val pointId: Long,
-    val cityPointId: Long,
+    val cityCodeId: String,
     val address: String,
     val placeName: String,
     @Embedded

@@ -12,6 +12,7 @@ data class PointCloud(
     val coordinates: LatLng,
     @SerialName("place_name")
     val placeName: String,
+    val cityCode: String,
     @SerialName("working_hours")
     val workingHours: List<WorkingHour>
 )

@@ -1,43 +1,29 @@
 package com.yuriisurzhykov.foodbanks.data.city
 
-import com.yuriisurzhykov.foodbanks.core.data.Delete
-import com.yuriisurzhykov.foodbanks.core.data.Save
-import com.yuriisurzhykov.foodbanks.core.map
+import com.yuriisurzhykov.foodbanks.core.data.Repository
 import com.yuriisurzhykov.foodbanks.data.ConnectivityCheck
-import com.yuriisurzhykov.foodbanks.data.RemoteDataException
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
-import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
+import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
+import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloud
 import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloudDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
-interface CityRepository : Save<CityCache>, Delete<CityCache> {
+interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
 
-    suspend fun cities(): Flow<CityRepositoryResponse>
-
-    abstract class Abstract(
-        private val cloudToCacheMapper: CloudToCacheListMapper,
+    class Base constructor(
         private val cityCloudDataSource: CityCloudDataSource,
-        private val cityCacheDataSource: CityCacheDataSource,
-        private val connectivityCheck: ConnectivityCheck,
-    ) : CityRepository {
+        private val cityCacheDataSource: CityDao,
+        cloudToCacheMapper: CloudToCacheListMapper,
+        connectivityCheck: ConnectivityCheck,
+    ) : Repository.Abstract<List<CityCloud>, List<CityCache>>(
+        connectivityCheck,
+        cloudToCacheMapper
+    ), CityRepository {
 
-        override suspend fun cities() = flow {
-            val cacheList = cityCacheDataSource.cities()
-            emit(CityRepositoryResponse.Success(cacheList))
-            if (connectivityCheck.isNetworkAvailable()) {
-                try {
-                    val cloud = cityCloudDataSource.cities()
-                    val cache = cloud.map(cloudToCacheMapper)
-                    cityCacheDataSource.insertAll(cache)
-                    emit(CityRepositoryResponse.Success(cityCacheDataSource.cities()))
-                } catch (e: RemoteDataException) {
-                    emit(CityRepositoryResponse.ServerFailed(e, cacheList))
-                }
-            } else {
-                emit(CityRepositoryResponse.NoInternetConnection(cacheList))
-            }
-        }
+        override suspend fun cached(): List<CityCache> = cityCacheDataSource.cities()
+
+        override suspend fun cloud(): List<CityCloud> = cityCloudDataSource.cities()
+
+        override suspend fun cacheCloud(value: List<CityCache>) =
+            cityCacheDataSource.insert(value)
     }
-
 }
