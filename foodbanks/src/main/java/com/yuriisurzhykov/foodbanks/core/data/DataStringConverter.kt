@@ -1,4 +1,4 @@
-package com.yuriisurzhykov.foodbanks.core
+package com.yuriisurzhykov.foodbanks.core.data
 
 import com.google.gson.Gson
 import javax.inject.Inject
