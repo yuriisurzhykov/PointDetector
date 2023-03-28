@@ -4,6 +4,7 @@ import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
 
 interface PreferenceDataSource<T : Any> {
 
+    @kotlin.jvm.Throws(NoPreferenceException::class)
     suspend fun getPrefValue(): T
 
     suspend fun savePref(value: T)
@@ -20,8 +21,12 @@ interface PreferenceDataSource<T : Any> {
 
         @Suppress("UNCHECKED_CAST")
         override suspend fun getPrefValue(): T {
-            val pref = preferencesDao.preference(prefName())
-            return stringConverter.inverseMap(pref.prefValue, clazz) as T
+            try {
+                val pref = preferencesDao.preference(prefName())
+                return stringConverter.inverseMap(pref.prefValue, clazz) as T
+            } catch (e: Exception) {
+                throw NoPreferenceException(prefName())
+            }
         }
 
         override suspend fun savePref(value: T) {
