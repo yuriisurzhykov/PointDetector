@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.Flow
 interface CityDao {
 
     @Query("SELECT * FROM CityCache")
-    fun cities(): Flow<CityCache>
+    suspend fun cities(): List<CityCache>
 
-    @Query("SELECT * FROM CityCache WHERE cityId=:cityId")
+    @Query("SELECT * FROM CityCache WHERE nameCode=:cityCode")
     @Transaction
-    fun cityWithPoints(cityId: Long): Flow<CityWithPointsCache>
+    suspend fun cityWithPoints(cityCode: String): CityWithPointsCache
 
     @Insert
-    suspend fun insert(city: CityCache)
+    suspend fun insert(city: List<CityCache>)
 
     @Delete
     suspend fun delete(city: CityCache)

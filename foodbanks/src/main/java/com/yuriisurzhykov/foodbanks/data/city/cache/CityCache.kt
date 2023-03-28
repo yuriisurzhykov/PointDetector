@@ -1,9 +1,15 @@
 package com.yuriisurzhykov.foodbanks.data.city.cache
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    indices = [
+        Index(name = "nameCode", unique = true),
+        Index(name = "cityId", unique = true)
+    ]
+)
 data class CityCache(
     @PrimaryKey(autoGenerate = true)
     val cityId: Long,
