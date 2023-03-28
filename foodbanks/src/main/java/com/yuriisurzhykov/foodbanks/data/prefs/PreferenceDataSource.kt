@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.foodbanks.data.prefs
 
-import com.yuriisurzhykov.foodbanks.core.DataStringConverter
+import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
 
 interface PreferenceDataSource<T : Any> {
 
