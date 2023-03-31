@@ -85,32 +85,8 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         listAdapter.favoritesApply = FavoritesApply { holderItem ->
             (holderItem as? PointUi)?.let { pointUi -> favoritesViewModel.applyFavorite(pointUi) }
         }
-        listAdapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
-            override fun onSwipedToLeft(
-                viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem
-            ) {
-                if (item is PointUi) {
-                    viewModel.removeItem(item)
-                    showOnDeleteSnackbar(item, position)
-                }
-            }
-        })
         viewModel.observePointsList(viewLifecycleOwner) {
             this@PointsListFragment.view?.post { listAdapter.submitList(it) }
-        }
-    }
-
-    private fun showOnDeleteSnackbar(point: ViewHolderItem, position: Int) {
-        view?.let {
-            val snackbar =
-                Snackbar.make(it, R.string.label_point_deletec_action, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.button_undo) {
-                        if (point is PointUi) {
-                            listAdapter.insertItem(point, position)
-                            viewModel.insertItem(point)
-                        }
-                    }
-            snackbar.show()
         }
     }
 

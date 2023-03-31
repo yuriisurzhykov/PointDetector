@@ -18,7 +18,7 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment, PermissionsRe
         }
 
     private val settingsLauncher =
-        registerForActivityResult(PermissionsCheckActivity.SettingsActivityContract { requireContext() }) {
+        registerForActivityResult(SettingsActivityContract { requireContext() }) {
             if (it) {
                 onPermissionsGranted()
             }
@@ -33,7 +33,10 @@ abstract class AbstractPermissionFragment : AbstractStyleFragment, PermissionsRe
     protected fun checkPermissions() {
         context?.let { localContext ->
             val permissionGranted = getPermissionsArray().all {
-                ContextCompat.checkSelfPermission(localContext, it) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(
+                    localContext,
+                    it
+                ) == PackageManager.PERMISSION_GRANTED
             }
             if (permissionGranted) {
                 onPermissionsGranted()
