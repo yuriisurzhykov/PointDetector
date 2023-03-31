@@ -11,7 +11,16 @@ interface Mapper<I : Any, O : Any> {
     }
 
     interface List<I : Any, O : Any> :
-        Mapper<kotlin.collections.List<I>, kotlin.collections.List<O>>
+        Mapper<kotlin.collections.List<I>, kotlin.collections.List<O>> {
+        fun map(input: I): O
+    }
+
+    abstract class AbstractList<I : Any, O : Any> : List<I, O>,
+        Abstract<kotlin.collections.List<I>, kotlin.collections.List<O>>() {
+        override fun map(input: kotlin.collections.List<I>): kotlin.collections.List<O> {
+            return input.map { map(it) }
+        }
+    }
 
     class Empty<I : Any> : Mapper<I, Unit> {
         override fun map(input: I) = Unit

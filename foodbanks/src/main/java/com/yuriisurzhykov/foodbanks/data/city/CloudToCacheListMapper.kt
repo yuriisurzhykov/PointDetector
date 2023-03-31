@@ -8,8 +8,7 @@ import javax.inject.Inject
 
 class CloudToCacheListMapper @Inject constructor(
     private val mapper: CloudToCacheMapper
-) : Mapper.List<CityCloud, CityCache> {
-    override fun map(input: List<CityCloud>): List<CityCache> {
-        return input.map { item -> item.map(mapper) }
-    }
+) : Mapper.AbstractList<CityCloud, CityCache>() {
+
+    override fun map(input: CityCloud) = input.map(mapper)
 }
