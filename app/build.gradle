@@ -9,6 +9,10 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+ext {
+    kotlin_version = "1.8.0"
+}
+
 android {
     compileSdk 33
 
