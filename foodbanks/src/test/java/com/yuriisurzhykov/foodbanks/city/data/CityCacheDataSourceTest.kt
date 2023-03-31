@@ -9,21 +9,42 @@ import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 private const val TestCityCode = "sac"
 
 class CityCacheDataSourceTest {
 
+    private lateinit var dao: TestCityDao
+    private lateinit var dataSource: CityCacheDataSource
+
+    @Before
+    fun `init resources for test`() {
+        dao = TestCityDao()
+        dataSource = TestCityCacheDataSource(dao)
+    }
+
     @Test
     fun `test searching city by code`(): Unit = runBlocking {
-        val dao = TestCityDao()
-        val dataSource = TestCityCacheDataSource(dao)
-        assertEquals(dao.cities, dataSource.cities())
         val points = dataSource.cityByCode(TestCityCode).points
         assertEquals(dao.points, points)
     }
+
+    @Test
+    fun `test comparing all cities in data source list`(): Unit = runBlocking {
+        assertEquals(dao.cities, dataSource.cities())
+    }
+
+    @Test
+    fun `test inserting cities to data source`(): Unit = runBlocking {
+        dataSource.insertAll(
+            listOf(CityCache(0, "City 2", "sac-2", "CA", "USA"))
+        )
+        assertEquals(dao.cities, dataSource.cities())
+    }
 }
+
 
 private class TestCityDao : CityDao {
 
