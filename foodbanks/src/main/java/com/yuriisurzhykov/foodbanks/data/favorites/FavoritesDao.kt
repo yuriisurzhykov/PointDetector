@@ -14,8 +14,11 @@ interface FavoritesDao {
     fun favorites(): Flow<List<FavoritePointCache>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavorite(favorite: FavoritePointCache)
+    fun insertFavorite(favorite: FavoritePointCache): Boolean
 
     @Delete
-    fun deleteFavorite(favorite: FavoritePointCache)
+    suspend fun deleteFavorite(favorite: FavoritePointCache)
+
+    @Delete
+    suspend fun deleteFavorite(id: Long): Boolean
 }
