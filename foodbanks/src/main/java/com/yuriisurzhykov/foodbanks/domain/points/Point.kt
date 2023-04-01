@@ -1,4 +1,5 @@
 package com.yuriisurzhykov.foodbanks.domain.points
 
-class Point {
-}
+class Point(
+    val id: Long
+)
