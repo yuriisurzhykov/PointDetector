@@ -9,6 +9,8 @@ interface PointsCacheDataSource {
 
     suspend fun points(): Flow<List<PointCache>>
 
+    suspend fun findById(id: Long): PointCache
+
     abstract class Abstract(
         private val cityPreference: SelectedCityPreference,
         private val pointsDao: PointsDao
@@ -16,6 +18,10 @@ interface PointsCacheDataSource {
 
         override suspend fun points() = flow {
             emit(pointsDao.pointsByCity(cityPreference.getPrefValue()))
+        }
+
+        override suspend fun findById(id: Long): PointCache {
+            return pointsDao.pointById(id)
         }
     }
 

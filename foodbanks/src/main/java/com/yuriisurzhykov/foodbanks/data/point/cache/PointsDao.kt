@@ -13,6 +13,9 @@ interface PointsDao {
     @Query("SELECT * FROM PointCache WHERE cityCodeId=:cityId")
     fun pointsByCity(cityId: String): List<PointCache>
 
+    @Query("SELECT * FROM PointCache WHERE pointId=:id")
+    fun pointById(id: Long): PointCache
+
     @Insert
     suspend fun insert(point: PointCache)
 
