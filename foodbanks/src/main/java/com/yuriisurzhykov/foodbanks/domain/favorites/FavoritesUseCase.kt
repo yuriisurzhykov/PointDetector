@@ -2,7 +2,6 @@ package com.yuriisurzhykov.foodbanks.domain.favorites
 
 import com.yuriisurzhykov.foodbanks.core.presentation.Dispatchers
 import com.yuriisurzhykov.foodbanks.data.favorites.FavoritesRepository
-import com.yuriisurzhykov.foodbanks.domain.points.Point
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
