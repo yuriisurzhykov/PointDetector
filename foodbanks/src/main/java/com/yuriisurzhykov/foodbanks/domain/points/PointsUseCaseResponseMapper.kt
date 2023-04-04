@@ -4,6 +4,9 @@ import com.yuriisurzhykov.foodbanks.core.domain.UseCaseResponseMapper
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import javax.inject.Inject
 
-class PointsUseCaseResponseMapper @Inject constructor(
-    mapper: PointCacheToDomainMapper
-) : UseCaseResponseMapper.AbstractList<PointCache, Point>(mapper)
+interface PointsUseCaseResponseMapper : UseCaseResponseMapper.List<PointCache, Point> {
+
+    class Base @Inject constructor(
+        mapper: PointCacheToDomainMapper
+    ) : PointsUseCaseResponseMapper, UseCaseResponseMapper.AbstractList<PointCache, Point>(mapper)
+}

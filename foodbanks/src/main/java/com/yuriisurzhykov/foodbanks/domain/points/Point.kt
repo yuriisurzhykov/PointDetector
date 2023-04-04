@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 interface Point {
 
     interface Mapper<T> {
+        
         fun map(id: Long, name: String, address: String, workingHours: List<WorkingHour>): T
 
         class MarkFavorite(
@@ -29,10 +30,10 @@ interface Point {
     fun <T> map(mapper: Mapper<T>): T
 
     data class Base(
-        val id: Long,
-        val name: String,
-        val address: String,
-        val workingHours: List<WorkingHour>
+        private val id: Long,
+        private val name: String,
+        private val address: String,
+        private val workingHours: List<WorkingHour>
     ) : Point {
 
         override fun <T> map(mapper: Mapper<T>): T {

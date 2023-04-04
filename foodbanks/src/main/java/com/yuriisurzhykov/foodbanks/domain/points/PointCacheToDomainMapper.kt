@@ -7,8 +7,11 @@ interface PointCacheToDomainMapper : Mapper.List<PointCache, Point> {
 
     class Base : Mapper.AbstractList<PointCache, Point>(), PointCacheToDomainMapper {
 
-        override fun map(input: PointCache): Point {
-            return Point()
-        }
+        override fun map(input: PointCache): Point = Point.Base(
+            input.pointId,
+            input.placeName,
+            input.address,
+            input.workingHours
+        )
     }
 }

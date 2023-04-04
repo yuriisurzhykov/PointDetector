@@ -7,6 +7,7 @@ import com.yuriisurzhykov.foodbanks.data.point.PointsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 interface PointsListUseCase {
 
@@ -27,4 +28,11 @@ interface PointsListUseCase {
             point.map(Point.Mapper.MarkFavorite(favoritesRepository, dispatchers, coroutineScope))
         }
     }
+
+    class Base @Inject constructor(
+        repository: PointsRepository,
+        favoritesRepository: FavoritesRepository,
+        mapper: PointsUseCaseResponseMapper,
+        dispatchers: Dispatchers
+    ) : Abstract(repository, favoritesRepository, mapper, dispatchers)
 }
