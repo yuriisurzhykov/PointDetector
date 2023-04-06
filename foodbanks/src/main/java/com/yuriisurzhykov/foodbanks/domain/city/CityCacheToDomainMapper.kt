@@ -10,7 +10,7 @@ interface CityCacheToDomainMapper : Mapper.List<CityCache, City> {
         CityCacheToDomainMapper,
         Mapper.AbstractList<CityCache, City>() {
 
-        override fun map(input: CityCache) = City.Base(
+        override fun mapSingle(input: CityCache) = City.Base(
             cityName = input.name,
             cityCode = input.nameCode,
             country = input.country,

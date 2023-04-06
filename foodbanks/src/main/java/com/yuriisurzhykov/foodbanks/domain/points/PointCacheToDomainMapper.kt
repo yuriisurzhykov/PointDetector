@@ -7,7 +7,7 @@ interface PointCacheToDomainMapper : Mapper.List<PointCache, Point> {
 
     class Base : Mapper.AbstractList<PointCache, Point>(), PointCacheToDomainMapper {
 
-        override fun map(input: PointCache): Point = Point.Base(
+        override fun mapSingle(input: PointCache): Point = Point.Base(
             input.pointId,
             input.placeName,
             input.address,

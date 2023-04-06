@@ -10,5 +10,5 @@ class CloudToCacheListMapper @Inject constructor(
     private val mapper: CloudToCacheMapper
 ) : Mapper.AbstractList<CityCloud, CityCache>() {
 
-    override fun map(input: CityCloud) = input.map(mapper)
+    override fun mapSingle(input: CityCloud) = input.map(mapper)
 }
