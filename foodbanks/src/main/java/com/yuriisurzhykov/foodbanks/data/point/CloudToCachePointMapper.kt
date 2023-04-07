@@ -5,11 +5,11 @@ import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import com.yuriisurzhykov.foodbanks.data.point.cloud.PointCloud
 import javax.inject.Inject
 
-interface CloudToCacheMapper : Mapper<List<PointCloud>, List<PointCache>> {
+interface CloudToCachePointMapper : Mapper<List<PointCloud>, List<PointCache>> {
 
     fun map(input: PointCloud): PointCache
 
-    class Base @Inject constructor() : CloudToCacheMapper {
+    class Base @Inject constructor() : CloudToCachePointMapper {
 
         override fun map(input: List<PointCloud>): List<PointCache> {
             return input.map { map(it) }

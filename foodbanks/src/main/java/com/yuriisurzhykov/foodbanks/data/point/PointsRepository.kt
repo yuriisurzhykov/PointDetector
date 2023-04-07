@@ -15,7 +15,7 @@ interface PointsRepository : Repository<List<PointCloud>, List<PointCache>> {
         private val pointDao: PointsDao,
         private val selectedCityPreference: SelectedCityPreference,
         private val pointCloudDataSource: PointCloudDataSource,
-        cloudCacheMapper: CloudToCacheMapper,
+        cloudCacheMapper: CloudToCachePointMapper,
         networkCheck: ConnectivityCheck
     ) : Repository.Abstract<List<PointCloud>, List<PointCache>>(networkCheck, cloudCacheMapper),
         PointsRepository {

@@ -6,7 +6,7 @@ import android.net.Network
 import android.net.NetworkRequest
 import com.yuriisurzhykov.foodbanks.data.ConnectivityCheck
 
-class AndroidConnectivityCheck(context: Context, private val networkRequest: NetworkRequest) :
+class AndroidConnectivityCheck(context: Context, networkRequest: NetworkRequest) :
     ConnectivityCheck,
     ConnectivityManager.NetworkCallback() {
 

@@ -6,7 +6,8 @@ import javax.inject.Inject
 
 interface PointToFavoriteMapper : Mapper<PointCache, FavoritePointCache> {
 
-    class Base @Inject constructor() : Mapper.Abstract<PointCache, FavoritePointCache>() {
+    class Base @Inject constructor() : PointToFavoriteMapper,
+        Mapper.Abstract<PointCache, FavoritePointCache>() {
         override fun map(input: PointCache) =
             FavoritePointCache(
                 0,
