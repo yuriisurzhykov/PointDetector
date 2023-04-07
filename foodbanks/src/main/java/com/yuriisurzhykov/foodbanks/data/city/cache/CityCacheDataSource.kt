@@ -1,5 +1,7 @@
 package com.yuriisurzhykov.foodbanks.data.city.cache
 
+import javax.inject.Inject
+
 interface CityCacheDataSource {
 
     suspend fun cityByCode(codeName: String): CityWithPointsCache
@@ -18,4 +20,6 @@ interface CityCacheDataSource {
 
         override suspend fun insertAll(list: List<CityCache>) = cityDao.insert(list)
     }
+
+    class Base @Inject constructor(cityDao: CityDao) : Abstract(cityDao)
 }

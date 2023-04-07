@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.data.sync.cloud
 
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 interface SyncCloudDataSource {
 
@@ -16,5 +17,5 @@ interface SyncCloudDataSource {
         }
     }
 
-    class Base(database: FirebaseDatabase) : Abstract(database)
+    class Base @Inject constructor(database: FirebaseDatabase) : Abstract(database)
 }
