@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.data.favorites
 
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointsCacheDataSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 interface FavoritesRepository {
 
@@ -29,4 +30,11 @@ interface FavoritesRepository {
             return favoritesDao.deleteFavorite(id)
         }
     }
+
+    class Base @Inject constructor(
+        mapper: PointToFavoriteMapper,
+        pointsCacheDataSource: PointsCacheDataSource,
+        favoriteCacheDataStore: FavoriteCacheDataStore,
+        favoritesDao: FavoritesDao
+    ) : Abstract(mapper, pointsCacheDataSource, favoriteCacheDataStore, favoritesDao)
 }

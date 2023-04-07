@@ -6,10 +6,11 @@ import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloud
 import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloudDataSource
+import javax.inject.Inject
 
 interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
 
-    class Base constructor(
+    class Base @Inject constructor(
         private val cityCloudDataSource: CityCloudDataSource,
         private val cityCacheDataSource: CityDao,
         cloudToCacheMapper: CloudToCacheListMapper,
