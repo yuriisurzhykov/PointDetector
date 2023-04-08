@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FavoritesModule {
+object FavoritesModule {
 
     @Provides
     @Singleton
