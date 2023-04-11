@@ -5,13 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.yuriisurzhykov.foodbanks.data.sync.SyncProperty
 
 @Dao
 interface SyncDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: SyncProperty)
+    suspend fun insert(entity: SyncPropertyCache)
 
     suspend fun update()
 
@@ -21,6 +20,6 @@ interface SyncDao {
                 "ON s.syncEntity=P.prefValue AND P.prefName='preference_selected_city'"
     )
     @Transaction
-    suspend fun lastUpdate(): SyncProperty
+    suspend fun lastUpdate(): SyncPropertyCache
 
 }
