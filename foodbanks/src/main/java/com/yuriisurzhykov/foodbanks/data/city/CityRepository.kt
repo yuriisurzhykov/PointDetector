@@ -15,7 +15,7 @@ interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
         private val cityCacheDataSource: CityDao,
         cloudToCacheMapper: CloudToCacheListMapper,
         connectivityCheck: ConnectivityCheck,
-    ) : Repository.Abstract<List<CityCloud>, List<CityCache>>(
+    ) : Repository.CacheRepository<List<CityCloud>, List<CityCache>>(
         connectivityCheck,
         cloudToCacheMapper
     ), CityRepository {

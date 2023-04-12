@@ -27,4 +27,28 @@ data class PointCache(
     val coordinates: LatLng,
     @Embedded
     val workingHours: List<WorkingHour>
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PointCache
+
+        if (cityCodeId != other.cityCodeId) return false
+        if (address != other.address) return false
+        if (placeName != other.placeName) return false
+        if (coordinates != other.coordinates) return false
+        if (workingHours != other.workingHours) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = cityCodeId.hashCode()
+        result = 31 * result + address.hashCode()
+        result = 31 * result + placeName.hashCode()
+        result = 31 * result + coordinates.hashCode()
+        result = 31 * result + workingHours.hashCode()
+        return result
+    }
+}

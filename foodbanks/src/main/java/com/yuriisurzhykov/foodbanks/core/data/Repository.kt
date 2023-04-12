@@ -16,6 +16,7 @@ interface Repository<Cloud : Any, Cache : Any> {
         protected abstract suspend fun cached(): Cache
         protected abstract suspend fun cloud(): Cloud
         protected abstract suspend fun cacheCloud(value: Cache)
+        protected abstract suspend fun merge(cache: Cache, cloudMapped: Cache): Cache
 
         override suspend fun fetch(): Flow<RepositoryResponse<Cache>> = flow {
             val cacheItems = cached()
@@ -24,7 +25,7 @@ interface Repository<Cloud : Any, Cache : Any> {
                 try {
                     val cloudValue = cloud().map(mapper)
                     cacheCloud(cloudValue)
-                    emit(RepositoryResponse.Success(cloudValue))
+                    emit(RepositoryResponse.Success(merge(cacheItems, cloudValue)))
                 } catch (e: Exception) {
                     emit(RepositoryResponse.NetworkError(cacheItems))
                 }
