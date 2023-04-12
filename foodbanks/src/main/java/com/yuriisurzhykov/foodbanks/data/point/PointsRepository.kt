@@ -33,6 +33,13 @@ interface PointsRepository : Repository<List<PointCloud>, List<PointCache>> {
         override suspend fun cacheCloud(value: List<PointCache>) {
             pointDao.insert(value)
         }
+
+        override suspend fun merge(
+            cache: List<PointCache>,
+            cloudMapped: List<PointCache>
+        ): List<PointCache> {
+            return (cache.toSet() + cloudMapped.toSet()).toSet().toList()
+        }
     }
 
 }
