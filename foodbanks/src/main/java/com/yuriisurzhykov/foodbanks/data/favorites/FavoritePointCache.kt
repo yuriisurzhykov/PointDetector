@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.data.favorites
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 
@@ -13,7 +14,8 @@ import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
             parentColumns = ["pointId"],
             childColumns = ["pointId"]
         )
-    ]
+    ],
+    indices = [Index("pointId", unique = false)]
 )
 data class FavoritePointCache(
     @PrimaryKey

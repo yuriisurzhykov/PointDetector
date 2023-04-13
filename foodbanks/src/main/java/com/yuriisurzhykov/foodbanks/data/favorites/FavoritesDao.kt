@@ -1,10 +1,6 @@
 package com.yuriisurzhykov.foodbanks.data.favorites
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,11 +10,12 @@ interface FavoritesDao {
     fun favorites(): Flow<List<FavoritePointCache>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavorite(favorite: FavoritePointCache): Boolean
+    fun insertFavorite(favorite: FavoritePointCache)
 
     @Delete
     suspend fun deleteFavorite(favorite: FavoritePointCache)
 
-    @Delete
-    suspend fun deleteFavorite(id: Long): Boolean
+    @Query("DELETE FROM FavoritePoint WHERE favoriteId=:id")
+    @Transaction
+    suspend fun deleteFavorite(id: Long)
 }

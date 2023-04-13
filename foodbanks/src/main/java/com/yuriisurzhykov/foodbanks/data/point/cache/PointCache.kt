@@ -1,9 +1,6 @@
 package com.yuriisurzhykov.foodbanks.data.point.cache
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.point.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
@@ -15,7 +12,8 @@ import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
         parentColumns = ["nameCode"],
         childColumns = ["cityCodeId"],
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index("cityCodeId", unique = false)]
 )
 data class PointCache(
     @PrimaryKey(autoGenerate = true)

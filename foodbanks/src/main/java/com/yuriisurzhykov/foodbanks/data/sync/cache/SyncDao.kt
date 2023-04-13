@@ -13,8 +13,6 @@ interface SyncDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: SyncProperty)
 
-    suspend fun update()
-
     @Query(
                 "SELECT S.id, S.lastSyncTime,S.syncEntity FROM SyncProperty AS S " +
                 "INNER JOIN PreferenceCache AS P " +

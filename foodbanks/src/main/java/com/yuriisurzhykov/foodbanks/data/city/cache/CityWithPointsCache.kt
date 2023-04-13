@@ -1,9 +1,11 @@
 package com.yuriisurzhykov.foodbanks.data.city.cache
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.Relation
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 
+@Entity
 data class CityWithPointsCache(
     @Embedded
     val city: CityCache,

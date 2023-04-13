@@ -6,15 +6,15 @@ import androidx.room.PrimaryKey
 
 @Entity(
     indices = [
-        Index(name = "nameCode", unique = true),
-        Index(name = "cityId", unique = true)
+        Index("nameCode", unique = true),
+        Index("cityId", unique = true)
     ]
 )
 data class CityCache(
     @PrimaryKey(autoGenerate = true)
-    val cityId: Long,
+    val cityId: Long = 0,
     val name: String,
-    val nameCode: String,
+    val nameCode: String = "",
     val region: String,
     val country: String
 )
