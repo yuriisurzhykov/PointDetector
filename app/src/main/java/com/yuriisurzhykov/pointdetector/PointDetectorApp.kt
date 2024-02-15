@@ -4,5 +4,4 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PointDetectorApp : Application() {
-}
+class PointDetectorApp : Application()
