@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointsdetector.uicomponents.textselect.SelectOption
+import com.yuriisurzhykov.pointdetector.uicomponents.textselect.SelectOption
 
 interface RadioButtonProvider<T> {
     fun provideButton(item: T, parent: ViewGroup, inflater: LayoutInflater): RadioButton

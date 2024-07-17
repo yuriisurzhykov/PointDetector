@@ -2,8 +2,8 @@ package com.yuriisurzhykov.pointdetector.domain.entities
 
 import com.google.firebase.database.PropertyName
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import java.io.Serializable
 
 @kotlinx.serialization.Serializable

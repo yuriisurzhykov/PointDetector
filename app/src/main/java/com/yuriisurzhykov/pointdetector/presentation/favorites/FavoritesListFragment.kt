@@ -11,8 +11,8 @@ import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeRecyclerCallbacks
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeRecyclerCallbacks
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -5,8 +5,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractSwipeCallback
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.BaseRecyclerViewAdapter
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractSwipeCallback
+import com.yuriisurzhykov.pointdetector.uicomponents.list.BaseRecyclerViewAdapter
 
 class BothSideSwipeCallback(
     private val rightSwipeCallback: AbstractSwipeCallback,

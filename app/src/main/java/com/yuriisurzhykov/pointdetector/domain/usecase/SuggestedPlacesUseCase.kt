@@ -23,7 +23,6 @@ interface SuggestedPlacesUseCase {
 
         private val geocoder = Geocoder(context)
 
-        @Suppress("BlockingMethodInNonBlockingContext")
         override suspend fun getSuggestedPlaces(placeName: String): List<Point> {
             return try {
                 geocoder.getFromLocationName(placeName, maxRelatedPlaceCount).orEmpty().map { mapper.map(it) }

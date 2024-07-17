@@ -6,7 +6,7 @@ import com.yuriisurzhykov.pointdetector.data.cache.configs.MeasureUnitConfig
 import com.yuriisurzhykov.pointdetector.data.cache.configs.SortingTypeConfig
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAvailableMeasureUnitUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAvailableSortingTypesUseCase
-import com.yuriisurzhykov.pointsdetector.uicomponents.textselect.SelectOption
+import com.yuriisurzhykov.pointdetector.uicomponents.textselect.SelectOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

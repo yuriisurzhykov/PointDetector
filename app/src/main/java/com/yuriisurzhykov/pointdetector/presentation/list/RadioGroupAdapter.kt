@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.MutableListAdapter
+import com.yuriisurzhykov.pointdetector.uicomponents.list.MutableListAdapter
 import java.lang.ref.SoftReference
 
 class RadioGroupAdapter<T> constructor(

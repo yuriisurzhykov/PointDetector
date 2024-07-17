@@ -1,8 +1,11 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.location.Location
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.config.ProjectSortTypeBuilder
 import com.yuriisurzhykov.pointdetector.domain.mappers.PointUiToCacheMapper
@@ -12,12 +15,12 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
-import java.util.*
+import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.timerTask
 

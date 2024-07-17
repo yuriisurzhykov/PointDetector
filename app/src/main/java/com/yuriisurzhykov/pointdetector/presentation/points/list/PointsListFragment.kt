@@ -11,21 +11,23 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.favorites.BothSideSwipeCallback
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
-import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteSwipeCallback
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
+import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
 import com.yuriisurzhykov.pointdetector.presentation.vibration.VibrationService
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.*
+import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointdetector.uicomponents.list.LayoutManagerFactory
+import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeDeleteCallback
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

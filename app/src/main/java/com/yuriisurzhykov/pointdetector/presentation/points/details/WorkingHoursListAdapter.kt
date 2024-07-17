@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.details
 
 import com.yuriisurzhykov.pointdetector.presentation.list.BaseViewHolderTypeManager
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.BaseRecyclerViewAdapter
+import com.yuriisurzhykov.pointdetector.uicomponents.list.BaseRecyclerViewAdapter
 
 class WorkingHoursListAdapter : BaseRecyclerViewAdapter(BaseViewHolderTypeManager())
