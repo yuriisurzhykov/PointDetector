@@ -5,9 +5,7 @@ import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
-@ViewHolder(R.layout.list_item_entered_data_empty)
 class EmptySearchViewHolder(view: View) : AbstractViewHolder<EmptySearchData>(view) {
 
     private val text: TextView by lazy { itemView.findViewById(android.R.id.text1) }

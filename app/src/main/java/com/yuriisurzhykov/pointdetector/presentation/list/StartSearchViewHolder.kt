@@ -7,7 +7,6 @@ import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 
 class StartSearchData : ViewHolderItem.Abstract() {
@@ -17,7 +16,6 @@ class StartSearchData : ViewHolderItem.Abstract() {
     }
 }
 
-@ViewHolder(R.layout.list_item_empty_points_list)
 class StartSearchViewHolder(view: View) : AbstractViewHolder<StartSearchData>(view) {
 
     private val image: ImageView by lazy { itemView.findViewById(android.R.id.icon) }

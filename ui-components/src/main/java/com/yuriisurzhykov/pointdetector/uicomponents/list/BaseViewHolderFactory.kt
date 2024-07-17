@@ -10,14 +10,8 @@ class BaseViewHolderFactory<VH : RecyclerView.ViewHolder>(
 ) : ViewHolderFactory<VH> {
 
     @Suppress("UNCHECKED_CAST")
-    override fun create(clazz: Class<out RecyclerView.ViewHolder>, parent: ViewGroup): VH {
-        if (clazz.isAnnotationPresent(ViewHolder::class.java)) {
-            val annotation = clazz.annotations.find { it is ViewHolder } as? ViewHolder
-            if (annotation != null && AbstractViewHolder::class.java.isAssignableFrom(clazz)) {
-                val view = inflater.inflate(annotation.layoutRes, parent, false)
-                return clazz.getConstructor(View::class.java).newInstance(view) as VH
-            }
-        }
-        throw IllegalArgumentException("Illegal $clazz! You must to annotate it with @ViewHolder annotation!")
+    override fun create(holderContainer: ViewHolderContainer<*>, parent: ViewGroup): VH {
+        val view = inflater.inflate(holderContainer.layoutId, parent, false)
+        return holderContainer.javaClass.getConstructor(View::class.java).newInstance(view) as VH
     }
 }

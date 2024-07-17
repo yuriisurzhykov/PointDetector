@@ -1,7 +1,6 @@
 package com.yuriisurzhykov.pointdetector.uicomponents.list;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,24 +11,24 @@ public interface ViewHolderTypeManager<T> {
     int getViewHolderType(@NonNull T item);
 
     @NonNull
-    Class<? extends AbstractViewHolder<T>> getViewHolderClass(int viewType);
+    ViewHolderContainer<T> getViewHolderClass(int viewType);
 
     abstract class Abstract<T> implements ViewHolderTypeManager<T> {
 
-        private final Map<Integer, Class<? extends AbstractViewHolder<T>>> typeMap = new HashMap<>();
+        private final Map<Integer, ViewHolderContainer<T>> typeMap = new HashMap<>();
 
-        public abstract Pair<Integer, Class<? extends AbstractViewHolder<T>>> getViewHolderTypeWithClass(@NonNull T item);
+        public abstract ViewHolderContainer<T> getViewHolderTypeWithClass(@NonNull T item);
 
         @Override
         public int getViewHolderType(@NonNull T item) {
-            Pair<Integer, Class<? extends AbstractViewHolder<T>>> pair = getViewHolderTypeWithClass(item);
-            typeMap.put(pair.first, pair.second);
-            return pair.first;
+            ViewHolderContainer<T> pair = getViewHolderTypeWithClass(item);
+            typeMap.put(pair.getType(), pair);
+            return pair.getType();
         }
 
         @Override
         @NonNull
-        public Class<? extends AbstractViewHolder<T>> getViewHolderClass(int viewType) {
+        public ViewHolderContainer<T> getViewHolderClass(int viewType) {
             return Objects.requireNonNull(typeMap.get(viewType));
         }
     }

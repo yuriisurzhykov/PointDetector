@@ -8,9 +8,7 @@ import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
 import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipableViewHolder
-import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
-@ViewHolder(R.layout.list_item_point_2_0)
 class PointsViewHolder(view: View) : AbstractViewHolder<PointUi>(view), SwipableViewHolder {
 
     private val addressText: TextView by lazy { itemView.findViewById(R.id.location_address) }

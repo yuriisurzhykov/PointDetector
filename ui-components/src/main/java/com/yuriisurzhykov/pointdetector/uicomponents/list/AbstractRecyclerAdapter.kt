@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbstractRecyclerAdapter<T : Any, VH : com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder<T>>(
-    private val viewHolderTypeManager: com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderTypeManager<T>
+abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
+    private val viewHolderTypeManager: ViewHolderTypeManager<T>
 ) : RecyclerView.Adapter<VH>(),
-    com.yuriisurzhykov.pointdetector.uicomponents.list.IRecyclerViewTypeAdapter<T>,
-    com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeRecyclerCallbacks<T>,
-    com.yuriisurzhykov.pointdetector.uicomponents.list.MutableListAdapter<T> {
+    IRecyclerViewTypeAdapter<T>,
+    SwipeRecyclerCallbacks<T>,
+    MutableListAdapter<T> {
 
-    private var onItemClickListener: com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener<T>? = null
+    private var onItemClickListener: OnItemClickListener<T>? =
+        null
     private var inflater: LayoutInflater? = null
     private val dataList = mutableListOf<T>()
 
@@ -23,14 +24,14 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : com.yuriisurzhykov.pointdet
         return viewHolderTypeManager.getViewHolderType(getItem(position))
     }
 
-    override fun getHolderClassByType(viewType: Int): Class<out com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder<T>> {
+    override fun getViewHolderGenerationInfo(viewType: Int): ViewHolderContainer<T> {
         return viewHolderTypeManager.getViewHolderClass(viewType)
     }
 
     open fun onItemRemoved(holder: RecyclerView.ViewHolder, position: Int, item: T) {
     }
 
-    fun setOnItemClickListener(listener: com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener<T>) {
+    fun setOnItemClickListener(listener: OnItemClickListener<T>) {
         onItemClickListener = listener
     }
 
@@ -70,11 +71,8 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : com.yuriisurzhykov.pointdet
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return com.yuriisurzhykov.pointdetector.uicomponents.list.BaseViewHolderFactory<VH>(
-            layoutInflater(parent.context)
-        ).create(
-            getHolderClassByType(viewType), parent
-        )
+        return BaseViewHolderFactory<VH>(layoutInflater(parent.context))
+            .create(getViewHolderGenerationInfo(viewType), parent)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {

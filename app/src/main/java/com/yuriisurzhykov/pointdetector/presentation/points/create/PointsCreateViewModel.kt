@@ -2,8 +2,11 @@ package com.yuriisurzhykov.pointdetector.presentation.points.create
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.core.Mapper
@@ -11,12 +14,11 @@ import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
-import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.list.StartSearchData
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
+import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.timerTask
 

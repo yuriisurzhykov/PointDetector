@@ -1,13 +1,17 @@
 package com.yuriisurzhykov.pointdetector.presentation.favorites
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -33,7 +37,7 @@ class FavoriteListViewModel @Inject constructor(
         if (it.isNullOrEmpty()) {
             liveData.postValue(listOf(EmptyStateData()))
         } else {
-            liveData.postValue(it)
+            liveData.postValue(it.toList())
         }
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.MainActivity">
 
-    <com.yuriisurzhykov.pointsdetector.uicomponents.centertoolbar.CenteredTextToolbar
+    <com.yuriisurzhykov.pointdetector.uicomponents.centertoolbar.CenteredTextToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
