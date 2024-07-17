@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
 @ViewHolder(R.layout.list_item_point)
 class PointSimplifiedViewHolder(view: View) : AbstractViewHolder<Point>(view) {

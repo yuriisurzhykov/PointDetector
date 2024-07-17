@@ -5,10 +5,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 
 class StartSearchData : ViewHolderItem.Abstract() {
 

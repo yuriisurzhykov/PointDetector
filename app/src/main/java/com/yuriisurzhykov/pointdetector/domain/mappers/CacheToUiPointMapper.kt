@@ -12,7 +12,7 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUse
 import com.yuriisurzhykov.pointdetector.domain.usecase.ConfigUnifiedSource
 import com.yuriisurzhykov.pointdetector.presentation.entities.FavoriteState
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

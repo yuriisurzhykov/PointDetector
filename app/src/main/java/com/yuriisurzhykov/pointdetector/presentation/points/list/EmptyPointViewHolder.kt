@@ -3,7 +3,10 @@ package com.yuriisurzhykov.pointdetector.presentation.points.list
 import android.view.View
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.*
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
+import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
 @ViewHolder(R.layout.list_item_empty_points_list)
 class EmptyPointViewHolder(view: View) : AbstractViewHolder<EmptyStateData>(view, false) {

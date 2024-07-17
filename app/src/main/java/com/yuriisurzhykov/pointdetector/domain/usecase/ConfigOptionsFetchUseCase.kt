@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.XmlRes
 import com.yuriisurzhykov.pointdetector.data.cache.configs.AbstractConfigService
 import com.yuriisurzhykov.pointdetector.presentation.core.getHashMapResource
-import com.yuriisurzhykov.pointsdetector.uicomponents.textselect.SelectOption
+import com.yuriisurzhykov.pointdetector.uicomponents.textselect.SelectOption
 
 interface ConfigOptionsFetchUseCase {
 

@@ -5,7 +5,7 @@ import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.cache.entities.WorkingHoursCache
 import com.yuriisurzhykov.pointdetector.data.cache.entities.WorkingHoursGroupCache
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import javax.inject.Inject
 
 class UiToCachePointMapper @Inject constructor(

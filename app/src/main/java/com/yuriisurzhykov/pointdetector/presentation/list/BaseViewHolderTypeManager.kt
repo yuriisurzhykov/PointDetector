@@ -12,10 +12,10 @@ import com.yuriisurzhykov.pointsdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderTypeManager
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderTypeManager
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 
-open class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolderItem>() {
+open class BaseViewHolderTypeManager : com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderTypeManager.Abstract<ViewHolderItem>() {
 
     override fun getViewHolderTypeWithClass(item: ViewHolderItem): Pair<Int, Class<out AbstractViewHolder<ViewHolderItem>>> {
         return when (item) {

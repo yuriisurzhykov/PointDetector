@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/work_day_view"
+        style="@style/DayViewSelector.TextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shadowed_background"
+        android:elevation="8dp"
+        android:padding="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/from_time_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mon" />
+
+    <com.yuriisurzhykov.pointdetector.uicomponents.workday.TimeEditText
+        android:id="@+id/from_time_input"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:background="@drawable/time_input_background"
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:nextFocusRight="@id/to_time_input"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/time_input_text_color"
+        app:layout_constraintBottom_toBottomOf="@id/work_day_view"
+        app:layout_constraintEnd_toStartOf="@id/to_time_input"
+        app:layout_constraintStart_toEndOf="@id/work_day_view"
+        app:layout_constraintTop_toTopOf="@id/work_day_view"
+        tools:enabled="false" />
+
+    <com.yuriisurzhykov.pointdetector.uicomponents.workday.TimeEditText
+        android:id="@+id/to_time_input"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:background="@drawable/time_input_background"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/time_input_text_color"
+        app:layout_constraintBottom_toBottomOf="@id/from_time_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/from_time_input"
+        app:layout_constraintTop_toTopOf="@id/from_time_input" />
+
+</merge>

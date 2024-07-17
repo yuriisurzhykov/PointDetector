@@ -10,7 +10,7 @@ import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.list.RadioGroupAdapter
 import com.yuriisurzhykov.pointdetector.presentation.list.SelectOptionsRadioButtonInflater
-import com.yuriisurzhykov.pointsdetector.uicomponents.textselect.SelectOption
+import com.yuriisurzhykov.pointdetector.uicomponents.textselect.SelectOption
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

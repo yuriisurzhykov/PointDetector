@@ -5,10 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipableViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
+import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipableViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
 @ViewHolder(R.layout.list_item_point_2_0)
 class PointsViewHolder(view: View) : AbstractViewHolder<PointUi>(view), SwipableViewHolder {

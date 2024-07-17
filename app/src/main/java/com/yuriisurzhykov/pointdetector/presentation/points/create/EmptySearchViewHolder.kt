@@ -3,10 +3,9 @@ package com.yuriisurzhykov.pointdetector.presentation.points.create
 import android.view.View
 import android.widget.TextView
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.presentation.points.create.EmptySearchData
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.OnItemClickListener
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder
+import com.yuriisurzhykov.pointdetector.uicomponents.list.OnItemClickListener
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolder
 
 @ViewHolder(R.layout.list_item_entered_data_empty)
 class EmptySearchViewHolder(view: View) : AbstractViewHolder<EmptySearchData>(view) {

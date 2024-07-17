@@ -16,7 +16,7 @@ import com.yuriisurzhykov.pointdetector.domain.services.WeekDaysListResource
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.ConfigUnifiedSource
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

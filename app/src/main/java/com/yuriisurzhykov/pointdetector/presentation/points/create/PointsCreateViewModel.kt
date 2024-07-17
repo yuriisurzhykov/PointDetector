@@ -14,7 +14,7 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.list.StartSearchData
 import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
-import com.yuriisurzhykov.pointsdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
