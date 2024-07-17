@@ -3,8 +3,8 @@ package com.yuriisurzhykov.pointdetector.presentation.points.list
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.favorites.IFavoriteAdapter
 import com.yuriisurzhykov.pointdetector.presentation.list.BaseViewHolderTypeManager
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.SwipeViewRecyclerAdapter
-import com.yuriisurzhykov.pointsdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeViewRecyclerAdapter
+import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 
 class PointsListAdapter : SwipeViewRecyclerAdapter(BaseViewHolderTypeManager()), IFavoriteAdapter {
 

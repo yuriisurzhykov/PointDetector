@@ -6,7 +6,6 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-serialization:1.9.24")
         classpath("com.google.gms:google-services:4.4.2")
         classpath("com.google.firebase:firebase-appdistribution-gradle:5.0.0")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:3.0.2")
     }
 }
 
