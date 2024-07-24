@@ -2,7 +2,7 @@ name: Release Build
 on:
   push:
     tags:
-      - 'v*'
+      - 'sdfsasdalsdkalsda'
 jobs:
   Build:
     name: Build/Sign APK

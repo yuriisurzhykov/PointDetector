@@ -20,15 +20,19 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
     constructor() : super()
     constructor(@LayoutRes layoutId: Int) : super(layoutId)
 
-    private val locationService by lazy { LocationServices.getFusedLocationProviderClient(requireContext()) }
+    private val locationService by lazy {
+        LocationServices.getFusedLocationProviderClient(
+            requireContext()
+        )
+    }
     private val locationExecutor by lazy { Executors.newSingleThreadExecutor() }
     private val locationRequest by lazy {
-        LocationRequest.create().apply {
-            priority = Priority.PRIORITY_HIGH_ACCURACY
-            interval = 5
-            fastestInterval = 0
-            maxWaitTime = 3000
-        }
+        LocationRequest.Builder(5)
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+            .setWaitForAccurateLocation(true)
+            .setMinUpdateIntervalMillis(0)
+            .setMaxUpdateDelayMillis(3000)
+            .build()
     }
 
     private val locationCallback = object : LocationCallback() {
@@ -82,7 +86,9 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
     private fun showPermissionsDeniedSnackbar(view: View) {
         Snackbar
             .make(
-                view, getString(R.string.snackbar_location_permissions_denied), Snackbar.LENGTH_INDEFINITE
+                view,
+                getString(R.string.snackbar_location_permissions_denied),
+                Snackbar.LENGTH_INDEFINITE
             ).setAction(R.string.button_provide_location_permissions_never_ask) {
                 openSettingsScreen()
             }.show()
@@ -99,7 +105,11 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
 
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     private fun sendLastLocation() {
-        locationService.lastLocation.addOnCompleteListener { if (it.result != null) onLocationReceived(it.result) }
+        locationService.lastLocation.addOnCompleteListener {
+            if (it.result != null) onLocationReceived(
+                it.result
+            )
+        }
     }
 
 }

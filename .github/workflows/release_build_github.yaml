@@ -1,0 +1,132 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - "v[0-9].[0-9]+.[0-9]+"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Android project
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+          cache: gradle
+
+      - name: Get Tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-home-cache-cleanup: true
+
+      - name: Configure Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > app/keystore.jks.b64
+          base64 -d -i app/keystore.jks.b64 > app/keystore.jks
+          echo "keystoreFile=keystore.jks" >> app/signing.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> app/signing.properties
+          echo "keystorePassword=$KEYSTORE_STORE_PASSWORD" >> app/signing.properties
+          echo "::debug::storePassword=$KEYSTORE_STORE_PASSWORD"
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> app/signing.properties
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease bundleRelease
+
+      - name: Get AAB file path
+        id: aab-path
+        run: |
+          # Find the AAB file, accounting for potential variations in the filename.
+          aab_file=$(find . -name '*.aab' -type f -path "*build/outputs/bundle/release/*" | head -1) 
+          echo "aab_file=${aab_file}" >> $GITHUB_OUTPUT
+
+      - name: Get APK file path
+        id: apk-path
+        run: |
+          # Find the APK file, accounting for potential variations in the filename.
+          apk_file=$(find . -name '*.apk' -type f -path "*build/outputs/apk/release/*" | head -1) 
+          echo "apk_file=${apk_file}" >> $GITHUB_OUTPUT
+
+      - name: Upload AAB file to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ steps.aab-path.outputs.aab_file }}
+
+      - name: Upload APK file to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ steps.apk-path.outputs.apk_file }}
+
+      - name: Build Changelog
+        uses: ardalanamini/auto-changelog@v4
+        id: changelog
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          commit-types: |
+            feat: New Features
+            fix: Bug Fixes
+            build: Build System & Dependencies
+            perf: Performance Improvements
+            docs: Documentation
+            test: Tests
+            refactor: Refactors
+            chore: Chores
+            ci: CI
+            style: Code Style
+            revert: Reverts
+          default-commit-type: Other Changes
+          mention-authors: true
+          mention-new-contributors: true
+          include-compare-link: true
+          include-pr-links: true
+          include-commit-links: true
+          semver: true
+          use-github-autolink: true
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      - name: Upload APK
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.apk-path.outputs.apk_file }}
+          asset_name: app-release-${{ github.ref_name }}.apk
+          asset_content_type: application/zip
+
+      - name: Upload AAB
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.aab-path.outputs.aab_file }}
+          asset_name: app-release-${{ github.ref_name }}.aab
+          asset_content_type: application/zip
