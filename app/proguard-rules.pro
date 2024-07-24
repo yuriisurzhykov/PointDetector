@@ -19,7 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keepclassmembers class * extends com.yuriisurzhykov.pointsdetector.uicomponents.list.AbstractViewHolder {
+-keepclassmembers class * extends com.yuriisurzhykov.pointdetector.uicomponents.list.AbstractViewHolder {
     public <init>();
     public<init>(android.view.View);
 }
