@@ -1,7 +1,6 @@
 package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
-import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.data.cache.configs.MeasureUnitConfig
@@ -9,7 +8,7 @@ import com.yuriisurzhykov.pointdetector.data.cache.configs.SortingTypeConfig
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.data.remote.DistanceCalculateService
 import com.yuriisurzhykov.pointdetector.data.remote.LocalDistanceCalculateService
-import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.domain.mappers.DataSnapshotToPointsListMapper
 import com.yuriisurzhykov.pointdetector.domain.mappers.PointToCacheMapper
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
 import com.yuriisurzhykov.pointdetector.domain.services.UserLocationService
@@ -53,7 +52,7 @@ object ServicesModule {
     @Singleton
     @Provides
     fun providePointsFetchValueListener(
-        listMapper: Mapper<DataSnapshot, List<Point>>,
+        listMapper: DataSnapshotToPointsListMapper,
         useCase: SavePointUseCase,
         mapper: PointToCacheMapper,
         dispatchers: Dispatchers

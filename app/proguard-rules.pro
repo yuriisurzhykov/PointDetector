@@ -32,3 +32,17 @@
 }
 -keepclassmembers class com.google.firebase.database.GenericTypeIndicator { *; }
 -keep class * extends com.google.firebase.database.GenericTypeIndicator { *; }
+-keepclassmembers class * extends com.google.firebase.database.GenericTypeIndicator {
+    <init>(...);
+}
+-keep class com.google.firebase.database.GenericTypeIndicator { *; }
+-keep @kotlinx.serialization.Serializable class * {*;}
+
+# Keep Dependency Injection Framework related classes and methods
+-keep class dagger.hilt.** { *; }
+-keep class javax.inject.** { *; }
+-keep class javax.annotation.** { *; }
+# Keep empty constructors with @Inject annotation
+-keepclassmembers,allowobfuscation @javax.inject.Inject class * {
+    <init>(...);
+}

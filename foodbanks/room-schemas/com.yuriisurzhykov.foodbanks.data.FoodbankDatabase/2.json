@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "8da6c2d26f098e998077d434220fcd4f",
+    "identityHash": "ec20499e3a48b5fde9d451c95eb29b50",
     "entities": [
       {
         "tableName": "CityCache",
@@ -262,7 +262,18 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_WorkingHourCache_pointId_workingHourId",
+            "unique": false,
+            "columnNames": [
+              "pointId",
+              "workingHourId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_WorkingHourCache_pointId_workingHourId` ON `${TABLE_NAME}` (`pointId`, `workingHourId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "PointCache",
@@ -342,7 +353,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8da6c2d26f098e998077d434220fcd4f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ec20499e3a48b5fde9d451c95eb29b50')"
     ]
   }
 }

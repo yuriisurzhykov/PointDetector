@@ -35,11 +35,6 @@ android {
         buildConfigField("String", "GOOGLE_MAPS_API_KEY", "")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
     }
     lint {
         abortOnError = false

@@ -2,7 +2,6 @@ package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
 import android.location.Address
-import com.google.firebase.database.DataSnapshot
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
@@ -10,7 +9,16 @@ import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
 import com.yuriisurzhykov.pointdetector.data.cache.entities.WorkingHoursCache
 import com.yuriisurzhykov.pointdetector.data.remote.DistanceCalculateService
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointdetector.domain.mappers.*
+import com.yuriisurzhykov.pointdetector.domain.mappers.AddressToPointMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.CacheToUiListPointsMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.CacheToUiPointMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.LocalToGoogleLatLngMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.PointUiToCacheMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.PointUiToDomainMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.UiToCachePointMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.WeekDayToCacheMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.WeekDayToWorkingHoursListMapper
+import com.yuriisurzhykov.pointdetector.domain.mappers.WorkingHourToWeekDayListMapper
 import com.yuriisurzhykov.pointdetector.domain.services.IUserLocationService
 import com.yuriisurzhykov.pointdetector.domain.services.WeekDaysListResource
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckPointAvailabilityUseCase
@@ -89,11 +97,6 @@ object MappersModule {
     fun provideWorkingHourToWeekDayListMapper(resource: WeekDaysListResource): Mapper<List<WorkingHoursCache>, List<WeekDay>> {
         return WorkingHourToWeekDayListMapper(resource)
     }
-
-    @Provides
-    @Singleton
-    fun provideSnapshotToPointListMapper(): Mapper<DataSnapshot, List<Point>> =
-        DataSnapshotToPointsListMapper()
 
     @Provides
     @Singleton
