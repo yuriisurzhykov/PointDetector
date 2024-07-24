@@ -5,9 +5,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
+    tableName = "CityCache",
     indices = [
-        Index(name = "nameCode", unique = true),
-        Index(name = "cityId", unique = true)
+        Index(name = "nameCode", value = ["nameCode"], unique = true),
+        Index(name = "cityId", value = ["cityId"], unique = true)
     ]
 )
 data class CityCache(

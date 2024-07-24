@@ -2,11 +2,15 @@ package com.yuriisurzhykov.foodbanks.data.favorites
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 
 @Entity(
     tableName = "FavoritePoint",
+    indices = [
+        Index(value = ["pointId", "favoriteId"])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = PointCache::class,

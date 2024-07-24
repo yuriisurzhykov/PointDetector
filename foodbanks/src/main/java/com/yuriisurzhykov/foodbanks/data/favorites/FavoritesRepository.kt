@@ -23,11 +23,18 @@ interface FavoritesRepository {
 
         override suspend fun markFavorite(pointId: Long): Boolean {
             val favorite = mapper.map(pointsCacheDataSource.findById(pointId))
-            return favoritesDao.insertFavorite(favorite)
+            return try {
+                favoritesDao.insertFavorite(favorite)
+                true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
         }
 
         override suspend fun removeFavorite(id: Long): Boolean {
-            return favoritesDao.deleteFavorite(id)
+            // If number of deleted rows == 1, then the favorite deleted
+            return favoritesDao.deleteFavorite(id) == 1
         }
     }
 

@@ -12,7 +12,7 @@ data class PointUi(
     val distanceString: String,
     val distanceDouble: Double,
     val placeName: String,
-    val workingHours: List<WeekDay>,
+    var workingHours: List<WeekDay> = emptyList(),
     val isPointAvailable: Boolean = false,
     val favoriteState: FavoriteState
 ) : Serializable, ViewHolderItem {

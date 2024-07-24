@@ -1,17 +1,21 @@
 package com.yuriisurzhykov.foodbanks.domain.points
 
 import com.yuriisurzhykov.foodbanks.core.data.Mapper
-import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
+import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
+import com.yuriisurzhykov.foodbanks.data.point.cache.PointWithHours
+import com.yuriisurzhykov.foodbanks.data.point.cache.WorkingHourCache
 
-interface PointCacheToDomainMapper : Mapper.List<PointCache, Point> {
+interface PointCacheToDomainMapper : Mapper.List<PointWithHours, Point> {
 
-    class Base : Mapper.AbstractList<PointCache, Point>(), PointCacheToDomainMapper {
+    class Base(
+        private val workingHourMapper: Mapper<WorkingHourCache, WorkingHour>
+    ) : Mapper.AbstractList<PointWithHours, Point>(), PointCacheToDomainMapper {
 
-        override fun mapSingle(input: PointCache): Point = Point.Base(
-            input.pointId,
-            input.placeName,
-            input.address,
-            input.workingHours
+        override fun mapSingle(input: PointWithHours): Point = Point.Base(
+            input.point.pointId,
+            input.point.placeName,
+            input.point.address,
+            input.workingHours.map { workingHourMapper.map(it) }
         )
     }
 }

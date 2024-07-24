@@ -5,8 +5,10 @@ import androidx.room.Relation
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 
 data class CityWithPointsCache(
-    @Embedded
-    val city: CityCache,
-    @Relation(parentColumn = "cityId", entityColumn = "cityPointId", entity = PointCache::class)
-    val points: List<PointCache>
+    @Embedded val city: CityCache,
+    @Relation(
+        parentColumn = "nameCode",
+        entityColumn = "cityCodeId"
+    )
+    var points: List<PointCache> = emptyList()
 )

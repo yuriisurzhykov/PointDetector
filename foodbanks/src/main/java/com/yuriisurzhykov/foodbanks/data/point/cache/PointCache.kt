@@ -1,15 +1,19 @@
 package com.yuriisurzhykov.foodbanks.data.point.cache
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.point.LatLng
-import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 
 @Entity(
     tableName = "PointCache",
+    indices = [
+        Index(value = ["cityCodeId", "pointId"])
+    ],
     foreignKeys = [ForeignKey(
         entity = CityCache::class,
         parentColumns = ["nameCode"],
@@ -19,36 +23,14 @@ import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 )
 data class PointCache(
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "pointId")
     val pointId: Long,
+    @ColumnInfo(name = "cityCodeId")
     val cityCodeId: String,
+    @ColumnInfo(name = "address")
     val address: String,
+    @ColumnInfo(name = "placeName")
     val placeName: String,
     @Embedded
-    val coordinates: LatLng,
-    @Embedded
-    val workingHours: List<WorkingHour>
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as PointCache
-
-        if (cityCodeId != other.cityCodeId) return false
-        if (address != other.address) return false
-        if (placeName != other.placeName) return false
-        if (coordinates != other.coordinates) return false
-        if (workingHours != other.workingHours) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = cityCodeId.hashCode()
-        result = 31 * result + address.hashCode()
-        result = 31 * result + placeName.hashCode()
-        result = 31 * result + coordinates.hashCode()
-        result = 31 * result + workingHours.hashCode()
-        return result
-    }
-}
+    var coordinates: LatLng = LatLng(0.0, 0.0),
+)

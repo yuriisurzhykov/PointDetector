@@ -15,7 +15,7 @@ interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
         private val cityCacheDataSource: CityDao,
         cloudToCacheMapper: CloudToCacheListMapper,
         connectivityCheck: ConnectivityCheck,
-    ) : Repository.CacheRepository<List<CityCloud>, List<CityCache>>(
+    ) : Repository.Abstract<List<CityCloud>, List<CityCache>>(
         connectivityCheck,
         cloudToCacheMapper
     ), CityRepository {
@@ -23,6 +23,13 @@ interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
         override suspend fun cached(): List<CityCache> = cityCacheDataSource.cities()
 
         override suspend fun cloud(): List<CityCloud> = cityCloudDataSource.cities()
+
+        override suspend fun merge(
+            cache: List<CityCache>,
+            cloudMapped: List<CityCache>
+        ): List<CityCache> {
+            return cache.union(cloudMapped).toList()
+        }
 
         override suspend fun cacheCloud(value: List<CityCache>) =
             cityCacheDataSource.insert(value)

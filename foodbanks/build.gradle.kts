@@ -7,6 +7,10 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+ksp {
+    arg(RoomSchemaArgProvider(File(projectDir, "room-schemas")))
+}
+
 kapt {
     correctErrorTypes = true
 }

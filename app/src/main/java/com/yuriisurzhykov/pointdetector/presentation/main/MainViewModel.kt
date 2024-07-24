@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
     private val dispatchers: Dispatchers
 ) : ViewModel() {
 
-    private val isImportOptionEnabled = MutableLiveData(true)
+    private val isImportOptionEnabled = MutableLiveData(false)
 
     init {
         dispatchers.launchBackground(viewModelScope) {

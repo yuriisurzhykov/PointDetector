@@ -563,7 +563,11 @@
   ],
   "points-grouped": [
     {
-      "sacramento-ca": [
+      "country": "United States",
+      "name": "Sacramento",
+      "name_code": "sacramento-ca-usa",
+      "region": "CA",
+      "points": [
         {
           "address": "5901 San Juan Ave, Citrus Heights, CA 95610, USA",
           "coordinates": {

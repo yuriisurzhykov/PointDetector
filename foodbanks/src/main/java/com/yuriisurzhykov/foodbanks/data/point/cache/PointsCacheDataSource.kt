@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 interface PointsCacheDataSource {
 
-    suspend fun points(): Flow<List<PointCache>>
+    suspend fun points(): Flow<List<PointWithHours>>
 
     suspend fun findById(id: Long): PointCache
 

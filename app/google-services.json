@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "163210330542",
+    "firebase_url": "https://point-detector-default-rtdb.firebaseio.com",
     "project_id": "point-detector",
     "storage_bucket": "point-detector.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163210330542:android:5270b5817f03866ecc083f",
+        "android_client_info": {
+          "package_name": "com.yuriisurzhykov.foodbanks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBVdB7YG7TD7FBymC18YkYizO6Uq7poOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163210330542-2gn7c345jmbkedvk2grh62s3t2mhb7ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:163210330542:android:c5af8e56eed3052bcc083f",
@@ -20,7 +50,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCjb1j63HORiU4TijJJa5I_-Z5lEa-0QAw"
+          "current_key": "AIzaSyBBVdB7YG7TD7FBymC18YkYizO6Uq7poOo"
         }
       ],
       "services": {
@@ -49,7 +79,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCjb1j63HORiU4TijJJa5I_-Z5lEa-0QAw"
+          "current_key": "AIzaSyBBVdB7YG7TD7FBymC18YkYizO6Uq7poOo"
         }
       ],
       "services": {
