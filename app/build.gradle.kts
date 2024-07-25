@@ -159,7 +159,7 @@ fun getReleaseVersionCode(): Int {
         return versionCode.toString().toInt()
     } catch (e: Exception) {
         println("Exception: ${e}")
-        return 4
+        return 5
     }
 }
 
