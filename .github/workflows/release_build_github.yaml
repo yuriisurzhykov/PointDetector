@@ -49,6 +49,8 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease bundleRelease
+        env:
+          VERSION_NAME: ${{ github.ref_name }}
 
       - name: Get AAB file path
         id: aab-path

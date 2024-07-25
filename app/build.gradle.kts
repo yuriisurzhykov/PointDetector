@@ -159,7 +159,7 @@ fun getReleaseVersionCode(): Int {
         return versionCode.toString().toInt()
     } catch (e: Exception) {
         println("Exception: ${e}")
-        return 3
+        return 4
     }
 }
 
@@ -167,11 +167,11 @@ fun getReleaseVersionName(): String {
     var versionName = System.getenv("VERSION_NAME")
     try {
         if (versionName.isEmpty()) {
-            versionName = "1.3"
+            versionName = "1.3.1"
         }
         return versionName.toString() + "." + getReleaseVersionCode().toString()
     } catch (e: Exception) {
         println("Exception: ${e}")
-        return "1.3"
+        return "1.3.1"
     }
 }
