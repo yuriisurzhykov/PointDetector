@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
-import com.yuriisurzhykov.pointdetector.uicomponents.R
 
 class CenteredTextToolbar : Toolbar {
 
@@ -41,7 +40,7 @@ class CenteredTextToolbar : Toolbar {
                 ellipsize = TextUtils.TruncateAt.END
                 gravity = Gravity.CENTER
                 setTextAppearance(
-                    androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title
+                    androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title
                 )
                 val toolbarLayoutParams = LayoutParams(
                     LayoutParams.WRAP_CONTENT,

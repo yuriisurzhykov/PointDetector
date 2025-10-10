@@ -2,8 +2,8 @@ package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
 import android.location.Address
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
@@ -12,7 +12,19 @@ import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.services.JsonAssetListFileReader
 import com.yuriisurzhykov.pointdetector.domain.source.DateFormatterType
-import com.yuriisurzhykov.pointdetector.domain.usecase.*
+import com.yuriisurzhykov.pointdetector.domain.usecase.CheckTimeAvailabilityUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.GeoDecodeUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.ImportAssetsPointsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.PointsFetchValueListener
+import com.yuriisurzhykov.pointdetector.domain.usecase.SaveImportsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import dagger.Module
 import dagger.Provides
@@ -29,7 +41,7 @@ object UseCaseModule {
     @Singleton
     fun provideFetchAllPointsUseCase(
         pointsRepository: PointsRepository,
-        mapper: SuspendMapper<List<PointCache>, List<PointUi>>
+        mapper: SuspendMapper<List<PointCache>, List<PointUi>>,
     ): FetchAllPointsUseCase {
         return FetchAllPointsUseCase.Base(pointsRepository, mapper)
     }
@@ -38,7 +50,7 @@ object UseCaseModule {
     @Singleton
     fun provideSuggestedPlacesUseCase(
         @ApplicationContext context: Context,
-        mapper: Mapper<Address, Point>
+        mapper: Mapper<Address, Point>,
     ): SuggestedPlacesUseCase {
         return SuggestedPlacesUseCase.Base(context, 5, mapper)
     }
@@ -46,7 +58,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGeoDecodeUseCase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): GeoDecodeUseCase {
         return GeoDecodeUseCase.Base(context, 5)
     }
@@ -63,7 +75,7 @@ object UseCaseModule {
     @Singleton
     fun provideSearchPointUseCase(
         repository: PointsRepository,
-        mapper: SuspendMapper<List<PointCache>, List<PointUi>>
+        mapper: SuspendMapper<List<PointCache>, List<PointUi>>,
     ): SearchPointUseCase {
         return SearchPointUseCase.Base(mapper, repository)
     }
@@ -71,7 +83,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCheckTimeAvailabilityUseCase(
-        formatter: DateFormatterType.TimeFormat
+        formatter: DateFormatterType.TimeFormat,
     ): CheckTimeAvailabilityUseCase {
         return CheckTimeAvailabilityUseCase.Base(formatter)
     }
@@ -87,7 +99,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideImportAssetsPointsUseCase(
-        jsonAssetListFileReader: JsonAssetListFileReader
+        jsonAssetListFileReader: JsonAssetListFileReader,
     ): ImportAssetsPointsUseCase {
         return ImportAssetsPointsUseCase.Base(jsonAssetListFileReader)
     }
@@ -104,7 +116,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSaveImportsUseCase(
-        fetchListener: PointsFetchValueListener
+        fetchListener: PointsFetchValueListener,
     ): SaveImportsUseCase<List<Point>> {
         return SaveImportsUseCase.FirebaseImportPoints(Firebase.database, fetchListener)
     }
@@ -113,7 +125,7 @@ object UseCaseModule {
     @Singleton
     fun provideFavoritesFetchUseCase(
         pointsRepository: FavoritesRepository,
-        mapper: SuspendMapper<PointCache, PointUi>
+        mapper: SuspendMapper<PointCache, PointUi>,
     ): FavoritesFetchUseCase {
         return FavoritesFetchUseCase.Base(mapper, pointsRepository)
     }
@@ -122,7 +134,7 @@ object UseCaseModule {
     @Singleton
     fun provideFavoritesRemoveUseCase(
         pointsRepository: FavoritesRepository,
-        mapper: Mapper<PointUi, PointCache>
+        mapper: Mapper<PointUi, PointCache>,
     ): FavoritesRemoveUseCase {
         return FavoritesRemoveUseCase.Base(mapper, pointsRepository)
     }
@@ -131,7 +143,7 @@ object UseCaseModule {
     @Singleton
     fun provideFavoritesApplyUseCase(
         pointsRepository: FavoritesRepository,
-        mapper: Mapper<PointUi, PointCache>
+        mapper: Mapper<PointUi, PointCache>,
     ): FavoritesApplyUseCase {
         return FavoritesApplyUseCase.Base(mapper, pointsRepository)
     }
