@@ -69,12 +69,12 @@ jobs:
           echo "apk_file=${apk_file}" >> $GITHUB_OUTPUT
 
       - name: Upload AAB file to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.aab-path.outputs.aab_file }}
 
       - name: Upload APK file to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.apk-path.outputs.apk_file }}
 
