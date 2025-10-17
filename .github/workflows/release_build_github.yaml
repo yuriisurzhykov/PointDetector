@@ -101,7 +101,7 @@ jobs:
           use-github-autolink: true
 
       - name: Release
-        uses: softprops/action-gh-release@latest
+        uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo: ${{ github.repository }}
