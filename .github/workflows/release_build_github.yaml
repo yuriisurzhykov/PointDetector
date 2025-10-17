@@ -62,6 +62,9 @@ jobs:
         env:
           VERSION_NAME: ${{ github.ref_name }}
 
+      - name: List files in target directory
+        run: ls -la app/build/outputs/*/release/*.{apk,aab}
+
       - name: Upload AAB/APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
