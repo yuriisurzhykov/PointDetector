@@ -62,31 +62,17 @@ jobs:
         env:
           VERSION_NAME: ${{ github.ref_name }}
 
-      - name: Get AAB file path
-        id: aab-path
-        run: |
-          # Find the AAB file, accounting for potential variations in the filename.
-          aab_file=$(find . -name '*.aab' -type f -path "*build/outputs/bundle/release/*" | head -1) 
-          echo "aab_file=${aab_file}" >> $GITHUB_OUTPUT
-
-      - name: Get APK file path
-        id: apk-path
-        run: |
-          # Find the APK file, accounting for potential variations in the filename.
-          apk_file=$(find . -name '*.apk' -type f -path "*build/outputs/apk/release/*" | head -1) 
-          echo "apk_file=${apk_file}" >> $GITHUB_OUTPUT
-
       - name: Upload AAB file to Artifacts
         uses: actions/upload-artifact@v4
         with:
+          path: app/build/outputs/apk/release/app-release.aab
           name: AAB Release ${{ steps.versions.outputs.versionName }}
-          path: ${{ steps.aab-path.outputs.aab_file }}
 
       - name: Upload APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
+          path: app/build/outputs/apk/release/app-release.apk
           name: APK Release ${{ steps.versions.outputs.versionName }}
-          path: ${{ steps.apk-path.outputs.apk_file }}
 
       - name: Build Changelog
         uses: ardalanamini/auto-changelog@v4
