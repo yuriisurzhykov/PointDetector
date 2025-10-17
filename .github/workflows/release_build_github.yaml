@@ -118,7 +118,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.apk-path.outputs.apk_file }}
+          asset_path: app/build/outputs/apk/release/app-release.apk
           asset_name: app-release-${{ github.ref_name }}.apk
           asset_content_type: application/zip
 
@@ -128,6 +128,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.aab-path.outputs.aab_file }}
+          asset_path: app/build/outputs/apk/release/app-release.aab
           asset_name: app-release-${{ github.ref_name }}.aab
           asset_content_type: application/zip
