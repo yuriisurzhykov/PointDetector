@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
+import java.io.IOException
 import java.util.Properties
 
 plugins {
@@ -131,44 +132,46 @@ dependencies {
 }
 
 fun getDebugGoogleMapsApiKey(): String {
-    try {
-        val properties = Properties()
-        FileInputStream(file("keys.properties")).use { stream ->
-            properties.load(stream)
-        }
-        return properties.getProperty("API_KEY") ?: emptyString()
-    } catch (_: Exception) {
-        return emptyString()
-    }
+    return getFilePropertyValue("keys.properties", "API_KEY").orEmpty()
 }
 
 fun getReleaseGoogleMapsApiKey(): String {
-    return System.getenv("GOOGLE_MAPS_API_KEY") ?: emptyString()
-}
-
-fun emptyString(): String {
-    return "\"\""
+    return System.getenv("GOOGLE_MAPS_API_KEY").orEmpty()
 }
 
 fun getReleaseVersionCode(): Int {
-    val versionCode = System.getenv("VERSION_CODE")
     try {
-        return versionCode.toString().toInt()
+        val versionCode = System.getenv("VERSION_CODE")
+        return versionCode.toString().ifEmpty {
+            getFilePropertyValue("version.properties", "versionCode")
+        }?.toIntOrNull() ?: 1
     } catch (e: Exception) {
         println("Exception: $e")
-        return 5
+        return 1
     }
 }
 
 fun getReleaseVersionName(): String {
-    var versionName = System.getenv("VERSION_NAME")
+    val versionName = System.getenv("VERSION_NAME")
     try {
-        if (versionName.isEmpty()) {
-            versionName = "1.3.1"
+        return versionName.toString().ifEmpty {
+            getFilePropertyValue("version.properties", "versionName").orEmpty()
         }
-        return versionName.toString() + "." + getReleaseVersionCode().toString()
     } catch (e: Exception) {
         println("Exception: $e")
-        return "1.3.1"
+        return getFilePropertyValue("version.properties", "versionName").orEmpty()
+    }
+}
+
+fun getFilePropertyValue(fileName: String, propertyName: String): String? {
+    try {
+        val properties = Properties()
+        FileInputStream(file(fileName)).use { stream ->
+            properties.load(stream)
+        }
+        return properties[propertyName]?.toString()
+    } catch (e: IOException) {
+        println("Exception: $e")
+        return null
     }
 }

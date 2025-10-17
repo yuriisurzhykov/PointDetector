@@ -21,6 +21,10 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
           cache: gradle
+      - uses: madhead/read-java-properties@latest
+        id: versions
+        with:
+          file: app/version.properties
 
       - name: Get Tag
         id: vars
@@ -50,7 +54,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleRelease bundleRelease
+        run: ./gradlew buildRelease
         env:
           VERSION_NAME: ${{ github.ref_name }}
 
@@ -71,11 +75,13 @@ jobs:
       - name: Upload AAB file to Artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: AAB Release ${{ steps.version.outputs.versionName }}
           path: ${{ steps.aab-path.outputs.aab_file }}
 
       - name: Upload APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: APK Release ${{ steps.version.outputs.versionName }}
           path: ${{ steps.apk-path.outputs.apk_file }}
 
       - name: Build Changelog
