@@ -66,8 +66,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
+            apk/release/app-release.apk
+            bundle/release/app-release.aab
           name: App Release ${{ steps.versions.outputs.versionName }}
 
       - name: Generate Release
@@ -78,5 +78,5 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
+            ${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk
+            ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab
