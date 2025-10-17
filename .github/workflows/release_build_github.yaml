@@ -17,7 +17,7 @@ jobs:
         uses: madhead/read-java-properties@latest
         id: versions
         with:
-          file: app/version.properties
+          file: ${{ github.workspace }}/app/version.properties
           all: true
       - name: Checkout Android project
         uses: actions/checkout@v5
