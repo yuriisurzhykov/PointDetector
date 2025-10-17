@@ -20,7 +20,7 @@ jobs:
         uses: madhead/read-java-properties@latest
         id: versions
         with:
-          file: /app/version.properties
+          file: app/version.properties
           all: true
 
       - name: Set up JDK 17
