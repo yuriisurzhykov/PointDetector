@@ -132,11 +132,11 @@ dependencies {
 }
 
 fun getDebugGoogleMapsApiKey(): String {
-    return getFilePropertyValue("keys.properties", "API_KEY").orEmpty()
+    return getFilePropertyValue("keys.properties", "API_KEY") ?: "\"\""
 }
 
 fun getReleaseGoogleMapsApiKey(): String {
-    return System.getenv("GOOGLE_MAPS_API_KEY").orEmpty()
+    return System.getenv("GOOGLE_MAPS_API_KEY") ?: "\"\""
 }
 
 fun getReleaseVersionCode(): Int {
@@ -152,14 +152,14 @@ fun getReleaseVersionCode(): Int {
 }
 
 fun getReleaseVersionName(): String {
-    val versionName = System.getenv("VERSION_NAME")
     try {
+        val versionName = System.getenv("VERSION_NAME")
         return versionName.toString().ifEmpty {
-            getFilePropertyValue("version.properties", "versionName").orEmpty()
+            getFilePropertyValue("version.properties", "versionName") ?: "\"\""
         }
     } catch (e: Exception) {
         println("Exception: $e")
-        return getFilePropertyValue("version.properties", "versionName").orEmpty()
+        return getFilePropertyValue("version.properties", "versionName") ?: "\"\""
     }
 }
 
