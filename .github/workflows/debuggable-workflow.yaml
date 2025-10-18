@@ -58,7 +58,7 @@ jobs:
 
       - name: List files in target directory
         continue-on-error: true
-        run: ls -la build/outputs/*/debug/*.{apk,aab}
+        run: ls -R **build/outputs/*/debug/*.{apk,aab}
 
       - name: Print out project tree
         continue-on-error: true
