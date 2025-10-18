@@ -34,7 +34,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew buildRelease
+        run: ./gradlew assembleDebug
         env:
           VERSION_NAME: ${{ github.ref_name }}
 
