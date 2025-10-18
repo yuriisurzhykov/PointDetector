@@ -58,6 +58,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug bundleDebug
         env:
+          VERSION_CODE: ${{ github.run_number }}
           VERSION_NAME: ${{ github.ref_name }}
 
       - name: Print working directory
@@ -78,3 +79,11 @@ jobs:
         run: |
           echo "Found APK at: ${{ steps.find-apk-files.outputs.apk_location }}"
           echo "Another path: ${{ steps.find-apk-files.outputs.apk_local_location }}"
+
+      - name: Upload AAB/APK file to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            ${{ steps.find-apk-files.outputs.apk_location }}
+            ${{ steps.find-apk-files.outputs.apk_local_location }}
+          name: App Release ${{ github.ref_name }}

@@ -61,6 +61,8 @@ jobs:
         run: |
           APK_PATH=$(find . -type f \( -name "*.apk" \) -print)
           AAB_PATH=$(find . -type f \( -name "*.aab" \) -print)
+          echo "APK Path is: $APK_PATH"
+          echo "AAB Path is: $AAB_PATH"
           echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
           echo "aab_location=$AAB_PATH" >> $GITHUB_OUTPUT
 
