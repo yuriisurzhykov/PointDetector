@@ -71,4 +71,6 @@ jobs:
         continue-on-error: true
         run: find . | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
 
+      - name: Find APK files in the entire workspace
+        run: find ${{ github.workspace }} -name "*.apk"
 
