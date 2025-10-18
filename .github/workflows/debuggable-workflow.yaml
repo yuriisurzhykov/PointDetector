@@ -63,6 +63,9 @@ jobs:
       - name: Print working directory
         run: pwd
 
+      - name: Find all apk/aab
+        run: find . -type f \( -name "*.apk" -o -name "*.aab" \) -print
+
       - name: Find APK files in the entire workspace
         id: find-apk-files
         run: |
