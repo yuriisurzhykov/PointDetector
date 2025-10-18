@@ -30,10 +30,6 @@ jobs:
           distribution: 'corretto'
           cache: gradle
 
-      - name: Get Tag
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
       - name: Setup Gradle Cache
         uses: gradle/actions/setup-gradle@v4
 
@@ -61,14 +57,14 @@ jobs:
           VERSION_NAME: ${{ github.ref_name }}
 
       - name: List files in target directory
-        run: ls -la app/build/outputs/*/release/*.{apk,aab}
+        run: ls -la ${{ github.workspace }}/app/build/outputs/*/release/*.{apk,aab}
 
       - name: Upload AAB/APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
           path: |
-            apk/release/app-release.apk
-            bundle/release/app-release.aab
+            ${{ github.workspace }}/apk/release/app-release.apk
+            ${{ github.workspace }}/bundle/release/app-release.aab
           name: App Release ${{ steps.versions.outputs.versionName }}
 
       - name: Generate Release
