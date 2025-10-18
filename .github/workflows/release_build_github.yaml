@@ -56,15 +56,20 @@ jobs:
         env:
           VERSION_NAME: ${{ github.ref_name }}
 
-      - name: List files in target directory
-        run: ls -la ${{ github.workspace }}/app/build/outputs/*/release/*.{apk,aab}
+      - name: Find APK files in the entire workspace
+        id: find-android-files
+        run: |
+          APK_PATH=$(find ${{ github.workspace }} -name "*.apk")
+          AAB_PATH=$(find ${{ github.workspace }} -name "*.aab")
+          echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
+          echo "aab_location=$AAB_PATH" >> $GITHUB_OUTPUT
 
       - name: Upload AAB/APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
           path: |
-            ${{ github.workspace }}/apk/release/app-release.apk
-            ${{ github.workspace }}/bundle/release/app-release.aab
+            ${{ steps.find-apk-files.outputs.apk_location }}
+            ${{ steps.find-apk-files.outputs.aab_location }}
           name: App Release ${{ steps.versions.outputs.versionName }}
 
       - name: Generate Release
@@ -75,5 +80,5 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk
-            ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab
+            ${{ steps.find-apk-files.outputs.apk_location }}
+            ${{ steps.find-apk-files.outputs.aab_location }}
