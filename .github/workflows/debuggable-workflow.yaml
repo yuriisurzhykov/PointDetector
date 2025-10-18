@@ -60,4 +60,8 @@ jobs:
         continue-on-error: true
         run: ls -la build/outputs/*/release/*.{apk,aab}
 
+      - name: Print out project tree
+        continue-on-error: true
+        run: find . | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
 
