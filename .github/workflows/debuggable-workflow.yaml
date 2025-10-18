@@ -63,10 +63,6 @@ jobs:
       - name: Print working directory
         run: pwd
 
-      - name: List files in target directory
-        continue-on-error: true
-        run: ls -R **build/outputs/*/debug/*.{apk,aab}
-
       - name: Find APK files in the entire workspace
         id: find-apk-files
         run: |
@@ -76,4 +72,3 @@ jobs:
       - name: Access APK Location path
         run: |
           echo "Found APK at: ${{ steps.find-apk-files.outputs.apk_location }}"
-

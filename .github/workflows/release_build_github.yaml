@@ -68,8 +68,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: |
-            ${{ steps.find-apk-files.outputs.apk_location }}
-            ${{ steps.find-apk-files.outputs.aab_location }}
+            ${{ steps.find-android-files.outputs.apk_location }}
+            ${{ steps.find-android-files.outputs.aab_location }}
           name: App Release ${{ steps.versions.outputs.versionName }}
 
       - name: Generate Release
@@ -80,5 +80,5 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            ${{ steps.find-apk-files.outputs.apk_location }}
-            ${{ steps.find-apk-files.outputs.aab_location }}
+            ${{ steps.find-android-files.outputs.apk_location }}
+            ${{ steps.find-android-files.outputs.aab_location }}
