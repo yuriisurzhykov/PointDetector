@@ -70,15 +70,12 @@ jobs:
       - name: Find APK files in the entire workspace
         id: find-apk-files
         run: |
-          APK_PATH=$(find ${{ github.workspace }} -name "*.apk")
           APK_PATH_2=$(find . -type f \( -name "*.apk" \) -print)
-          echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
           echo "apk_local_location=$APK_PATH_2" >> $GITHUB_OUTPUT
 
       - name: Access APK Location path
         run: |
-          echo "Found APK at: ${{ steps.find-apk-files.outputs.apk_location }}"
-          echo "Another path: ${{ steps.find-apk-files.outputs.apk_local_location }}"
+          echo "APK path: ${{ steps.find-apk-files.outputs.apk_local_location }}"
 
       - name: Upload AAB/APK file to Artifacts
         uses: actions/upload-artifact@v4

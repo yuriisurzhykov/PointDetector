@@ -72,7 +72,7 @@ jobs:
           path: |
             ${{ steps.find-android-files.outputs.apk_location }}
             ${{ steps.find-android-files.outputs.aab_location }}
-          name: App Release ${{ steps.versions.outputs.versionName }}
+          name: App Release ${{ github.ref_name }}
 
       - name: Generate Release
         uses: softprops/action-gh-release@v2
