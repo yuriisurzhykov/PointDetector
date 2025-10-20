@@ -66,8 +66,8 @@ jobs:
       - name: Find APK files in the entire workspace
         id: find-android-files
         run: |
-          APK_PATH=$(find . -type f \( -name "*.apk" \) -print)
-          AAB_PATH=$(find . -type f \( -name "*.aab" \) -print)
+          APK_PATH=$(find . -type f \( -name "*.apk" \) -print | head -1)
+          AAB_PATH=$(find . -type f \( -name "*.aab" \) -print | head -1)
           echo "APK Path is: $APK_PATH"
           echo "AAB Path is: $AAB_PATH"
           echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
