@@ -146,8 +146,13 @@ fun getReleaseVersionCode(): Int {
             getFilePropertyValue("version.properties", "versionCode")
         }?.toIntOrNull() ?: 1
     } catch (e: Exception) {
-        println("Exception: $e")
-        return 1
+        println("Exception: $e. Using version code from file.")
+        return try {
+            getFilePropertyValue("version.properties", "versionCode")?.toInt() ?: 1
+        } catch (e: Exception) {
+            println("Exception: $e")
+            1
+        }
     }
 }
 
