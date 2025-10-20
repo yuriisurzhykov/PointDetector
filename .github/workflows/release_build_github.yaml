@@ -31,7 +31,14 @@ jobs:
           cache: gradle
 
       - name: Setup Gradle Cache
-        uses: gradle/actions/setup-gradle@v4
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Configure Keystore
         run: |
@@ -66,13 +73,17 @@ jobs:
           echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
           echo "aab_location=$AAB_PATH" >> $GITHUB_OUTPUT
 
-      - name: Upload AAB/APK file to Artifacts
+      - name: Upload APK file to Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: |
-            ${{ steps.find-android-files.outputs.apk_location }}
-            ${{ steps.find-android-files.outputs.aab_location }}
-          name: App Release ${{ github.ref_name }}
+          path: ${{ steps.find-android-files.outputs.apk_location }}
+          name: APK Release ${{ github.ref_name }}
+
+      - name: Upload AAB file to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: ${{ steps.find-android-files.outputs.aab_location }}
+          name: AAB Release ${{ github.ref_name }}
 
       - name: Generate Release
         uses: softprops/action-gh-release@v2
