@@ -61,7 +61,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease bundleRelease
         env:
-          VERSION_NAME: ${{ github.ref_name }}
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ github.ref_name }}.${{ github.run_number }}
 
       - name: Find APK files in the entire workspace
         id: find-android-files
