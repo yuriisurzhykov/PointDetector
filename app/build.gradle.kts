@@ -5,13 +5,12 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.symbol.processing)
     alias(libs.plugins.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
-    alias(libs.plugins.google.firebase.appdistribution)
+    alias(libs.plugins.google.firebase.app.distribution)
 }
 
 ksp {
@@ -91,14 +90,11 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.google.material)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview.selection)
     implementation(libs.androidx.databinding.runtime)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
@@ -107,20 +103,20 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.play.services.location)
+    implementation(libs.google.play.services.location)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
-    implementation(libs.android.maps.utils)
-    implementation(libs.maps.utils.ktx)
-    implementation(libs.maps.ktx)
+    implementation(libs.google.maps.utils)
+    implementation(libs.google.maps.utils.ktx)
+    implementation(libs.google.maps.ktx)
 
-    implementation(libs.play.services.places)
-    implementation(libs.places)
+    implementation(libs.google.play.services.places)
+    implementation(libs.google.places)
 
-    implementation(libs.converter.gson)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.kotlin.serialization.json)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
@@ -128,7 +124,11 @@ dependencies {
     implementation(libs.firebase.database)
 
     // reflection-free flavor
-    implementation(libs.viewbindingpropertydelegate.noreflection)
+    implementation(libs.viewbinding.delegate.no.reflection)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }
 
 fun getDebugGoogleMapsApiKey(): String {

@@ -2,10 +2,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.symbol.processing)
 }
 
 ksp {
@@ -50,7 +49,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.google.material)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview.selection)
@@ -63,26 +62,26 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.play.services.location)
+    implementation(libs.google.play.services.location)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
-    implementation(libs.android.maps.utils)
-    implementation(libs.maps.utils.ktx)
-    implementation(libs.maps.ktx)
+    implementation(libs.google.maps.utils)
+    implementation(libs.google.maps.utils.ktx)
+    implementation(libs.google.maps.ktx)
 
-    implementation(libs.play.services.places)
-    implementation(libs.places)
+    implementation(libs.google.play.services.places)
+    implementation(libs.google.places)
 
-    implementation(libs.converter.gson)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.kotlin.serialization.json)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.database)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }
