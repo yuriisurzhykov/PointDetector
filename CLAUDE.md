@@ -47,6 +47,13 @@ Three Gradle modules (`settings.gradle.kts`), shared build constants (SDK levels
 
 `CacheDatabase` (version 3, `autoMigrations` 2→3 plus a `MigrationV1ToV2Spec`) exports schemas to `app/schemas/`; `FoodbankDatabase` to `foodbanks/room-schemas/`. Schema JSONs are tracked in git — when changing an entity, bump the version, add a migration, and commit the regenerated JSON.
 
+## Commits and changelog
+
+All commit messages **must** follow [Conventional Commits](https://www.conventionalcommits.org): `<type>(<optional scope>)<!>: <Description>`, with type one of `feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert` (scopes used here: `app`, `foodbanks`, `ui-components`, or a feature name; add `!` for breaking changes). Commits are authored only by the user — no `Co-Authored-By` trailers.
+
+- Enforced locally by `.githooks/commit-msg`; enable it once per clone with `git config core.hooksPath .githooks`. The same script is run in CI by `.github/workflows/commit-lint.yml` (on PRs and pushes to `master`).
+- `CHANGELOG.md` is **not committed**: the release workflow generates it with [git-cliff](https://git-cliff.org) (`cliff.toml`) and attaches it to the GitHub release; the release body is the notes for the tag being released. Commits that are not Conventional Commits (most of the history before this rule) are silently omitted from it, and `style`/`chore` commits are skipped. To preview locally: `git cliff --unreleased` or `git cliff --latest --strip header`.
+
 ## CI
 
-GitHub Actions in `.github/workflows/`: `debuggable-workflow.yaml` builds debug APK/AAB on push to `master`; `release_build_github.yaml` builds signed release artifacts and creates a GitHub release on version tags (`v1.2.3`, `1.2.3`, optionally with `-suffix`); `release_build_new.yml` is deprecated/disabled.
+GitHub Actions in `.github/workflows/`: `debuggable-workflow.yaml` builds debug APK/AAB on push to `master`; `release_build_github.yaml` builds signed release artifacts and creates a GitHub release on version tags (`v1.2.3`, `1.2.3`, optionally with `-suffix`); `commit-lint.yml` validates commit messages; `release_build_new.yml` is deprecated/disabled.

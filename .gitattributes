@@ -4,6 +4,7 @@
 # Scripts that must keep specific endings regardless of platform
 gradlew         text eol=lf
 *.sh            text eol=lf
+.githooks/*     text eol=lf
 *.bat           text eol=crlf
 
 # Binary files

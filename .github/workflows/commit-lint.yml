@@ -1,0 +1,43 @@
+name: Commit Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  commit-lint:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check commit messages
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          PUSH_AFTER_SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            range="$PR_BASE_SHA..$PR_HEAD_SHA"
+          elif echo "$PUSH_BEFORE_SHA" | grep -q -E '^0+$'; then
+            range="$PUSH_AFTER_SHA^!"
+          else
+            range="$PUSH_BEFORE_SHA..$PUSH_AFTER_SHA"
+          fi
+
+          failed=0
+          for sha in $(git log --no-merges --format=%H "$range"); do
+            git log -1 --format=%B "$sha" > "$RUNNER_TEMP/commit-message"
+            if ! sh .githooks/commit-msg "$RUNNER_TEMP/commit-message"; then
+              echo "::error::Commit $sha does not follow Conventional Commits"
+              failed=1
+            fi
+          done
+          exit $failed
