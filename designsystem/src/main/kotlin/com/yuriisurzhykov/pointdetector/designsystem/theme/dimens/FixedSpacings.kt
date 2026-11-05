@@ -81,4 +81,8 @@ internal val FixedComponentDimensions = ComponentDimensions(
     modalMaxFraction = 0.88f,
     cityChipMaxWidth = 220.dp,
     mapUserDotSize = 16.dp,
+    placeHeroHeight = 178.dp,
+    placeBodyOverlap = 16.dp,
+    placeBodyBottomInset = 112.dp,
+    riseOffset = 12.dp,
 )

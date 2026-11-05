@@ -60,4 +60,8 @@ data class ComponentDimensions(
     val modalMaxFraction: Float,
     val cityChipMaxWidth: Dp,
     val mapUserDotSize: Dp,
+    val placeHeroHeight: Dp,
+    val placeBodyOverlap: Dp,
+    val placeBodyBottomInset: Dp,
+    val riseOffset: Dp,
 )
