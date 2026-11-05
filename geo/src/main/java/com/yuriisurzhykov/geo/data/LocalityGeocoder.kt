@@ -1,26 +1,26 @@
-package com.yuriisurzhykov.foodbanks.data.location
+package com.yuriisurzhykov.geo.data
 
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-interface CityGeocoder {
+interface LocalityGeocoder {
 
     /**
-     * Name of the city (locality) at the [location], or an empty string
+     * Name of the locality (city, town) at the [location], or an empty string
      * when it is not known, for example when there is no network.
      */
     suspend fun locality(location: LatLng): String
 
     abstract class Abstract(
         private val geocoder: Geocoder
-    ) : CityGeocoder {
+    ) : LocalityGeocoder {
 
         override suspend fun locality(location: LatLng): String {
             if (!Geocoder.isPresent()) return ""

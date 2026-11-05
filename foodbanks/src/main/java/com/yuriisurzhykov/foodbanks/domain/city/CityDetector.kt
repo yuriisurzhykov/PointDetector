@@ -3,10 +3,10 @@ package com.yuriisurzhykov.foodbanks.domain.city
 import com.yuriisurzhykov.foodbanks.data.city.CityRepository
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
-import com.yuriisurzhykov.foodbanks.data.location.CityGeocoder
-import com.yuriisurzhykov.foodbanks.data.location.LocationUnavailableException
-import com.yuriisurzhykov.foodbanks.data.location.UserLocationSource
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.data.LocalityGeocoder
+import com.yuriisurzhykov.geo.data.LocationUnavailableException
+import com.yuriisurzhykov.geo.data.UserLocationSource
+import com.yuriisurzhykov.geo.LatLng
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ interface CityDetector {
 
     abstract class Abstract(
         private val locationSource: UserLocationSource,
-        private val geocoder: CityGeocoder,
+        private val geocoder: LocalityGeocoder,
         private val cityCacheDataSource: CityCacheDataSource,
         private val cityRepository: CityRepository,
         private val matcher: CityMatcher
@@ -52,7 +52,7 @@ interface CityDetector {
 
     class Base @Inject constructor(
         locationSource: UserLocationSource,
-        geocoder: CityGeocoder,
+        geocoder: LocalityGeocoder,
         cityCacheDataSource: CityCacheDataSource,
         cityRepository: CityRepository,
         matcher: CityMatcher

@@ -1,7 +1,6 @@
-package com.yuriisurzhykov.foodbanks.city.domain
+package com.yuriisurzhykov.geo
 
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
-import com.yuriisurzhykov.foodbanks.domain.location.DistanceCalculator
+import com.yuriisurzhykov.geo.domain.DistanceCalculator
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

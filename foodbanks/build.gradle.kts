@@ -45,6 +45,7 @@ kotlin {
 
 dependencies {
 
+    api(project(":geo"))
     implementation(project(":ui-components"))
 
     implementation(libs.androidx.core.ktx)

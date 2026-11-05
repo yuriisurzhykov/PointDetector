@@ -1,6 +1,6 @@
-package com.yuriisurzhykov.foodbanks.domain.location
+package com.yuriisurzhykov.geo.domain
 
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import javax.inject.Inject
 import kotlin.math.asin
 import kotlin.math.cos

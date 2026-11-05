@@ -1,8 +1,8 @@
 package com.yuriisurzhykov.foodbanks.domain.city
 
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
-import com.yuriisurzhykov.foodbanks.domain.location.DistanceCalculator
+import com.yuriisurzhykov.geo.LatLng
+import com.yuriisurzhykov.geo.domain.DistanceCalculator
 import javax.inject.Inject
 
 interface CityMatcher {

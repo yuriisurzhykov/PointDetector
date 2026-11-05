@@ -1,9 +1,9 @@
 package com.yuriisurzhykov.foodbanks.city.domain
 
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.domain.city.CityMatcher
-import com.yuriisurzhykov.foodbanks.domain.location.DistanceCalculator
+import com.yuriisurzhykov.geo.domain.DistanceCalculator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before

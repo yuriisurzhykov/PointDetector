@@ -2,7 +2,7 @@ package com.yuriisurzhykov.foodbanks.city.data
 
 import com.yuriisurzhykov.foodbanks.data.city.CloudToCacheMapper
 import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloud
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.cloud.PointCloud
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

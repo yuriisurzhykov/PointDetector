@@ -5,10 +5,10 @@ import com.yuriisurzhykov.foodbanks.data.city.CityRepository
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityWithPointsCache
-import com.yuriisurzhykov.foodbanks.data.location.CityGeocoder
-import com.yuriisurzhykov.foodbanks.data.location.LocationUnavailableException
-import com.yuriisurzhykov.foodbanks.data.location.UserLocationSource
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.data.LocalityGeocoder
+import com.yuriisurzhykov.geo.data.LocationUnavailableException
+import com.yuriisurzhykov.geo.data.UserLocationSource
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.prefs.NoPreferenceException
 import com.yuriisurzhykov.foodbanks.data.prefs.SelectedCityPreference
 import com.yuriisurzhykov.foodbanks.domain.city.City
@@ -17,7 +17,7 @@ import com.yuriisurzhykov.foodbanks.domain.city.CityDetector
 import com.yuriisurzhykov.foodbanks.domain.city.CityMatcher
 import com.yuriisurzhykov.foodbanks.domain.city.CityNotDetectedException
 import com.yuriisurzhykov.foodbanks.domain.city.SelectedCityUseCase
-import com.yuriisurzhykov.foodbanks.domain.location.DistanceCalculator
+import com.yuriisurzhykov.geo.domain.DistanceCalculator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -181,7 +181,7 @@ private class FakeUserLocationSource(var location: LatLng?) : UserLocationSource
     }
 }
 
-private class FakeCityGeocoder(var locality: String) : CityGeocoder {
+private class FakeCityGeocoder(var locality: String) : LocalityGeocoder {
 
     override suspend fun locality(location: LatLng): String = locality
 }

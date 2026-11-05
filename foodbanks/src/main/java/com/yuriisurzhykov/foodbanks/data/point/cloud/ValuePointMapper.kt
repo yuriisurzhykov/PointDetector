@@ -2,7 +2,7 @@ package com.yuriisurzhykov.foodbanks.data.point.cloud
 
 import com.yuriisurzhykov.foodbanks.core.data.Mapper
 import com.yuriisurzhykov.foodbanks.core.data.SnapshotValue
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import javax.inject.Inject
 

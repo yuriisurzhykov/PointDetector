@@ -4,7 +4,7 @@ import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityWithPointsCache
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

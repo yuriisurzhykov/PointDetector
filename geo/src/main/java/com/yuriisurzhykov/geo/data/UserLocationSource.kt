@@ -1,9 +1,9 @@
-package com.yuriisurzhykov.foodbanks.data.location
+package com.yuriisurzhykov.geo.data
 
 import android.annotation.SuppressLint
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -14,8 +14,8 @@ interface UserLocationSource {
     suspend fun location(): LatLng
 
     /**
-     * The city is a coarse value, so the last known location is good enough and is much
-     * faster than waiting for a fresh one.
+     * The last known location is good enough for coarse needs like finding a city and is much
+     * faster than waiting for a fresh one. The location permission is checked by the caller.
      */
     abstract class Abstract(
         private val locationClient: FusedLocationProviderClient

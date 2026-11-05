@@ -1,4 +1,4 @@
-package com.yuriisurzhykov.foodbanks.data.point
+package com.yuriisurzhykov.geo
 
 @kotlinx.serialization.Serializable
 data class LatLng(
