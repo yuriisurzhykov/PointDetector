@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +20,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
@@ -46,8 +49,11 @@ internal fun PdBasicField(
     transformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    autoFocus: Boolean = false,
 ) {
     var focused by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+    if (autoFocus) LaunchedEffect(Unit) { focusRequester.requestFocus() }
     val colors = PdTheme.colors
     val spacing = PdTheme.dimensions.spacing
     val stroke = PdTheme.dimensions.stroke
@@ -77,7 +83,7 @@ internal fun PdBasicField(
             BasicTextField(
                 value = value,
                 onValueChange = onValueChange,
-                modifier = Modifier.fillMaxWidth().onFocusChanged { focused = it.isFocused },
+                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester).onFocusChanged { focused = it.isFocused },
                 singleLine = true,
                 textStyle = PdTextRole.BodyLarge.style().copy(color = colors.content.primary),
                 cursorBrush = SolidColor(colors.primary.main),

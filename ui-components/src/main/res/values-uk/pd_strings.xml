@@ -25,4 +25,6 @@
     <string name="pd_empty_matches_title">Нічого не знайдено за запитом «%1$s»</string>
     <string name="pd_empty_matches_message">Перевірте написання або додайте місце вручну.</string>
     <string name="pd_offline_notice">Немає з’єднання. Показано збережені місця.</string>
+    <string name="pd_empty_open_title">Зараз нічого не відчинено</string>
+    <string name="pd_empty_open_message">Загляньте на інші вкладки або поверніться пізніше.</string>
 </resources>

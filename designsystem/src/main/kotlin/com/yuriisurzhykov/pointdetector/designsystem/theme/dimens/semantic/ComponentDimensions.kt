@@ -58,4 +58,6 @@ data class ComponentDimensions(
     val illustrationSmallIcon: Dp,
     val illustrationRingScale: Float,
     val modalMaxFraction: Float,
+    val cityChipMaxWidth: Dp,
+    val mapUserDotSize: Dp,
 )

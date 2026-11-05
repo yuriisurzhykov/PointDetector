@@ -52,7 +52,8 @@ class PointToUiMapper @Inject constructor(
             isPointAvailable = availabilityService.isPointAvailableNow(point.workingHours),
             favoriteState = FavoriteState.Factory.build(point.favorite),
             id = point.id,
-            isUserPoint = point.origin == PointOrigin.USER
+            isUserPoint = point.origin == PointOrigin.USER,
+            help = point.help
         )
     }
 
@@ -71,7 +72,8 @@ class PointToUiMapper @Inject constructor(
         val longitude: Double,
         val workingHours: List<WorkingHour>,
         val origin: PointOrigin,
-        val favorite: Boolean
+        val favorite: Boolean,
+        val help: Map<String, Boolean>
     )
 
     private object PointFields : Point.Mapper<Fields> {
@@ -86,7 +88,8 @@ class PointToUiMapper @Inject constructor(
             favorite: Boolean,
             help: PointHelp
         ) = Fields(
-            id, name, address, coordinates.lat, coordinates.lng, workingHours, origin, favorite
+            id, name, address, coordinates.lat, coordinates.lng, workingHours, origin, favorite,
+            help.facts.associate { it.type to it.enabled }
         )
     }
 }

@@ -16,7 +16,8 @@ data class PointUi(
     val isPointAvailable: Boolean = false,
     val favoriteState: FavoriteState,
     val id: Long = 0,
-    val isUserPoint: Boolean = false
+    val isUserPoint: Boolean = false,
+    val help: Map<String, Boolean> = emptyMap()
 ) : Serializable, ViewHolderItem {
 
     override fun areItemsTheSame(other: Any): Boolean {

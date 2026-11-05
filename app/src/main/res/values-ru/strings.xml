@@ -55,4 +55,38 @@
     <string name="title_working_hours_input">Выберите часы работы</string>
     <string name="label_nothing_selected">Ничего не задано</string>
     <string name="title_filter_screen">Фильтры</string>
+
+    <!-- Main screen -->
+    <string name="place_next_tomorrow">завтра</string>
+    <string name="tag_appointment">Нужна запись</string>
+    <string name="tag_walk_in">Без записи</string>
+    <string name="tag_documents">Нужен документ</string>
+    <string name="help_title">Как получить помощь</string>
+    <string name="help_appointment">Запись</string>
+    <string name="help_appointment_required">Нужна</string>
+    <string name="help_appointment_not_required">Не нужна</string>
+    <string name="help_documents">Документы</string>
+    <string name="help_documents_required">Нужны</string>
+    <string name="help_documents_not_required">Не нужны</string>
+    <string name="places_favorite_add">В избранное</string>
+    <string name="places_favorite_remove">Убрать из избранного</string>
+    <string name="places_title_open">Открыто сейчас: %1$s</string>
+    <string name="places_title_favorites">В избранном: %1$s</string>
+    <string name="places_order_distance">Сначала ближайшие</string>
+    <string name="places_order_name">По названию</string>
+    <string name="places_tab_all">Все</string>
+    <string name="places_tab_open">Открыто сейчас</string>
+    <string name="places_tab_favorites">Избранное</string>
+    <string name="places_search_hint">Найти помощь рядом</string>
+    <string name="places_filters">Фильтры</string>
+    <string name="places_clear">Очистить</string>
+    <string name="places_my_location">Моё местоположение</string>
+    <string name="places_add">Добавить место</string>
+    <string name="places_city_description">Выбрать город</string>
+    <plurals name="places_title_all">
+        <item quantity="one">%d место рядом</item>
+        <item quantity="few">%d места рядом</item>
+        <item quantity="many">%d мест рядом</item>
+        <item quantity="other">%d места рядом</item>
+    </plurals>
 </resources>

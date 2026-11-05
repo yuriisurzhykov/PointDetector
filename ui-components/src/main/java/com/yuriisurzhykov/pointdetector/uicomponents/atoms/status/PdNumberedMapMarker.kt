@@ -22,6 +22,7 @@ import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdBasicText
 import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdTextRole
 import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.style
 import com.yuriisurzhykov.pointdetector.uicomponents.component.PdBaseComponent
+import com.yuriisurzhykov.pointdetector.uicomponents.component.PdMapMarker
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PlaceStatus
 import com.yuriisurzhykov.pointdetector.uicomponents.resolver.text.PdLiteralText
 

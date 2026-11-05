@@ -24,6 +24,7 @@ class PdSearchField(
     private val hint: PdTextResolver,
     private val clearDescription: PdTextResolver,
     private val onSearch: () -> Unit,
+    private val autoFocus: Boolean = false,
 ) : PdBaseComponent(), PdField {
 
     @Composable
@@ -37,6 +38,7 @@ class PdSearchField(
             trailing = if (value.isEmpty()) PdNoComponent else PdFlatIconButton(PdIcons.Close, clearDescription) { onValueChange("") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = { onSearch() }),
+            autoFocus = autoFocus,
         )
     }
 }

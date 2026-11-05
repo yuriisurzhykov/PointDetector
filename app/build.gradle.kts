@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.symbol.processing)
+    alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.google.firebase.app.distribution)
@@ -87,6 +88,7 @@ kotlin {
 dependencies {
 
     implementation(project(":ui-components"))
+    implementation(project(":map-maplibre"))
     implementation(project(":foodbanks"))
 
     implementation(libs.androidx.core.ktx)
@@ -110,6 +112,12 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.google.maps.utils)
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Previews live in src/debug only.
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.tooling.preview)
 
     implementation(libs.google.play.services.places)
     implementation(libs.google.places)
