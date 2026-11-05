@@ -57,6 +57,16 @@ class SelectedCityUseCaseTest {
     }
 
     @Test
+    fun `test manual choice wins over detected city`(): Unit = runBlocking {
+        useCase.selectedCity()
+
+        useCase.select(oakland.nameCode)
+
+        assertEquals(oakland.nameCode, useCase.selectedCity().code())
+        assertEquals(oakland.nameCode, preference.value)
+    }
+
+    @Test
     fun `test city is detected and remembered when nothing is chosen`(): Unit = runBlocking {
         assertEquals(sacramento.nameCode, useCase.selectedCity().code())
         assertEquals(sacramento.nameCode, preference.value)

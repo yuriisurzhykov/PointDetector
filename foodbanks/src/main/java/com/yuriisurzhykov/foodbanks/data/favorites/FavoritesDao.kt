@@ -23,4 +23,8 @@ interface FavoritesDao {
     @Query("DELETE FROM FavoritePoint WHERE favoriteId=:id")
     @Transaction
     suspend fun deleteFavorite(id: Long): Int
+
+    @Query("DELETE FROM FavoritePoint WHERE pointId=:pointId")
+    @Transaction
+    suspend fun deleteFavoriteOfPoint(pointId: Long): Int
 }

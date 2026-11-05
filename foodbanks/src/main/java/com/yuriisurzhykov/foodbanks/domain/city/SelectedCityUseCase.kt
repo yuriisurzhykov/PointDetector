@@ -15,6 +15,11 @@ interface SelectedCityUseCase {
     @kotlin.jvm.Throws(CityNotDetectedException::class)
     suspend fun selectedCity(): City
 
+    /**
+     * The user's own choice, it is used from now on instead of the detected city.
+     */
+    suspend fun select(cityCode: String)
+
     abstract class Abstract(
         private val preference: SelectedCityPreference,
         private val cityCacheDataSource: CityCacheDataSource,
@@ -26,6 +31,8 @@ interface SelectedCityUseCase {
             val city = savedCity() ?: detectedCity()
             return mapper.mapSingle(city)
         }
+
+        override suspend fun select(cityCode: String) = preference.savePref(cityCode)
 
         private suspend fun savedCity(): CityCache? {
             return try {

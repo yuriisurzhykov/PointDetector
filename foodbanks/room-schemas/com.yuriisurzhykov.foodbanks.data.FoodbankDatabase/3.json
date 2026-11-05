@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "1a439b21c325108c5e826361fa56c127",
+    "identityHash": "2c93f70c1fc0207b85227955e81829b8",
     "entities": [
       {
         "tableName": "CityCache",
@@ -325,7 +325,7 @@
       },
       {
         "tableName": "FavoritePoint",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favoriteId` INTEGER NOT NULL, `pointId` INTEGER NOT NULL, `pointName` TEXT NOT NULL, `pointAddress` TEXT NOT NULL, PRIMARY KEY(`favoriteId`), FOREIGN KEY(`pointId`) REFERENCES `PointCache`(`pointId`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favoriteId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pointId` INTEGER NOT NULL, `pointName` TEXT NOT NULL, `pointAddress` TEXT NOT NULL, FOREIGN KEY(`pointId`) REFERENCES `PointCache`(`pointId`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "favoriteId",
@@ -353,21 +353,20 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "favoriteId"
           ]
         },
         "indices": [
           {
-            "name": "index_FavoritePoint_pointId_favoriteId",
-            "unique": false,
+            "name": "index_FavoritePoint_pointId",
+            "unique": true,
             "columnNames": [
-              "pointId",
-              "favoriteId"
+              "pointId"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_FavoritePoint_pointId_favoriteId` ON `${TABLE_NAME}` (`pointId`, `favoriteId`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_FavoritePoint_pointId` ON `${TABLE_NAME}` (`pointId`)"
           }
         ],
         "foreignKeys": [
@@ -387,7 +386,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1a439b21c325108c5e826361fa56c127')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c93f70c1fc0207b85227955e81829b8')"
     ]
   }
 }

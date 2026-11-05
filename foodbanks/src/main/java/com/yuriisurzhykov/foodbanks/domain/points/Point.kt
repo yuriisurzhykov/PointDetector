@@ -17,7 +17,8 @@ interface Point {
             address: String,
             coordinates: LatLng,
             workingHours: List<WorkingHour>,
-            origin: PointOrigin
+            origin: PointOrigin,
+            favorite: Boolean
         ): T
 
         class MarkFavorite(
@@ -32,7 +33,8 @@ interface Point {
                 address: String,
                 coordinates: LatLng,
                 workingHours: List<WorkingHour>,
-                origin: PointOrigin
+                origin: PointOrigin,
+                favorite: Boolean
             ) {
                 dispatchers.launchBackground(coroutineScope) {
                     favoritesRepository.markFavorite(id)
@@ -49,11 +51,12 @@ interface Point {
         private val address: String,
         private val coordinates: LatLng,
         private val workingHours: List<WorkingHour>,
-        private val origin: PointOrigin
+        private val origin: PointOrigin,
+        private val favorite: Boolean
     ) : Point {
 
         override fun <T> map(mapper: Mapper<T>): T {
-            return mapper.map(id, name, address, coordinates, workingHours, origin)
+            return mapper.map(id, name, address, coordinates, workingHours, origin, favorite)
         }
     }
 }

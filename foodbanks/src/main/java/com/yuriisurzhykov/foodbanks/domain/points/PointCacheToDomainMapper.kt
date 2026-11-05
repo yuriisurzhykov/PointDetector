@@ -18,7 +18,8 @@ interface PointCacheToDomainMapper : Mapper.List<PointWithHours, Point> {
             input.point.address,
             input.point.coordinates,
             input.workingHours.map { workingHourMapper.map(it) },
-            input.point.origin
+            input.point.origin,
+            input.favorites.isNotEmpty()
         )
     }
 }
