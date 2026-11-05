@@ -31,7 +31,7 @@ No linter/formatter is configured (Android lint runs with `abortOnError = false`
 
 ## Architecture
 
-Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, `:geo`, plus the new Compose modules `:designsystem` (the theme), `:toast` and `:konsist` described below (the Compose components live in `:ui-components`), shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
+Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, `:geo`, plus the new Compose modules `:designsystem` (the theme), `:toast`, `:map-maplibre` and `:konsist` described below (the Compose components live in `:ui-components`), shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
 
 - **`:app`** — the shipping application. Package `com.yuriisurzhykov.pointdetector`, layered Clean + MVVM:
   - `core/` — generic capability interfaces (`Fetch`, `Save`, `Delete`, `Clear`, `Mapper`, `SuspendMapper`, …) that repositories/use cases compose. The project style is "one small interface per capability" with a `Base` nested implementation class (e.g. `interface FetchAllPointsUseCase { class Base @Inject constructor(...) }`).
@@ -52,7 +52,10 @@ The UI is being rewritten in Jetpack Compose. The old View code stays in `:app` 
   - `resolver/`, `icons/`, `component/`, `model/` — base layer: `PdTextResolver`, `PdDrawableResolver`, `PdIcons`, `PdComponent` / `PdBaseComponent` / `PdListItem`, either-state models such as `PlaceStatus`.
   - `atoms/`, `molecules/`, `organisms/` — atomic design, each split into group packages (`buttons`, `texts`, `status`, `lists`, …). A level may import only itself and the levels below it.
 - **`:toast`** — priority toast queue as a state machine (`ToastCommand.reduce` → `ToastSideEffect`), `ToastHostState`, `PdSwipeToastHost`. Depends on `:ui-components` (and through it on `:designsystem`).
+- **`:map-maplibre`** — the free map: MapLibre over the OpenFreeMap vector tiles (OpenStreetMap data, no key, no limits). It is one implementation of the contract `PdMap` / `PdMapFactory` that lives in `:ui-components` (`organisms/map`, with the UI-only types in `model/map`). Screens know only the contract; the single place that picks the implementation is `di/MapModule.kt` in `:app`. To use another map (for example Google), add another module with a `PdMapFactory` and rebind it there. `:konsist` fails the build if a map SDK (`org.maplibre.`, `org.osmdroid.`, Google Maps views) is imported outside of a `map-*` module. The style is built from `PdTheme.colors.map`, so the map follows day and night; the OpenStreetMap attribution is drawn by the map and must stay.
 - **`:konsist`** — JVM tests that enforce the rules below. Violations go through a ratchet (`KnownViolations` may only shrink).
+
+The main screen (`PointsListFragment` hosts `presentation/places/PlacesScreen`) is Compose: the map, the search, the three-stop sheet with the cards. `PlacesViewModel` holds plain state (`PlacesUiState`); `PlacesScreen` turns it into components with `remember`, using `PlaceCardMapper`, `PlaceStatusMapper` and the hours logic in `domain/hours` (`WorkingHoursParser`, `StandingResolver`: open / closing soon / opens today / closed until / unknown). Kinds of "how to get help" facts are `HelpFactFactory` classes bound into a Hilt set in `di/HelpFactsModule.kt`.
 
 Rules for any Compose UI code (they are enforced by `:konsist`):
 

@@ -57,11 +57,31 @@ class ArchitectureTest {
         known = emptyList(),
     )
 
+    @Test
+    fun `only the map module knows the map library`() = ratchet(
+        "a map SDK is imported only inside of a map-* module, everything else uses PdMap",
+        ArchitectureRules.forbiddenImports(
+            ProjectSources.production.filterNot { it.path.startsWith("map-") },
+            MAP_LIBRARIES,
+        ),
+        known = emptyList(),
+    )
+
     private fun ratchet(rule: String, found: List<String>, known: List<String>) {
         Ratchet.check(rule, found, known)?.let { fail(it) }
     }
 
     private companion object {
         const val MAX_FILE_LINES = 250
+
+        /** The libraries that draw a map. Distance helpers of Google Play services are not among them. */
+        val MAP_LIBRARIES = listOf(
+            "org.maplibre.",
+            "org.osmdroid.",
+            "com.google.maps.android.compose.",
+            "com.google.android.gms.maps.GoogleMap",
+            "com.google.android.gms.maps.MapView",
+            "com.google.android.gms.maps.SupportMapFragment",
+        )
     }
 }
