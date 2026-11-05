@@ -133,6 +133,26 @@ class SelectedCityUseCaseTest {
     }
 
     @Test
+    fun `test detecting finds a city that appeared in the cloud after the cache was filled`(): Unit = runBlocking {
+        val newCity = CityCache(3, "Folsom", "folsom", "CA", "USA", 38.67, -121.18)
+        cache = FakeCityCacheDataSource(mutableListOf(sacramento, oakland))
+        repository = FakeCityRepository(cache, listOf(sacramento, oakland, newCity))
+        location.location = LatLng(38.67, -121.18)
+        geocoder.locality = "Folsom"
+        useCase = createUseCase()
+
+        assertEquals(newCity.nameCode, useCase.detect().code())
+    }
+
+    @Test
+    fun `test detecting uses the cached cities when the cloud cannot be reached`(): Unit = runBlocking {
+        repository = FakeCityRepository(cache, listOf(sacramento, oakland), failing = true)
+        useCase = createUseCase()
+
+        assertEquals(sacramento.nameCode, useCase.detect().code())
+    }
+
+    @Test
     fun `test failed detecting by hand keeps the chosen city`(): Unit = runBlocking {
         preference.value = oakland.nameCode
         location.location = null
@@ -188,13 +208,15 @@ private class FakeCityCacheDataSource(val cities: MutableList<CityCache>) : City
 
 private class FakeCityRepository(
     private val cache: FakeCityCacheDataSource,
-    private val cloud: List<CityCache>
+    private val cloud: List<CityCache>,
+    private val failing: Boolean = false
 ) : CityRepository {
 
     var fetches = 0
 
     override suspend fun fetch(): Flow<RepositoryResponse<List<CityCache>>> = flow {
         fetches++
+        if (failing) throw IllegalStateException("the cloud cannot be reached")
         cache.insertAll(cloud)
         emit(RepositoryResponse.Success(cache.cities()))
     }

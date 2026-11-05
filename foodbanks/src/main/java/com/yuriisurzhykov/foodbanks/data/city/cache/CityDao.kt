@@ -29,11 +29,26 @@ interface CityDao {
     @Insert
     suspend fun insert(city: CityCache)
 
+    /**
+     * A new city is added, a known one (the same code) is updated. The list of cities comes
+     * without the points, so a city that has no coordinates in the cloud has no center there;
+     * the center that was worked out earlier is kept instead of being erased.
+     */
     @Transaction
     suspend fun insertOrUpdate(cities: List<CityCache>) {
         cities.forEach { city ->
-            val id = cityId(city.nameCode)
-            if (id == null) insert(city) else update(city.copy(cityId = id))
+            val known = city(city.nameCode)
+            if (known == null) {
+                insert(city)
+            } else {
+                update(
+                    city.copy(
+                        cityId = known.cityId,
+                        latitude = city.latitude ?: known.latitude,
+                        longitude = city.longitude ?: known.longitude,
+                    ),
+                )
+            }
         }
     }
 

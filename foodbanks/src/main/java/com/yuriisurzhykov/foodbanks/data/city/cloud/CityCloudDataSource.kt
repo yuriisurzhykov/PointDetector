@@ -10,21 +10,25 @@ import javax.inject.Inject
 
 interface CityCloudDataSource {
 
+    /**
+     * The cities of the cloud **without their points**. A city that cannot be read is left out,
+     * so one bad entry does not hide the others; the failure is thrown only when the list itself
+     * cannot be read.
+     */
     @kotlin.jvm.Throws(RemoteDataException::class)
     suspend fun cities(): List<CityCloud>
 
+    /** One city with its points. Points that cannot be read are left out. */
     @kotlin.jvm.Throws(RemoteDataException::class)
     suspend fun city(cityCode: String): CityCloud
 
     class Base @Inject constructor(
         private val database: FirebaseDatabase,
-        private val snapshotMapper: SnapshotCityMapper
+        private val snapshotMapper: SnapshotCityMapper,
+        private val list: CityListReader,
     ) : CityCloudDataSource {
 
-        override suspend fun cities(): List<CityCloud> = remote {
-            val snapshot = citiesReference().get().await()
-            snapshot.children.map { child -> child.map(snapshotMapper) }
-        }
+        override suspend fun cities(): List<CityCloud> = remote { list.cities() }
 
         override suspend fun city(cityCode: String): CityCloud = remote {
             citiesReference().child(cityCode).get().await().map(snapshotMapper)

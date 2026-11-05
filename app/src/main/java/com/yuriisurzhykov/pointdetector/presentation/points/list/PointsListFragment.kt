@@ -84,7 +84,10 @@ class PointsListFragment : AbstractLocationFragment() {
             viewModel.onOverlay(PlacesOverlay.Filters)
         }
 
-        override fun onCity() = viewModel.onOverlay(PlacesOverlay.City)
+        override fun onCity() {
+            cityViewModel.sync()
+            viewModel.onOverlay(PlacesOverlay.City)
+        }
 
         override fun onAdd() {
             startActivity(Intent(activity, PointsCreateActivity::class.java))
@@ -167,6 +170,7 @@ class PointsListFragment : AbstractLocationFragment() {
         super.onStart()
         toolbar()?.visibility = View.GONE
         checkPermissions()
+        cityViewModel.sync()
         viewModel.reload()
     }
 
