@@ -19,6 +19,43 @@ object PdIcons {
     val Warning: PdDrawableResolver = strokeIcon("Warning", "M12 4l9 16H3z", "M12 10v5", "M12 17.5v.01")
     val Error: PdDrawableResolver = strokeIcon("Error", CIRCLE, "M9 9l6 6M15 9l-6 6")
 
+    val Search: PdDrawableResolver = strokeIcon("Search", "M11 4a7 7 0 1 1 0 14a7 7 0 1 1 0 -14z", "M20 20l-4-4")
+    val Tune: PdDrawableResolver = strokeIcon(
+        "Tune",
+        "M4 7h9M17 7h3M4 17h3M11 17h9",
+        "M15 5a2 2 0 1 1 0 4a2 2 0 1 1 0 -4z",
+        "M9 15a2 2 0 1 1 0 4a2 2 0 1 1 0 -4z",
+    )
+    val Locate: PdDrawableResolver = strokeIcon(
+        "Locate",
+        "M12 8.5a3.5 3.5 0 1 1 0 7a3.5 3.5 0 1 1 0 -7z",
+        "M12 3v3M12 18v3M3 12h3M18 12h3",
+    )
+    val Back: PdDrawableResolver = strokeIcon("Back", "M15 5l-7 7 7 7")
+    val Share: PdDrawableResolver = strokeIcon(
+        "Share",
+        "M6 9.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 1 1 0 -5z",
+        "M17 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 1 1 0 -5z",
+        "M17 15.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 1 1 0 -5z",
+        "M8.2 10.8l6.6-3.6M8.2 13.2l6.6 3.6",
+    )
+    val Pin: PdDrawableResolver = strokeIcon(
+        "Pin",
+        "M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z",
+        "M12 8.8a2.2 2.2 0 1 1 0 4.4a2.2 2.2 0 1 1 0 -4.4z",
+    )
+    val Plus: PdDrawableResolver = strokeIcon("Plus", "M12 5v14M5 12h14")
+    val Chevron: PdDrawableResolver = strokeIcon("Chevron", "M9 5l7 7-7 7")
+    val Clock: PdDrawableResolver = strokeIcon("Clock", CIRCLE, "M12 7v5l3 2")
+    val WifiOff: PdDrawableResolver = strokeIcon(
+        "WifiOff",
+        "M3 3l18 18",
+        "M5.5 12.5a10 10 0 0 1 4-2.4",
+        "M14.5 10.1a10 10 0 0 1 4 2.4",
+        "M8.5 16a5.5 5.5 0 0 1 4-1.6",
+        "M12 19.5v.01",
+    )
+
     val Calendar: PdDrawableResolver = strokeIcon(
         "Calendar",
         "M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z",

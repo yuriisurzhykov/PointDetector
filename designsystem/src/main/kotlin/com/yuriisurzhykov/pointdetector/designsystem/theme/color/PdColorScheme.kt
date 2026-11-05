@@ -1,5 +1,6 @@
 package com.yuriisurzhykov.pointdetector.designsystem.theme.color
 
+import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.MapColors
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.ColorRole
@@ -17,4 +18,5 @@ data class PdColorScheme(
     val status: StatusColors,
     val outline: Color,
     val divider: Color,
+    val map: MapColors,
 )

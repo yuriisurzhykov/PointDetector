@@ -21,12 +21,16 @@ sealed interface PlaceStatus {
 
     val icon: PdDrawableResolver
 
+    /** Can the place be visited right now: open, or open for the last minutes. */
+    val isOpen: Boolean
+
     data object Open : PlaceStatus {
         override val statusRole: ColorRole
             @[Composable ReadOnlyComposable]
             get() = PdTheme.colors.primary
 
         override val icon: PdDrawableResolver = PdIcons.StatusOpen
+        override val isOpen: Boolean = true
     }
 
     data object ClosingSoon : PlaceStatus {
@@ -35,6 +39,7 @@ sealed interface PlaceStatus {
             get() = PdTheme.colors.status.warning
 
         override val icon: PdDrawableResolver = PdIcons.StatusClosingSoon
+        override val isOpen: Boolean = true
     }
 
     data object Closed : PlaceStatus {
@@ -43,5 +48,6 @@ sealed interface PlaceStatus {
             get() = PdTheme.colors.status.neutral
 
         override val icon: PdDrawableResolver = PdIcons.StatusClosed
+        override val isOpen: Boolean = false
     }
 }
