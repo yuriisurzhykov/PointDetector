@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractStyleFragment
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
-import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
+import com.yuriisurzhykov.pointdetector.presentation.points.list.PointSwipeActions
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsListAdapter
-import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeRecyclerCallbacks
+import com.yuriisurzhykov.pointdetector.presentation.vibration.VibrationService
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.swipe.SwipeEngine
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,12 +29,8 @@ class FavoritesListFragment : AbstractStyleFragment(R.layout.fragment_favorite_l
         viewModel.observe(viewLifecycleOwner, favoritesObserver)
         recycler.layoutManager = LinearLayoutManager(view.context)
         recycler.adapter = adapter
-        adapter.setOnSwipeListener(object : SwipeRecyclerCallbacks<ViewHolderItem> {
-            override fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: ViewHolderItem) {
-                super.onSwipedToLeft(viewHolder, position, item)
-                (item as? PointUi)?.let { viewModel.remove(it) }
-            }
-        })
+        val swipes = PointSwipeActions(view.context, VibrationService(), adapter)
+        SwipeEngine.Base(listOf(swipes.unfavorite { viewModel.remove(it) })).attachTo(recycler)
     }
 
     private val favoritesObserver = Observer<List<ViewHolderItem>> {

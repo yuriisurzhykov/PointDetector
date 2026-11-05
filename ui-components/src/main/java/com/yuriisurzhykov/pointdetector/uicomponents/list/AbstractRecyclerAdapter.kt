@@ -10,7 +10,6 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
     private val viewHolderTypeManager: ViewHolderTypeManager<T>
 ) : RecyclerView.Adapter<VH>(),
     IRecyclerViewTypeAdapter<T>,
-    SwipeRecyclerCallbacks<T>,
     MutableListAdapter<T> {
 
     private var onItemClickListener: OnItemClickListener<T>? =
@@ -28,16 +27,8 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
         return viewHolderTypeManager.getViewHolderClass(viewType)
     }
 
-    open fun onItemRemoved(holder: RecyclerView.ViewHolder, position: Int, item: T) {
-    }
-
     fun setOnItemClickListener(listener: OnItemClickListener<T>) {
         onItemClickListener = listener
-    }
-
-    fun removeItem(holder: RecyclerView.ViewHolder, position: Int) {
-        val itemToRemove = getItem(position)
-        onSwipedToLeft(holder, position, itemToRemove)
     }
 
     override fun removeItem(item: T) {
@@ -64,10 +55,6 @@ abstract class AbstractRecyclerAdapter<T : Any, VH : AbstractViewHolder<T>>(
         DiffUtil.calculateDiff(callback, true).dispatchUpdatesTo(this)
         dataList.clear()
         dataList.addAll(list.orEmpty())
-    }
-
-    override fun onSwipedToLeft(viewHolder: RecyclerView.ViewHolder, position: Int, item: T) {
-        removeItem(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

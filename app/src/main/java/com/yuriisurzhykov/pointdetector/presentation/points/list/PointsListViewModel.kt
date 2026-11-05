@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yuriisurzhykov.foodbanks.domain.points.UserPointsUseCase
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.config.ProjectSortTypeBuilder
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
+import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
@@ -30,6 +32,8 @@ class PointsListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val pointsListUseCase: FetchAllPointsUseCase,
     private val searchPointUseCase: SearchPointUseCase,
+    private val favoritesApplyUseCase: FavoritesApplyUseCase,
+    private val userPointsUseCase: UserPointsUseCase,
     private val pointsSorter: ProjectSortTypeBuilder
 ) : ViewModel() {
 
@@ -90,6 +94,23 @@ class PointsListViewModel @Inject constructor(
             timerTask { dispatchers.launchBackground(viewModelScope) { block.invoke() } },
             scheduleTime
         )
+    }
+
+    /**
+     * The list is loaded again to show the new state of the point.
+     */
+    fun toggleFavorite(point: PointUi) {
+        dispatchers.launchBackground(viewModelScope) {
+            favoritesApplyUseCase.applyFavorite(point)
+            startLoadPoints(searchCondition)
+        }
+    }
+
+    fun removeUserPoint(point: PointUi) {
+        dispatchers.launchBackground(viewModelScope) {
+            userPointsUseCase.remove(point.id)
+            startLoadPoints(searchCondition)
+        }
     }
 
     fun getSearchCondition(): CharSequence {
