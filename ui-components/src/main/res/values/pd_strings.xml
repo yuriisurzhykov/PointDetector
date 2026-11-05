@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Texts of the Compose components (Pd*). The mappers in :app only pass data (times, counts). -->
+<resources>
+    <string name="pd_status_open_until">Open until %1$s</string>
+    <string name="pd_status_closing_soon">Closes in %1$s min</string>
+    <string name="pd_status_closed">Closed</string>
+    <string name="pd_status_opens_today">Opens today at %1$s</string>
+    <string name="pd_status_next">Next opening: %1$s %2$s</string>
+    <string name="pd_status_unknown">Hours not specified</string>
+    <string name="pd_hours_range">%1$s – %2$s</string>
+    <string name="pd_day_off">Day off</string>
+    <string name="pd_open_all_day">Open 24 hours</string>
+    <string name="pd_today_format">%1$s · today</string>
+    <string name="pd_hours_description">Working hours: %1$s</string>
+    <string name="pd_hours_now_description">Time of day: %1$s</string>
+</resources>

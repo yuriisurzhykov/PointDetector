@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pd_status_open_until">Відчинено до %1$s</string>
+    <string name="pd_status_closing_soon">Зачиниться через %1$s хв</string>
+    <string name="pd_status_closed">Зачинено</string>
+    <string name="pd_status_opens_today">Відчиниться сьогодні о %1$s</string>
+    <string name="pd_status_next">Найближче: %1$s %2$s</string>
+    <string name="pd_status_unknown">Години не вказано</string>
+    <string name="pd_hours_range">%1$s – %2$s</string>
+    <string name="pd_day_off">Вихідний</string>
+    <string name="pd_open_all_day">Цілодобово</string>
+    <string name="pd_today_format">%1$s · сьогодні</string>
+    <string name="pd_hours_description">Години роботи: %1$s</string>
+    <string name="pd_hours_now_description">Час доби: %1$s</string>
+</resources>
