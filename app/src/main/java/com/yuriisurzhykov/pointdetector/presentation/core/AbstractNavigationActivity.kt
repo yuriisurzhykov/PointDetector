@@ -11,24 +11,21 @@ abstract class AbstractNavigationActivity : AppCompatActivity(), NavigationCallb
 
     /**
      * Closes the activity when the last fragment is on top of the back stack,
-     * instead of leaving an empty container. Enabled only in that state so that
-     * in all other cases the default back handling pops the fragment.
+     * instead of leaving an empty container; otherwise pops the top fragment.
      */
-    private val closeOnLastFragmentCallback = object : OnBackPressedCallback(false) {
+    private val backNavigationCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            finish()
+            if (supportFragmentManager.backStackEntryCount <= 1) {
+                finish()
+            } else {
+                supportFragmentManager.popBackStack()
+            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onBackPressedDispatcher.addCallback(this, closeOnLastFragmentCallback)
-        supportFragmentManager.addOnBackStackChangedListener(::updateCloseOnLastFragmentCallback)
-        updateCloseOnLastFragmentCallback()
-    }
-
-    private fun updateCloseOnLastFragmentCallback() {
-        closeOnLastFragmentCallback.isEnabled = supportFragmentManager.backStackEntryCount == 1
+        onBackPressedDispatcher.addCallback(this, backNavigationCallback)
     }
 
     override fun openFragment(fragment: Fragment, tag: String) {
