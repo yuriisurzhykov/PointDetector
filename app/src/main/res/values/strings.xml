@@ -86,4 +86,13 @@
         <item quantity="one">%d place nearby</item>
         <item quantity="other">%d places nearby</item>
     </plurals>
+    <string name="place_back">Back</string>
+    <string name="place_share">Share</string>
+    <string name="place_route">Get directions</string>
+    <string name="place_hours_title">Working hours</string>
+    <string name="place_day_off">Day off</string>
+    <string name="place_meta">%1$s · %2$s on foot · %3$s by car</string>
+    <string name="place_minutes">%1$s min</string>
+    <string name="place_hours_minutes">%1$s h %2$s min</string>
+    <string name="place_hours_only">%1$s h</string>
 </resources>

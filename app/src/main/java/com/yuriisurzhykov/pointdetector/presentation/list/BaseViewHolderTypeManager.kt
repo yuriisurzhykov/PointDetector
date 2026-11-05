@@ -6,14 +6,12 @@ import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.points.create.EmptySearchData
 import com.yuriisurzhykov.pointdetector.presentation.points.create.EmptySearchViewHolder
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointSimplifiedViewHolder
-import com.yuriisurzhykov.pointdetector.presentation.points.details.WorkingHoursViewHolder
 import com.yuriisurzhykov.pointdetector.presentation.points.list.EmptyPointViewHolder
 import com.yuriisurzhykov.pointdetector.presentation.points.list.PointsViewHolder
 import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderContainer
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderTypeManager
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 
 open class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolderItem>() {
 
@@ -41,12 +39,6 @@ open class BaseViewHolderTypeManager : ViewHolderTypeManager.Abstract<ViewHolder
                 4,
                 EmptySearchViewHolder::class,
                 R.layout.list_item_entered_data_empty
-            )
-
-            is WeekDay -> ViewHolderContainer(
-                5,
-                WorkingHoursViewHolder::class,
-                R.layout.list_item_week_day
             )
 
             is Point -> ViewHolderContainer(
