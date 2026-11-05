@@ -57,8 +57,16 @@ private class TestCityDao : CityDao {
 
     override suspend fun cities(): List<CityCache> = cities
 
+    override suspend fun city(cityCode: String): CityCache? {
+        return cities.find { it.nameCode == cityCode }
+    }
+
     override suspend fun cityWithPoints(cityCode: String): CityWithPointsCache {
         return CityWithPointsCache(cities.find { it.nameCode == cityCode }!!, points)
+    }
+
+    override suspend fun cityId(cityCode: String): Long? {
+        return cities.find { it.nameCode == cityCode }?.cityId
     }
 
     override suspend fun insert(city: List<CityCache>) {

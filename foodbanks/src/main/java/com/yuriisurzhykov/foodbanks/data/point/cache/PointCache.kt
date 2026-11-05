@@ -12,7 +12,8 @@ import com.yuriisurzhykov.foodbanks.data.point.LatLng
 @Entity(
     tableName = "PointCache",
     indices = [
-        Index(value = ["cityCodeId", "pointId"])
+        Index(value = ["cityCodeId", "pointId"]),
+        Index(value = ["cityCodeId", "address"], unique = true)
     ],
     foreignKeys = [ForeignKey(
         entity = CityCache::class,

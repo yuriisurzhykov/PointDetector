@@ -12,10 +12,16 @@ interface PointsDao {
 
     @Query("SELECT * FROM PointCache WHERE cityCodeId=:cityId")
     @Transaction
-    fun pointsByCity(cityId: String): List<PointWithHours>
+    suspend fun pointsByCity(cityId: String): List<PointWithHours>
 
     @Query("SELECT * FROM PointCache WHERE pointId=:id")
-    fun pointById(id: Long): PointCache
+    suspend fun pointById(id: Long): PointCache
+
+    @Query("SELECT pointId FROM PointCache WHERE cityCodeId=:cityId AND address=:address")
+    suspend fun pointId(cityId: String, address: String): Long?
+
+    @Query("DELETE FROM WorkingHourCache WHERE pointId=:pointId")
+    suspend fun deleteWorkingHours(pointId: Long)
 
     @Insert
     suspend fun insert(point: PointCache): Long
@@ -28,6 +34,18 @@ interface PointsDao {
         val id = insert(point.point)
         point.workingHours.forEach {
             insert(it.copy(pointId = id))
+        }
+    }
+
+    @Transaction
+    suspend fun insertOrUpdate(point: PointWithHours) {
+        val id = pointId(point.point.cityCodeId, point.point.address)
+        if (id == null) {
+            insert(point)
+        } else {
+            update(point.point.copy(pointId = id))
+            deleteWorkingHours(id)
+            point.workingHours.forEach { insert(it.copy(pointId = id)) }
         }
     }
 
