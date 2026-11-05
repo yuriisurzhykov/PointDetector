@@ -31,7 +31,7 @@ No linter/formatter is configured (Android lint runs with `abortOnError = false`
 
 ## Architecture
 
-Three Gradle modules (`settings.gradle.kts`), shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
+Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, `:geo`, plus the new Compose modules `:designsystem`, `:toast`, `:konsist` described below, shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
 
 - **`:app`** — the shipping application. Package `com.yuriisurzhykov.pointdetector`, layered Clean + MVVM:
   - `core/` — generic capability interfaces (`Fetch`, `Save`, `Delete`, `Clear`, `Mapper`, `SuspendMapper`, …) that repositories/use cases compose. The project style is "one small interface per capability" with a `Base` nested implementation class (e.g. `interface FetchAllPointsUseCase { class Base @Inject constructor(...) }`).
@@ -42,6 +42,36 @@ Three Gradle modules (`settings.gradle.kts`), shared build constants (SDK levels
   - Remote points come from Firebase Realtime Database (`PointsFirebaseListFetchListener`, `SaveImportsUseCase`) and are cached in Room; there is also a bundled `assets/sample1.json` import path (`ImportAssetsPointsUseCase`).
 - **`:ui-components`** — shared Android library of reusable views and RecyclerView infrastructure (`list/` base adapters, view holders, diff and swipe callbacks, `CenteredTextToolbar`). `:app` and `:foodbanks` both depend on it.
 - **`:foodbanks`** — a separate, newer library module with its own `core/`, `data/`, `domain/`, `di/` layers and its own Room database (`FoodbankDatabase`, schemas in `foodbanks/room-schemas`): cities, points, favorites, and a cloud↔cache sync (`data/sync`). **`:app` does not currently depend on it** — it is a work-in-progress replacement of the data layer, so changes there do not affect the running app.
+
+### Compose design system (new, not wired into `:app` yet)
+
+The UI is being rewritten in Jetpack Compose. The old View code stays in `:app` / `:ui-components` until screens move. Three new modules; read the project skill `compose-design-system` (`.claude/skills/compose-design-system/SKILL.md`) before touching any of them.
+
+- **`:designsystem`** — the theme and every component, Compose only (no Material), a leaf that depends on nothing of the app. Package `com.yuriisurzhykov.pointdetector.designsystem`:
+  - `theme/` — `PdTheme.colors | shapes | typography | brushes | dimensions | motion | opacity | haptics`, semantic sub-packages, light/dark schemes built from the project blue (`#1B69FD`, night `#75A4FE`).
+  - `resolver/`, `icons/`, `component/`, `model/` — base layer: `PdTextResolver`, `PdDrawableResolver`, `PdIcons`, `PdComponent` / `PdBaseComponent` / `PdListItem`, either-state models such as `PlaceStatus`.
+  - `atoms/`, `molecules/`, `organisms/` — atomic design, each split into group packages (`buttons`, `texts`, `status`, `lists`, …). A level may import only itself and the levels below it.
+- **`:toast`** — priority toast queue as a state machine (`ToastCommand.reduce` → `ToastSideEffect`), `ToastHostState`, `PdSwipeToastHost`. Depends only on `:designsystem`.
+- **`:konsist`** — JVM tests that enforce the rules below. Violations go through a ratchet (`KnownViolations` may only shrink).
+
+Rules for any Compose UI code (they are enforced by `:konsist`):
+
+1. Every component is an **interface** (`PdComponent`) with an optional abstract base (`PdBase*`) and concrete classes. No public free `@Composable fun` outside `theme/`; consumers never take a `PdBase*` type.
+2. No **nullable** structured types or lambdas in a public API; nullable primitives are fine. Use Null Object / Strategy / a class per state. Nullable data lives only at the data boundary and in mappers.
+3. No `java.time` / `kotlin.time` / `Date` or other business types in UI models or composables. The UI gets `Float` fractions and ready texts from a mapper.
+4. **No hardcode:** no `dp`/`sp` literals, colours, alpha, durations, shapes or font weights in components. Only `PdTheme.…`. New numbers become named tokens in the theme (or `toast/tokens`).
+5. Visible text is a `PdTextResolver`, graphics a `PdDrawableResolver`; `stringResource` / `painterResource` appear only in `resolver/`.
+6. Either-state values (status, toast type) are `sealed interface` models that return their own colour role and icon (see `PlaceStatus`).
+7. Lazy-list items implement `PdListItem` with both `key` and `contentType`.
+8. One type per file, files ≤ 250 lines, `is` in `when` over sealed objects.
+
+Commands:
+
+```
+./gradlew :designsystem:compileDebugKotlin
+./gradlew :toast:testDebugUnitTest
+./gradlew :konsist:test            # architecture rules + metrics report (hardcodedTokens, nullableStructures, interfaces, …)
+```
 
 ### Room schemas
 
