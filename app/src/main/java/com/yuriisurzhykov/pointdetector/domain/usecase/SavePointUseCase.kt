@@ -30,7 +30,8 @@ interface SavePointUseCase {
                 coordinates = LatLng(point.coordinates.lat, point.coordinates.lng),
                 workingHours = point.workingHours.map {
                     WorkingHour(it.dayName, it.dayValue, it.hoursFrom, it.hoursTo)
-                }
+                },
+                help = point.help
             )
         }
     }

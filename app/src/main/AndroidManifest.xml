@@ -25,9 +25,6 @@
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".presentation.points.create.PointsCreateActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
             android:name=".presentation.permissions.PermissionsCheckActivity"
             android:exported="true">
 

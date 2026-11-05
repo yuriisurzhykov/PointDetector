@@ -134,6 +134,7 @@ dependencies {
     implementation(libs.viewbinding.delegate.no.reflection)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlin.coroutines.test)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

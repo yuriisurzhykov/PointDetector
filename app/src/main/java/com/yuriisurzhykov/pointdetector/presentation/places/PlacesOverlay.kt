@@ -5,4 +5,5 @@ enum class PlacesOverlay {
     None,
     City,
     Filters,
+    AddPlace,
 }

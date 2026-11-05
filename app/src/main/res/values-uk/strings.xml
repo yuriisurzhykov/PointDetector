@@ -47,7 +47,7 @@
     <string name="label_sorting_type">Варіант сортування</string>
     <string name="label_measure_type">Одиниці виміру</string>
     <string name="button_apply_filters">Застосувати фільтри</string>
-    <string name="title_working_hours_input">Оберіть часи работи</string>
+    <string name="title_working_hours_input">Оберіть години роботи</string>
     <string name="label_nothing_selected">Нічого не задано</string>
     <string name="title_filter_screen">Фільтри</string>
 
@@ -101,4 +101,21 @@
     <string name="city_no_matches">Міста з такою назвою немає</string>
     <string name="filters_reset">Скинути</string>
     <string name="filters_sort_name_hint">Від А до Я</string>
+    <string name="add_step_of">Крок %1$s з %2$s</string>
+    <string name="add_city_label">Місто</string>
+    <string name="add_hours_change">Змінити години</string>
+    <string name="add_fact_unknown">Не знаю</string>
+    <string name="add_saving">Збереження…</string>
+    <string name="add_address_not_found">Адресу не знайдено. Перевірте її та спробуйте ще раз.</string>
+    <string name="add_error_generic">Не вдалося зберегти точку. Спробуйте ще раз.</string>
+    <string name="add_days">Дні</string>
+    <string name="add_time_from">З</string>
+    <string name="add_time_to">До</string>
+    <string name="add_choose_days">Оберіть робочі дні</string>
+    <string name="add_hours_added">Вже додано</string>
+    <string name="add_hours_add">Додати</string>
+    <string name="add_hours_remove">Видалити %1$s</string>
+    <string name="add_show_on_map">Показати на карті</string>
+    <string name="add_another">Додати ще одну</string>
+    <string name="add_no_hours">Години не задано</string>
 </resources>

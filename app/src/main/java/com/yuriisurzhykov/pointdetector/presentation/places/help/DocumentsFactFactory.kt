@@ -14,6 +14,14 @@ class DocumentsFactFactory @Inject constructor() : HelpFactFactory {
 
     override val type: String = "documents"
 
+    override val question = HelpQuestion(
+        order = 1,
+        icon = PdIcons.Id,
+        label = PdStringText(R.string.help_documents),
+        yes = PdStringText(R.string.help_documents_required),
+        no = PdStringText(R.string.help_documents_not_required),
+    )
+
     override fun item(fact: HelpFact): PdHelpItem = PdFactItem(
         icon = PdIcons.Id,
         label = PdStringText(R.string.help_documents),

@@ -37,7 +37,7 @@
     <string name="button_create_new_point_label">Добавить точку!</string>
     <string name="title_empty_points_list">Ничего не найдено</string>
     <string name="description_empty_points_list">Нет записей в локальной базе данных. Для того чтобы увидеть записи попробуйте добавить ее нажав на кнопку снизу.</string>
-    <string name="label_description_search_address">Начните печатать в поле выше и в списке начнут появлятся возможнные точки</string>
+    <string name="label_description_search_address">Начните печатать в поле выше и в списке появятся возможные точки</string>
     <string name="label_empty_search_data">Ничего не найдено по запросу</string>
     <string name="title_location_permission_request">Нет доступа к геоданным</string>
     <string name="button_continue_anyway">Все равно продолжить</string>
@@ -106,4 +106,21 @@
     <string name="city_no_matches">Города с таким названием нет</string>
     <string name="filters_reset">Сбросить</string>
     <string name="filters_sort_name_hint">От А до Я</string>
+    <string name="add_step_of">Шаг %1$s из %2$s</string>
+    <string name="add_city_label">Город</string>
+    <string name="add_hours_change">Изменить часы</string>
+    <string name="add_fact_unknown">Не знаю</string>
+    <string name="add_saving">Сохранение…</string>
+    <string name="add_address_not_found">Адрес не найден. Проверьте его и попробуйте снова.</string>
+    <string name="add_error_generic">Не удалось сохранить точку. Попробуйте ещё раз.</string>
+    <string name="add_days">Дни</string>
+    <string name="add_time_from">С</string>
+    <string name="add_time_to">До</string>
+    <string name="add_choose_days">Выберите дни работы</string>
+    <string name="add_hours_added">Уже добавлено</string>
+    <string name="add_hours_add">Добавить</string>
+    <string name="add_hours_remove">Удалить %1$s</string>
+    <string name="add_show_on_map">Показать на карте</string>
+    <string name="add_another">Добавить ещё одну</string>
+    <string name="add_no_hours">Часы не заданы</string>
 </resources>
