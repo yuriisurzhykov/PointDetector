@@ -31,7 +31,7 @@ No linter/formatter is configured (Android lint runs with `abortOnError = false`
 
 ## Architecture
 
-Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, `:geo`, plus the new Compose modules `:designsystem`, `:toast`, `:konsist` described below, shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
+Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, `:geo`, plus the new Compose modules `:designsystem` (the theme), `:toast` and `:konsist` described below (the Compose components live in `:ui-components`), shared build constants (SDK levels, Java version, `RoomSchemaArgProvider`) live in `buildSrc` (`ProjectProperties`). Dependency versions are in `gradle/libs.versions.toml`.
 
 - **`:app`** — the shipping application. Package `com.yuriisurzhykov.pointdetector`, layered Clean + MVVM:
   - `core/` — generic capability interfaces (`Fetch`, `Save`, `Delete`, `Clear`, `Mapper`, `SuspendMapper`, …) that repositories/use cases compose. The project style is "one small interface per capability" with a `Base` nested implementation class (e.g. `interface FetchAllPointsUseCase { class Base @Inject constructor(...) }`).
@@ -40,18 +40,18 @@ Gradle modules (`settings.gradle.kts`): `:app`, `:ui-components`, `:foodbanks`, 
   - `presentation/` — Activities/Fragments/ViewModels grouped by feature (`points/list|create|details`, `favorites`, `filter`, `permissions`, `main`), plus `delegate/` property delegates for view binding/arguments.
   - `di/` — Hilt modules installed in `SingletonComponent`; bindings are mostly hand-written `@Provides` (use cases, mappers, repositories) rather than `@Binds`, so new use cases/mappers must be registered in the matching module (`UseCaseModule`, `MappersModule`, …).
   - Remote points come from Firebase Realtime Database (`PointsFirebaseListFetchListener`, `SaveImportsUseCase`) and are cached in Room; there is also a bundled `assets/sample1.json` import path (`ImportAssetsPointsUseCase`).
-- **`:ui-components`** — shared Android library of reusable views and RecyclerView infrastructure (`list/` base adapters, view holders, diff and swipe callbacks, `CenteredTextToolbar`). `:app` and `:foodbanks` both depend on it.
+- **`:ui-components`** — shared Android library of reusable views and RecyclerView infrastructure (`list/` base adapters, view holders, diff and swipe callbacks, `CenteredTextToolbar`) **and** the Compose components `Pd*` (packages `atoms`, `molecules`, `organisms`, `component`, `resolver`, `icons`, `model`, `preview` next to the old `list/` and `workday/`; see below). `:app` and `:foodbanks` both depend on it; it exposes `:designsystem` as `api`.
 - **`:foodbanks`** — a separate, newer library module with its own `core/`, `data/`, `domain/`, `di/` layers and its own Room database (`FoodbankDatabase`, schemas in `foodbanks/room-schemas`): cities, points, favorites, and a cloud↔cache sync (`data/sync`). **`:app` does not currently depend on it** — it is a work-in-progress replacement of the data layer, so changes there do not affect the running app.
 
 ### Compose design system (new, not wired into `:app` yet)
 
-The UI is being rewritten in Jetpack Compose. The old View code stays in `:app` / `:ui-components` until screens move. Three new modules; read the project skill `compose-design-system` (`.claude/skills/compose-design-system/SKILL.md`) before touching any of them.
+The UI is being rewritten in Jetpack Compose. The old View code stays in `:app` / `:ui-components` (its packages `list`, `workday`, `textselect`, …) until screens move. The Compose side is spread over three modules; read the project skill `compose-design-system` (`.claude/skills/compose-design-system/SKILL.md`) before touching any of them.
 
-- **`:designsystem`** — the theme and every component, Compose only (no Material), a leaf that depends on nothing of the app. Package `com.yuriisurzhykov.pointdetector.designsystem`:
-  - `theme/` — `PdTheme.colors | shapes | typography | brushes | dimensions | motion | opacity | haptics`, semantic sub-packages, light/dark schemes built from the project blue (`#1B69FD`, night `#75A4FE`).
+- **`:designsystem`** — the theme only, Compose without Material, a leaf that depends on nothing of the app. Package `com.yuriisurzhykov.pointdetector.designsystem.theme`: `PdTheme.colors | shapes | typography | brushes | dimensions | motion | opacity | haptics`, semantic sub-packages, light/dark schemes built from the project blue (`#1B69FD`, night `#75A4FE`).
+- **`:ui-components`** (Compose part) — every component, built on `:designsystem`. Package `com.yuriisurzhykov.pointdetector.uicomponents`:
   - `resolver/`, `icons/`, `component/`, `model/` — base layer: `PdTextResolver`, `PdDrawableResolver`, `PdIcons`, `PdComponent` / `PdBaseComponent` / `PdListItem`, either-state models such as `PlaceStatus`.
   - `atoms/`, `molecules/`, `organisms/` — atomic design, each split into group packages (`buttons`, `texts`, `status`, `lists`, …). A level may import only itself and the levels below it.
-- **`:toast`** — priority toast queue as a state machine (`ToastCommand.reduce` → `ToastSideEffect`), `ToastHostState`, `PdSwipeToastHost`. Depends only on `:designsystem`.
+- **`:toast`** — priority toast queue as a state machine (`ToastCommand.reduce` → `ToastSideEffect`), `ToastHostState`, `PdSwipeToastHost`. Depends on `:ui-components` (and through it on `:designsystem`).
 - **`:konsist`** — JVM tests that enforce the rules below. Violations go through a ratchet (`KnownViolations` may only shrink).
 
 Rules for any Compose UI code (they are enforced by `:konsist`):
@@ -68,12 +68,12 @@ Rules for any Compose UI code (they are enforced by `:konsist`):
 Commands:
 
 ```
-./gradlew :designsystem:compileDebugKotlin
+./gradlew :ui-components:compileDebugKotlin :designsystem:compileDebugKotlin
 ./gradlew :toast:testDebugUnitTest
 ./gradlew :konsist:test            # architecture rules + metrics report (hardcodedTokens, nullableStructures, interfaces, …)
 ```
 
-**Previews.** Every component has a `@PdPreviews` preview (light, dark, large font) in the `src/debug` source set of its module, never in `src/main`: `designsystem/src/debug/.../preview/{atoms,molecules,organisms,resolver}` and `toast/src/debug/.../toast/preview`. Open a file in Android Studio and switch a card to "Interactive mode" to click, toggle and swipe the component. Preview-only dependencies (`ui-tooling`) are `debugImplementation`, and sample strings live in `designsystem/src/debug/res`, so release builds contain none of it. A new component is not done until it has a preview.
+**Previews.** Every component has a `@PdPreviews` preview (light, dark, large font) in the `src/debug` source set of its module, never in `src/main`: `ui-components/src/debug/.../uicomponents/preview/{atoms,molecules,organisms,resolver}` and `toast/src/debug/.../toast/preview`. Open a file in Android Studio and switch a card to "Interactive mode" to click, toggle and swipe the component. Preview-only dependencies (`ui-tooling`) are `debugImplementation`, and sample strings live in `ui-components/src/debug/res`, so release builds contain none of it. A new component is not done until it has a preview.
 
 ### Room schemas
 
