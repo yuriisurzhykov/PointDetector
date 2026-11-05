@@ -7,6 +7,7 @@ import com.yuriisurzhykov.geo.data.LocalityGeocoder
 import com.yuriisurzhykov.geo.data.LocationUnavailableException
 import com.yuriisurzhykov.geo.data.UserLocationSource
 import com.yuriisurzhykov.geo.LatLng
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -39,12 +40,17 @@ interface CityDetector {
         }
 
         /**
-         * Cities are cached after the first load, the repository is only needed
-         * to fill an empty cache.
+         * Detecting is an explicit act, so the list of cities is brought up to date first: a city
+         * that appeared in the cloud after the cache was filled can be found too. Without a
+         * network, or when the cloud fails, the cities that are cached are used.
          */
         private suspend fun availableCities(): List<CityCache> {
-            if (cityCacheDataSource.cities().isEmpty()) {
+            try {
                 cityRepository.fetch().collect()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // The cache is what there is.
             }
             return cityCacheDataSource.cities()
         }

@@ -39,8 +39,14 @@ class CityViewModel @Inject constructor(
 
     init {
         refresh()
-        loadCities()
+        sync()
     }
+
+    /**
+     * Brings the list of cities up to date: what is cached is shown at once and the cloud answer
+     * replaces it. The list that is already shown stays when the cloud cannot be reached.
+     */
+    fun sync() = loadCities()
 
     /** Looks for the selected city again, for example when the location becomes available. */
     fun refresh() {
@@ -49,10 +55,16 @@ class CityViewModel @Inject constructor(
         }
     }
 
+    /**
+     * The choice is saved first and only then announced: whoever reacts to the new city (the list
+     * of points) reads it from the preference and must not find the old one there.
+     */
     fun select(city: CityUi) {
         mutableDetectionFailed.value = false
-        mutableSelected.value = city
-        dispatchers.launchBackground(viewModelScope) { selectedCityUseCase.select(city.code) }
+        dispatchers.launchBackground(viewModelScope) {
+            selectedCityUseCase.select(city.code)
+            mutableSelected.value = city
+        }
     }
 
     /** Takes the city where the person is now. A failure is kept as a flag and the choice stays. */
@@ -61,6 +73,7 @@ class CityViewModel @Inject constructor(
         dispatchers.launchBackground(viewModelScope) {
             try {
                 mutableSelected.value = selectedCityUseCase.detect().map(CityUi.Factory)
+                sync()
             } catch (e: CityNotDetectedException) {
                 mutableDetectionFailed.value = true
             }
