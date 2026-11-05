@@ -95,4 +95,12 @@
     <string name="place_minutes">%1$s min</string>
     <string name="place_hours_minutes">%1$s h %2$s min</string>
     <string name="place_hours_only">%1$s h</string>
+    <string name="sheet_close">Close</string>
+    <string name="city_search_hint">Find a city</string>
+    <string name="city_auto">Detect automatically</string>
+    <string name="city_auto_hint">By your location</string>
+    <string name="city_auto_failed">Could not detect the city. Turn on the location or choose a city from the list.</string>
+    <string name="city_no_matches">No city with this name</string>
+    <string name="filters_reset">Reset</string>
+    <string name="filters_sort_name_hint">A to Z</string>
 </resources>

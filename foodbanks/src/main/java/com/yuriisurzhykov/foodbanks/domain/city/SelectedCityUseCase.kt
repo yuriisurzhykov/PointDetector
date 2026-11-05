@@ -20,6 +20,13 @@ interface SelectedCityUseCase {
      */
     suspend fun select(cityCode: String)
 
+    /**
+     * Forgets the choice and detects the city where the user is now, even when a city was chosen
+     * before. A failed detection keeps the previous choice.
+     */
+    @kotlin.jvm.Throws(CityNotDetectedException::class)
+    suspend fun detect(): City
+
     abstract class Abstract(
         private val preference: SelectedCityPreference,
         private val cityCacheDataSource: CityCacheDataSource,
@@ -33,6 +40,8 @@ interface SelectedCityUseCase {
         }
 
         override suspend fun select(cityCode: String) = preference.savePref(cityCode)
+
+        override suspend fun detect(): City = mapper.mapSingle(detectedCity())
 
         private suspend fun savedCity(): CityCache? {
             return try {

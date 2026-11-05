@@ -27,4 +27,5 @@ data class PlacesUiState(
     val sortedByName: Boolean = false,
     val camera: CameraRequest? = null,
     val scroll: ScrollRequest? = null,
+    val overlay: PlacesOverlay = PlacesOverlay.None,
 )

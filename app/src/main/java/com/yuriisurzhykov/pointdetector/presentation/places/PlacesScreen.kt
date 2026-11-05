@@ -80,7 +80,7 @@ fun PlacesScreen(
     val component = PdTheme.dimensions.component
     val spacing = PdTheme.dimensions.spacing
 
-    BackHandler(enabled = state.searching) { actions.onSearching(false) }
+    BackHandler(enabled = state.searching && state.overlay == PlacesOverlay.None) { actions.onSearching(false) }
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val coveredFraction = if (state.sheet == PdSheetState.Peek) component.sheetPeekFraction else component.sheetHalfFraction
