@@ -19,11 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
-import com.yuriisurzhykov.pointdetector.designsystem.atoms.icons.PdDecorativeIcon
-import com.yuriisurzhykov.pointdetector.designsystem.atoms.icons.PdIconSize
-import com.yuriisurzhykov.pointdetector.designsystem.atoms.texts.PdPlainText
-import com.yuriisurzhykov.pointdetector.designsystem.atoms.texts.PdTextRole
-import com.yuriisurzhykov.pointdetector.designsystem.component.PdBaseComponent
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.icons.PdDecorativeIcon
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.icons.PdIconSize
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdPlainText
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdTextRole
+import com.yuriisurzhykov.pointdetector.uicomponents.component.PdBaseComponent
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.LocalPdContentColor
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.PdContentTone

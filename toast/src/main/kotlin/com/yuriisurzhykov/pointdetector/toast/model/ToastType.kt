@@ -3,8 +3,8 @@ package com.yuriisurzhykov.pointdetector.toast.model
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
-import com.yuriisurzhykov.pointdetector.designsystem.icons.PdIcons
-import com.yuriisurzhykov.pointdetector.designsystem.resolver.drawable.PdDrawableResolver
+import com.yuriisurzhykov.pointdetector.uicomponents.icons.PdIcons
+import com.yuriisurzhykov.pointdetector.uicomponents.resolver.drawable.PdDrawableResolver
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.ColorRole
 

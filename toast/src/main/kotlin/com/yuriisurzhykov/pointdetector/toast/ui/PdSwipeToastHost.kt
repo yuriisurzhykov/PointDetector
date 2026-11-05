@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import com.yuriisurzhykov.pointdetector.designsystem.component.PdBaseComponent
+import com.yuriisurzhykov.pointdetector.uicomponents.component.PdBaseComponent
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.toast.ToastHostState
 import com.yuriisurzhykov.pointdetector.toast.ToastSlot

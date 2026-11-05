@@ -13,9 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.yuriisurzhykov.pointdetector.designsystem.atoms.texts.PdPlainText
-import com.yuriisurzhykov.pointdetector.designsystem.molecules.buttons.PdOutlineButton
-import com.yuriisurzhykov.pointdetector.designsystem.molecules.buttons.PdPrimaryButton
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdPlainText
+import com.yuriisurzhykov.pointdetector.uicomponents.molecules.buttons.PdOutlineButton
+import com.yuriisurzhykov.pointdetector.uicomponents.molecules.buttons.PdPrimaryButton
 import com.yuriisurzhykov.pointdetector.toast.ToastHostState
 import com.yuriisurzhykov.pointdetector.toast.model.ToastType
 import com.yuriisurzhykov.pointdetector.toast.ui.PdStatusToastBanner

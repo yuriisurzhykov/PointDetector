@@ -26,16 +26,12 @@ kotlin {
 }
 
 dependencies {
-    // The design system is a leaf: Compose only, no Material, no app or data modules.
+    // The theme is a leaf: Compose only, no Material, no app or data modules. Components live in :ui-components.
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.compose.runtime)
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.animation)
-
-    // Previews live in src/debug only: release builds never see them.
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.tooling.preview)
 
     testImplementation(libs.junit)
 }

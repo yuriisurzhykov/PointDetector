@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.yuriisurzhykov.pointdetector.designsystem.resolver.text.PdLiteralText
-import com.yuriisurzhykov.pointdetector.designsystem.resolver.text.PdTextResolver
+import com.yuriisurzhykov.pointdetector.uicomponents.resolver.text.PdLiteralText
+import com.yuriisurzhykov.pointdetector.uicomponents.resolver.text.PdTextResolver
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.toast.model.ToastData
 import com.yuriisurzhykov.pointdetector.toast.model.ToastType

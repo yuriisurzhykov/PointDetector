@@ -30,20 +30,30 @@ class ArchitectureTest {
     )
 
     @Test
-    fun `the design system is a leaf`() = ratchet(
-        "design system depends on nothing of the app",
-        ArchitectureRules.forbiddenImports(
-            ProjectSources.designSystem,
-            listOf("${ProjectSources.APP_ROOT}.").map { it },
-        ).filterNot { it.contains(": ${ProjectSources.DESIGN_SYSTEM_ROOT}.") },
+    fun `the theme is a leaf`() = ratchet(
+        "the theme depends on nothing of the app, not even the components",
+        ArchitectureRules.forbiddenImports(ProjectSources.theme, listOf("${ProjectSources.APP_ROOT}."))
+            .filterNot { it.contains(": ${ProjectSources.DESIGN_SYSTEM_ROOT}.") },
         known = emptyList(),
     )
 
     @Test
-    fun `the toast depends only on the design system`() = ratchet(
-        "toast imports its own package and the design system only",
+    fun `the components depend only on the theme`() = ratchet(
+        "components import their own package and the theme only",
+        ArchitectureRules.forbiddenImports(ProjectSources.components, listOf("${ProjectSources.APP_ROOT}."))
+            .filterNot { it.contains(": ${ProjectSources.DESIGN_SYSTEM_ROOT}.") || it.contains(": ${ProjectSources.COMPONENTS_ROOT}.") },
+        known = emptyList(),
+    )
+
+    @Test
+    fun `the toast depends only on the components and the theme`() = ratchet(
+        "toast imports its own package, the components and the theme only",
         ArchitectureRules.forbiddenImports(ProjectSources.toast, listOf("${ProjectSources.APP_ROOT}."))
-            .filterNot { it.contains(": ${ProjectSources.DESIGN_SYSTEM_ROOT}.") || it.contains(": ${ProjectSources.TOAST_ROOT}.") },
+            .filterNot {
+                it.contains(": ${ProjectSources.DESIGN_SYSTEM_ROOT}.") ||
+                    it.contains(": ${ProjectSources.COMPONENTS_ROOT}.") ||
+                    it.contains(": ${ProjectSources.TOAST_ROOT}.")
+            },
         known = emptyList(),
     )
 

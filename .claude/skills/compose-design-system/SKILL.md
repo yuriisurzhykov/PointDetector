@@ -9,7 +9,7 @@ Reference implementations (read them, do not reinvent):
 
 | What | Where |
 |---|---|
-| Full implementation of this skill | `PointDetector`: modules `:designsystem`, `:toast`, `:konsist` |
+| Full implementation of this skill | `PointDetector`: modules `:designsystem` (theme), `:ui-components` (components), `:toast`, `:konsist` |
 | Theme, `BuildStatus`, toasts, Konsist rules (the origin) | `E:\Projects\build-notify-plugin\mobile-app` (`core/ui/.../theme`, `core/ui/.../components/model/BuildStatus.kt`, `core/toast`, `konsist/`, `config/konsist`) |
 
 If the user sends their own reference path, read it before writing code: the principles below come from such references.
@@ -17,7 +17,7 @@ If the user sends their own reference path, read it before writing code: the pri
 ## 0. Workflow
 
 1. Read the project's existing resources (`colors.xml`, icons, fonts): colors are not invented, they come from the project. Check contrast (WCAG) before showing a palette.
-2. Modules: `:designsystem` (the theme and all components, depends on nothing), `:toast` (depends only on `:designsystem`), `:konsist` (JVM tests of the rules).
+2. Modules: `:designsystem` (the theme only, depends on nothing), `:ui-components` (all Compose components, depends on `:designsystem`), `:toast` (depends on `:ui-components`), `:konsist` (JVM tests of the rules).
 3. Theme → base layer (interfaces, resolvers, models) → atoms → molecules → organisms → toasts → rules → documentation. Compile after each block.
 4. Rules and tests are written together with the code, not after. Mutation check: temporarily put `16.dp` into a component, the test must fail, then revert.
 5. Every component gets a preview in the `src/debug` source set of its module (section 10, "Previews") in the same change as the component.
@@ -161,7 +161,7 @@ Forbidden patterns (regular expressions of the rules): `\d+\.dp|sp`, `Color(0x`,
 
 ## 7. Toasts
 
-Module `:toast`, depends only on `:designsystem`. Architecture:
+Module `:toast`, depends on `:ui-components` (and through it on `:designsystem`). Architecture:
 
 ```
 ToastHostState.show(data) ──► Channel<ToastCommand> ──► scan(reduce) ──► onEach(execute side effects, publish slot)
@@ -238,7 +238,7 @@ Growing metrics: `interfaces`, `implementations`, `abstractBases` (from `metrics
 ## 11. How to create a new design system (checklist)
 
 1. Collect the project's colors, check contrast, decide what is `primary` and what is `status.*`.
-2. Create `:designsystem` (Compose, no Material), `:konsist`, and `:toast` if needed.
+2. Create `:designsystem` (the theme, Compose, no Material), put the components in `:ui-components`, add `:konsist`, and `:toast` if needed.
 3. Write the theme (section 1) and compile.
 4. Base layer: `PdComponent`, `PdBaseComponent`, `PdListItem` / `PdBaseListItem` / `PdContentType`, resolvers, `PdIcons`, state models.
 5. Atoms → molecules → organisms, each as an interface + scaffold + implementations, in group packages.
