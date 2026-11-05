@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
-import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
@@ -21,13 +20,16 @@ import javax.inject.Inject
 class FavoriteListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val favoritesUseCase: FavoritesFetchUseCase,
-    private val favRemoveUseCase: FavoritesRemoveUseCase,
-    private val favApplyUseCase: FavoritesApplyUseCase
-) : ViewModel(), FavoritesRemove<PointUi>, FavoritesApply<PointUi> {
+    private val favRemoveUseCase: FavoritesRemoveUseCase
+) : ViewModel(), FavoritesRemove<PointUi> {
 
     private val liveData = MutableLiveData<List<ViewHolderItem>>()
 
     init {
+        loadFavorites()
+    }
+
+    private fun loadFavorites() {
         dispatchers.launchBackground(viewModelScope) {
             favoritesUseCase.fetchFavorites().onEach { postResult(it) }.collect()
         }
@@ -45,15 +47,13 @@ class FavoriteListViewModel @Inject constructor(
         liveData.observe(owner, observer)
     }
 
-    override fun applyFavorite(item: PointUi) {
-        dispatchers.launchBackground(viewModelScope) {
-            favApplyUseCase.applyFavorite(item)
-        }
-    }
-
+    /**
+     * The list is loaded again, so it shows the empty state when the last favorite is removed.
+     */
     override fun remove(item: PointUi) {
         dispatchers.launchBackground(viewModelScope) {
             favRemoveUseCase.remove(item)
+            loadFavorites()
         }
     }
 }

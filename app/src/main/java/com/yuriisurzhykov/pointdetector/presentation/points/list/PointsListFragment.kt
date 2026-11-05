@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.presentation.city.CityPickerDialog
@@ -18,10 +17,6 @@ import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
 import com.yuriisurzhykov.pointdetector.presentation.entities.CityUi
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointdetector.presentation.favorites.BothSideSwipeCallback
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteSwipeCallback
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
@@ -29,15 +24,14 @@ import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetails
 import com.yuriisurzhykov.pointdetector.presentation.vibration.VibrationService
 import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
 import com.yuriisurzhykov.pointdetector.uicomponents.list.LayoutManagerFactory
-import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeDeleteCallback
 import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.swipe.SwipeEngine
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_list) {
 
     private val viewModel: PointsListViewModel by viewModels()
-    private val favoritesViewModel: FavoriteListViewModel by viewModels()
     private val cityViewModel: CityViewModel by viewModels()
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
@@ -70,13 +64,13 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         with(view.findViewById<RecyclerView>(R.id.recycler)) {
             adapter = listAdapter
             layoutManager = LayoutManagerFactory().produce(view.context)
-            ItemTouchHelper(
-                BothSideSwipeCallback(
-                    FavoriteSwipeCallback(listAdapter, view.context, VibrationService()),
-                    SwipeDeleteCallback(listAdapter, view.context),
-                    listAdapter
+            val swipes = PointSwipeActions(view.context, VibrationService(), listAdapter)
+            SwipeEngine.Base(
+                listOf(
+                    swipes.favorite { viewModel.toggleFavorite(it) },
+                    swipes.deleteUserPoint { viewModel.removeUserPoint(it) }
                 )
-            ).attachToRecyclerView(this)
+            ).attachTo(this)
         }
         with(view.findViewById<EditText>(R.id.search_text_input)) {
             setText(viewModel.getSearchCondition())
@@ -94,9 +88,6 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             } else if (item is PointUi) {
                 openPointDetailsFragment(item)
             }
-        }
-        listAdapter.favoritesApply = FavoritesApply { holderItem ->
-            (holderItem as? PointUi)?.let { pointUi -> favoritesViewModel.applyFavorite(pointUi) }
         }
         viewModel.observePointsList(viewLifecycleOwner) {
             this@PointsListFragment.view?.post { listAdapter.submitList(it) }
