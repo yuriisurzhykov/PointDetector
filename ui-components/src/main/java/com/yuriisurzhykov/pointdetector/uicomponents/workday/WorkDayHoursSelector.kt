@@ -34,10 +34,10 @@ class WorkDayHoursSelector : ConstraintLayout {
             dayToggleChangeListener?.invoke(weekDay, it.isSelected)
             updateInputs()
         }
-        fromTimeInput = findViewById<TextView?>(R.id.from_time_input).apply {
+        fromTimeInput = findViewById<TextView>(R.id.from_time_input).apply {
             addTextChangedListener { updateWeekDay() }
         }
-        toTimeInput = findViewById<TextView?>(R.id.to_time_input).apply {
+        toTimeInput = findViewById<TextView>(R.id.to_time_input).apply {
             addTextChangedListener { updateWeekDay() }
         }
         updateInputs()

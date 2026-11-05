@@ -5,7 +5,6 @@ import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityWithPointsCache
 import com.yuriisurzhykov.foodbanks.data.point.LatLng
-import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -53,11 +52,7 @@ private class TestCityDao : CityDao {
     )
 
     val points = listOf(
-        PointCache(
-            0, TestCityCode, "3 Reg Ct", "Name", LatLng(12.1231, 32.230023), listOf(
-                WorkingHour("Mon", 1, "10:00AM", "5:00PM")
-            )
-        )
+        PointCache(0, TestCityCode, "3 Reg Ct", "Name", LatLng(12.1231, 32.230023))
     )
 
     override suspend fun cities(): List<CityCache> = cities
