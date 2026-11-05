@@ -25,10 +25,10 @@ jobs:
           file: app/version.properties
           all: true
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'corretto'
           cache: gradle
 
@@ -49,7 +49,6 @@ jobs:
           echo "storeFile=keystore.jks" >> app/signing.properties
           echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> app/signing.properties
           echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> app/signing.properties
-          echo "::debug::storePassword=$KEYSTORE_STORE_PASSWORD"
           echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> app/signing.properties
         env:
           ANDROID_KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
@@ -69,8 +68,12 @@ jobs:
       - name: Find APK files in the entire workspace
         id: find-android-files
         run: |
-          APK_PATH=$(find . -type f \( -name "*.apk" \) -print | head -1)
-          AAB_PATH=$(find . -type f \( -name "*.aab" \) -print | head -1)
+          APK_PATH=$(find app/build/outputs/apk/release -maxdepth 1 -type f -name "*.apk" -print | head -1)
+          AAB_PATH=$(find app/build/outputs/bundle/release -maxdepth 1 -type f -name "*.aab" -print | head -1)
+          if [ -z "$APK_PATH" ] || [ -z "$AAB_PATH" ]; then
+            echo "::error::Release APK or AAB was not found in app/build/outputs"
+            exit 1
+          fi
           echo "APK Path is: $APK_PATH"
           echo "AAB Path is: $AAB_PATH"
           echo "apk_location=$APK_PATH" >> $GITHUB_OUTPUT
