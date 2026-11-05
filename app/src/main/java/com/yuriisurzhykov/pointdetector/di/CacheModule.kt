@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.yuriisurzhykov.pointdetector.data.cache.CacheDatabase
 import com.yuriisurzhykov.pointdetector.data.cache.configs.ConfigsDao
-import com.yuriisurzhykov.pointdetector.data.cache.PointsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,12 +20,6 @@ object CacheModule {
     fun provideDatabase(@ApplicationContext context: Context): CacheDatabase {
         return Room.databaseBuilder(context, CacheDatabase::class.java, Constants.DATABASE_NAME)
             .fallbackToDestructiveMigration().build()
-    }
-
-    @Provides
-    @Singleton
-    fun providePlaceDao(database: CacheDatabase): PointsDao {
-        return database.providePointsDao()
     }
 
     @Provides
