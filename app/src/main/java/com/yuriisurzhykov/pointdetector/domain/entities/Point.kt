@@ -11,7 +11,9 @@ data class Point(
     @PropertyName("address") var address: String = "",
     @PropertyName("coordinates") var coordinates: LatLng = LatLng(0.0, 0.0),
     @PropertyName("placeName") var placeName: String = "",
-    @PropertyName("workingHours") var workingHours: List<WeekDay> = emptyList()
+    @PropertyName("workingHours") var workingHours: List<WeekDay> = emptyList(),
+    /** Only the facts the person answered; a kind that is not known is left out. */
+    @PropertyName("help") var help: Map<String, Boolean> = emptyMap()
 ) : Serializable, ViewHolderItem {
     override fun areItemsTheSame(other: Any): Boolean {
         return other is Point && other.address == this.address

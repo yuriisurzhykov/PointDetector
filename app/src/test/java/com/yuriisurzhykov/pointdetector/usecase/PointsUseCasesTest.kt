@@ -276,7 +276,8 @@ private class FakeUserPoints : UserPointsUseCase {
         val placeName: String,
         val address: String,
         val coordinates: LatLng,
-        val workingHours: List<WorkingHour>
+        val workingHours: List<WorkingHour>,
+        val help: Map<String, Boolean> = emptyMap()
     )
 
     val added = mutableListOf<Added>()
@@ -285,9 +286,10 @@ private class FakeUserPoints : UserPointsUseCase {
         placeName: String,
         address: String,
         coordinates: LatLng,
-        workingHours: List<WorkingHour>
+        workingHours: List<WorkingHour>,
+        help: Map<String, Boolean>
     ) {
-        added.add(Added(placeName, address, coordinates, workingHours))
+        added.add(Added(placeName, address, coordinates, workingHours, help))
     }
 
     override suspend fun remove(pointId: Long): Boolean = false

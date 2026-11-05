@@ -75,6 +75,12 @@ class PlacesViewModel @Inject constructor(
 
     fun onOverlay(overlay: PlacesOverlay) = mutableState.update { it.copy(overlay = overlay) }
 
+    /** Closes the sheet or the flow that lies over the screen and shows a place on the map, e.g. the one just added. */
+    fun onShowPlace(latitude: Double, longitude: Double) {
+        mutableState.update { it.copy(overlay = PlacesOverlay.None, camera = cameraAt(latitude, longitude)) }
+        reload()
+    }
+
     /**
      * A new city: the points of the old one go away at once and the list shows that it is loading,
      * then the cached points of the new city come and, after the sync, the points of the cloud.
