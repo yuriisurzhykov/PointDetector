@@ -24,14 +24,16 @@ interface CityRepository : Repository<List<CityCloud>, List<CityCache>> {
 
         override suspend fun cloud(): List<CityCloud> = cityCloudDataSource.cities()
 
+        /**
+         * The cache has just been updated with the cloud values, so reading it back gives the
+         * merged result together with the generated ids that cloud values don't have yet.
+         */
         override suspend fun merge(
             cache: List<CityCache>,
             cloudMapped: List<CityCache>
-        ): List<CityCache> {
-            return cache.union(cloudMapped).toList()
-        }
+        ): List<CityCache> = cached()
 
         override suspend fun cacheCloud(value: List<CityCache>) =
-            cityCacheDataSource.insert(value)
+            cityCacheDataSource.insertOrUpdate(value)
     }
 }

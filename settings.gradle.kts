@@ -16,4 +16,5 @@ dependencyResolutionManagement {
 rootProject.name = "PointDetector"
 include(":app")
 include(":foodbanks")
+include(":geo")
 include(":ui-components")

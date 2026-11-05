@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.foodbanks.data.point.cloud
 
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import kotlinx.serialization.SerialName
 

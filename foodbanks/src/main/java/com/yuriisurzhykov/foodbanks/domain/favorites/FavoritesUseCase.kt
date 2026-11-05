@@ -13,6 +13,15 @@ interface FavoritesUseCase {
 
     suspend fun detachFavorite(favorite: Favorite, coroutineScope: CoroutineScope)
 
+    /**
+     * Whether the point is a favorite is a part of the point itself, so the screens that
+     * already have a point can change it without looking for the favorite first.
+     * @return true if the favorite is changed
+     */
+    suspend fun markFavorite(pointId: Long): Boolean
+
+    suspend fun unmarkFavorite(pointId: Long): Boolean
+
     abstract class Abstract(
         private val mapper: FavoriteCacheMapper,
         private val dispatchers: Dispatchers,
@@ -28,6 +37,11 @@ interface FavoritesUseCase {
                 Favorite.Mapper.FavoriteRemove(favoriteRepository, dispatchers, coroutineScope)
             )
         }
+
+        override suspend fun markFavorite(pointId: Long) = favoriteRepository.markFavorite(pointId)
+
+        override suspend fun unmarkFavorite(pointId: Long) =
+            favoriteRepository.unmarkFavorite(pointId)
     }
 
     class Base @Inject constructor(

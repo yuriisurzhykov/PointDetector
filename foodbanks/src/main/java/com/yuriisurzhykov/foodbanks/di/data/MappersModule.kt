@@ -2,10 +2,12 @@ package com.yuriisurzhykov.foodbanks.di.data
 
 import com.google.gson.Gson
 import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
+import com.yuriisurzhykov.foodbanks.data.city.CloudToCacheMapper
 import com.yuriisurzhykov.foodbanks.data.city.cloud.SnapshotCityMapper
+import com.yuriisurzhykov.foodbanks.data.city.cloud.ValueCityMapper
 import com.yuriisurzhykov.foodbanks.data.favorites.PointToFavoriteMapper
 import com.yuriisurzhykov.foodbanks.data.point.CloudToCachePointMapper
-import com.yuriisurzhykov.foodbanks.data.point.cloud.SnapshotPointMapper
+import com.yuriisurzhykov.foodbanks.data.point.cloud.ValuePointMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +20,26 @@ class MappersModule {
 
     @Provides
     @Singleton
-    fun provideCitySnapshotMapper(): SnapshotCityMapper {
-        return SnapshotCityMapper.Base()
+    fun provideCitySnapshotMapper(valueMapper: ValueCityMapper): SnapshotCityMapper {
+        return SnapshotCityMapper.Base(valueMapper)
     }
 
     @Provides
     @Singleton
-    fun provideSnapshotPointMapper(): SnapshotPointMapper {
-        return SnapshotPointMapper.Base()
+    fun provideCloudToCacheMapper(): CloudToCacheMapper {
+        return CloudToCacheMapper.Base()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCityValueMapper(pointMapper: ValuePointMapper): ValueCityMapper {
+        return ValueCityMapper.Base(pointMapper)
+    }
+
+    @Provides
+    @Singleton
+    fun providePointValueMapper(): ValuePointMapper {
+        return ValuePointMapper.Base()
     }
 
     @Provides

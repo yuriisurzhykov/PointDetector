@@ -6,6 +6,8 @@ interface CityCacheDataSource {
 
     suspend fun cityByCode(codeName: String): CityWithPointsCache
 
+    suspend fun city(codeName: String): CityCache?
+
     suspend fun cities(): List<CityCache>
 
     suspend fun insertAll(list: List<CityCache>)
@@ -16,9 +18,11 @@ interface CityCacheDataSource {
 
         override suspend fun cityByCode(codeName: String) = cityDao.cityWithPoints(codeName)
 
+        override suspend fun city(codeName: String) = cityDao.city(codeName)
+
         override suspend fun cities(): List<CityCache> = cityDao.cities()
 
-        override suspend fun insertAll(list: List<CityCache>) = cityDao.insert(list)
+        override suspend fun insertAll(list: List<CityCache>) = cityDao.insertOrUpdate(list)
     }
 
     class Base @Inject constructor(cityDao: CityDao) : Abstract(cityDao)

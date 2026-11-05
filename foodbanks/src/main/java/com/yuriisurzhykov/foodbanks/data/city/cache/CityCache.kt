@@ -17,5 +17,7 @@ data class CityCache(
     val name: String,
     val nameCode: String,
     val region: String,
-    val country: String
+    val country: String,
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )

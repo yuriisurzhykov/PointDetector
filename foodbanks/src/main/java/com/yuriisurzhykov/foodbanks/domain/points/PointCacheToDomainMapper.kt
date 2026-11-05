@@ -4,10 +4,11 @@ import com.yuriisurzhykov.foodbanks.core.data.Mapper
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointWithHours
 import com.yuriisurzhykov.foodbanks.data.point.cache.WorkingHourCache
+import javax.inject.Inject
 
 interface PointCacheToDomainMapper : Mapper.List<PointWithHours, Point> {
 
-    class Base(
+    class Base @Inject constructor(
         private val workingHourMapper: Mapper<WorkingHourCache, WorkingHour>
     ) : Mapper.AbstractList<PointWithHours, Point>(), PointCacheToDomainMapper {
 
@@ -15,7 +16,10 @@ interface PointCacheToDomainMapper : Mapper.List<PointWithHours, Point> {
             input.point.pointId,
             input.point.placeName,
             input.point.address,
-            input.workingHours.map { workingHourMapper.map(it) }
+            input.point.coordinates,
+            input.workingHours.map { workingHourMapper.map(it) },
+            input.point.origin,
+            input.favorites.isNotEmpty()
         )
     }
 }

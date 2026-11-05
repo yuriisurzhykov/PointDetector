@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
-import com.yuriisurzhykov.pointdetector.core.Mapper
-import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
+import com.yuriisurzhykov.foodbanks.domain.city.CityNotDetectedException
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
@@ -26,7 +25,6 @@ import kotlin.concurrent.timerTask
 class PointsCreateViewModel @Inject constructor(
     private val geoSuggestedPlacesUseCase: SuggestedPlacesUseCase,
     private val savePlacesUseCase: SavePointUseCase,
-    private val mapper: Mapper<Point, PointCache>,
     private val dispatchers: Dispatchers
 ) : ViewModel() {
 
@@ -69,8 +67,9 @@ class PointsCreateViewModel @Inject constructor(
             if (days.isNotEmpty()) {
                 if (days.all { it.isCorrect() }) {
                     selectedWorkingDays.postValue(days)
-                    saveSelectedPlace(enteredPointName.get().orEmpty(), days)
-                    creationState.postValue(PointCreateState.SavedPointState)
+                    if (saveSelectedPlace(enteredPointName.get().orEmpty(), days)) {
+                        creationState.postValue(PointCreateState.SavedPointState)
+                    }
                 } else {
                     postError(R.string.error_incorrect_selected_days)
                 }
@@ -81,7 +80,10 @@ class PointsCreateViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveSelectedPlace(name: String, days: List<WeekDay>) {
+    /**
+     * @return false if the point is not saved because there is no city to add it to
+     */
+    private suspend fun saveSelectedPlace(name: String, days: List<WeekDay>): Boolean {
         val state = creationState.value as PointCreateState.PointSelectedState
         val point = Point(
             state.point.address,
@@ -89,7 +91,13 @@ class PointsCreateViewModel @Inject constructor(
             name,
             days
         )
-        savePlacesUseCase.save(mapper.map(point))
+        return try {
+            savePlacesUseCase.save(point)
+            true
+        } catch (e: CityNotDetectedException) {
+            postError(R.string.error_city_not_selected)
+            false
+        }
     }
 
     fun selectPoint(point: Point) {

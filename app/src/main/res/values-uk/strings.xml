@@ -9,7 +9,6 @@
     <string name="title_points_add_screen">Пошук точок</string>
     <string name="title_points_add_info_screen">Зберігання точки</string>
     <string name="button_add_point">Додати нову точку</string>
-    <string name="menu_button_import_data">Імпорт даних</string>
     <string name="hint_place_name">Назва точки</string>
     <string name="hint_place_address">Адреса точки</string>
     <string name="hint_place_working_hours">Часи роботи</string>
@@ -23,6 +22,10 @@
     <string name="button_save">Зберегти</string>
     <string name="error_incorrect_selected_days">Невірний формат часу для заданих дат</string>
     <string name="error_days_not_selected">Дні роботи не вибрані</string>
+    <string name="error_city_not_selected">Не вдалося зберегти точку, спочатку оберіть місто</string>
+    <string name="city_not_selected">Обрати місто</string>
+    <string name="title_dialog_choose_city">Оберіть місто</string>
+    <string name="message_cities_not_loaded">Список міст ще не завантажено. Перевірте підключення до інтернету та спробуйте знову.</string>
     <string name="label_point_open">Відкрито</string>
     <string name="label_point_closed">Зачинено</string>
     <string name="label_point_successfully_created">Точку успішно додана!</string>
@@ -47,6 +50,4 @@
     <string name="title_working_hours_input">Оберіть часи работи</string>
     <string name="label_nothing_selected">Нічого не задано</string>
     <string name="title_filter_screen">Фільтри</string>
-    <string name="message_dialog_import_places">Нічого не знайдено в локальному сховищі. Хочете загрузити точки онлайн?</string>
-    <string name="title_dialog_import_data">В локальному сховищі пусто</string>
 </resources>

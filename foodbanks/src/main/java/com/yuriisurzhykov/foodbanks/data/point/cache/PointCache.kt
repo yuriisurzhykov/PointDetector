@@ -7,12 +7,13 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 
 @Entity(
     tableName = "PointCache",
     indices = [
-        Index(value = ["cityCodeId", "pointId"])
+        Index(value = ["cityCodeId", "pointId"]),
+        Index(value = ["cityCodeId", "address", "origin"], unique = true)
     ],
     foreignKeys = [ForeignKey(
         entity = CityCache::class,
@@ -33,4 +34,6 @@ data class PointCache(
     val placeName: String,
     @Embedded
     var coordinates: LatLng = LatLng(0.0, 0.0),
+    @ColumnInfo(name = "origin", defaultValue = "CLOUD")
+    val origin: PointOrigin = PointOrigin.CLOUD
 )

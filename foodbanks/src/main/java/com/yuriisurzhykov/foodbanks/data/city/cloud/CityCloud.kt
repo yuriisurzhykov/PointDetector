@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.foodbanks.data.city.cloud
 
 import com.yuriisurzhykov.foodbanks.data.point.cloud.PointCloud
+import com.yuriisurzhykov.geo.LatLng
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
@@ -14,5 +15,7 @@ data class CityCloud(
     @SerialName("country")
     val country: String,
     @SerialName("points")
-    val points: List<PointCloud>
+    val points: List<PointCloud>,
+    @SerialName("coordinates")
+    val coordinates: LatLng? = null
 )

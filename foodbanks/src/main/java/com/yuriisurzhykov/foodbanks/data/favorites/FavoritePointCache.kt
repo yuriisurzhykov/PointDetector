@@ -9,7 +9,7 @@ import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 @Entity(
     tableName = "FavoritePoint",
     indices = [
-        Index(value = ["pointId", "favoriteId"])
+        Index(value = ["pointId"], unique = true)
     ],
     foreignKeys = [
         ForeignKey(
@@ -20,7 +20,7 @@ import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
     ]
 )
 data class FavoritePointCache(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val favoriteId: Long,
     val pointId: Long,
     val pointName: String,

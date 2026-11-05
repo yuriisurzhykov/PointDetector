@@ -1,0 +1,392 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "2c93f70c1fc0207b85227955e81829b8",
+    "entities": [
+      {
+        "tableName": "CityCache",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cityId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameCode` TEXT NOT NULL, `region` TEXT NOT NULL, `country` TEXT NOT NULL, `latitude` REAL, `longitude` REAL)",
+        "fields": [
+          {
+            "fieldPath": "cityId",
+            "columnName": "cityId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameCode",
+            "columnName": "nameCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "region",
+            "columnName": "region",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "cityId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "nameCode",
+            "unique": true,
+            "columnNames": [
+              "nameCode"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `nameCode` ON `${TABLE_NAME}` (`nameCode`)"
+          },
+          {
+            "name": "cityId",
+            "unique": true,
+            "columnNames": [
+              "cityId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `cityId` ON `${TABLE_NAME}` (`cityId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "PointCache",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pointId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `cityCodeId` TEXT NOT NULL, `address` TEXT NOT NULL, `placeName` TEXT NOT NULL, `origin` TEXT NOT NULL DEFAULT 'CLOUD', `lat` REAL NOT NULL, `lng` REAL NOT NULL, FOREIGN KEY(`cityCodeId`) REFERENCES `CityCache`(`nameCode`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "pointId",
+            "columnName": "pointId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cityCodeId",
+            "columnName": "cityCodeId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "placeName",
+            "columnName": "placeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'CLOUD'"
+          },
+          {
+            "fieldPath": "coordinates.lat",
+            "columnName": "lat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinates.lng",
+            "columnName": "lng",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "pointId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_PointCache_cityCodeId_pointId",
+            "unique": false,
+            "columnNames": [
+              "cityCodeId",
+              "pointId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PointCache_cityCodeId_pointId` ON `${TABLE_NAME}` (`cityCodeId`, `pointId`)"
+          },
+          {
+            "name": "index_PointCache_cityCodeId_address_origin",
+            "unique": true,
+            "columnNames": [
+              "cityCodeId",
+              "address",
+              "origin"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_PointCache_cityCodeId_address_origin` ON `${TABLE_NAME}` (`cityCodeId`, `address`, `origin`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "CityCache",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "cityCodeId"
+            ],
+            "referencedColumns": [
+              "nameCode"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PreferenceCache",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entityId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `prefName` TEXT NOT NULL, `prefValue` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "entityId",
+            "columnName": "entityId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "prefName",
+            "columnName": "prefName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "prefValue",
+            "columnName": "prefValue",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "entityId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_PreferenceCache_prefName",
+            "unique": true,
+            "columnNames": [
+              "prefName"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_PreferenceCache_prefName` ON `${TABLE_NAME}` (`prefName`)"
+          }
+        ]
+      },
+      {
+        "tableName": "SyncProperty",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lastSyncTime` INTEGER NOT NULL, `syncEntity` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSyncTime",
+            "columnName": "lastSyncTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syncEntity",
+            "columnName": "syncEntity",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_SyncProperty_syncEntity_id",
+            "unique": true,
+            "columnNames": [
+              "syncEntity",
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_SyncProperty_syncEntity_id` ON `${TABLE_NAME}` (`syncEntity`, `id`)"
+          }
+        ]
+      },
+      {
+        "tableName": "WorkingHourCache",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dayName` TEXT NOT NULL, `dayValue` INTEGER NOT NULL, `hoursFrom` TEXT NOT NULL, `hoursTo` TEXT NOT NULL, `pointId` INTEGER NOT NULL, `workingHourId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`pointId`) REFERENCES `PointCache`(`pointId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "dayName",
+            "columnName": "dayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dayValue",
+            "columnName": "dayValue",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hoursFrom",
+            "columnName": "hoursFrom",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hoursTo",
+            "columnName": "hoursTo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointId",
+            "columnName": "pointId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "workingHourId",
+            "columnName": "workingHourId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "workingHourId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_WorkingHourCache_pointId_workingHourId",
+            "unique": false,
+            "columnNames": [
+              "pointId",
+              "workingHourId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_WorkingHourCache_pointId_workingHourId` ON `${TABLE_NAME}` (`pointId`, `workingHourId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "PointCache",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pointId"
+            ],
+            "referencedColumns": [
+              "pointId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "FavoritePoint",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favoriteId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pointId` INTEGER NOT NULL, `pointName` TEXT NOT NULL, `pointAddress` TEXT NOT NULL, FOREIGN KEY(`pointId`) REFERENCES `PointCache`(`pointId`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "favoriteId",
+            "columnName": "favoriteId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointId",
+            "columnName": "pointId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointName",
+            "columnName": "pointName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointAddress",
+            "columnName": "pointAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "favoriteId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_FavoritePoint_pointId",
+            "unique": true,
+            "columnNames": [
+              "pointId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_FavoritePoint_pointId` ON `${TABLE_NAME}` (`pointId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "PointCache",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pointId"
+            ],
+            "referencedColumns": [
+              "pointId"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c93f70c1fc0207b85227955e81829b8')"
+    ]
+  }
+}

@@ -4,7 +4,7 @@ import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityWithPointsCache
-import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import com.yuriisurzhykov.geo.LatLng
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -57,8 +57,16 @@ private class TestCityDao : CityDao {
 
     override suspend fun cities(): List<CityCache> = cities
 
+    override suspend fun city(cityCode: String): CityCache? {
+        return cities.find { it.nameCode == cityCode }
+    }
+
     override suspend fun cityWithPoints(cityCode: String): CityWithPointsCache {
         return CityWithPointsCache(cities.find { it.nameCode == cityCode }!!, points)
+    }
+
+    override suspend fun cityId(cityCode: String): Long? {
+        return cities.find { it.nameCode == cityCode }?.cityId
     }
 
     override suspend fun insert(city: List<CityCache>) {

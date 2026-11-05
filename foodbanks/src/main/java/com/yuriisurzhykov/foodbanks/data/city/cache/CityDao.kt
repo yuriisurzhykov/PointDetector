@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CityDao {
@@ -15,14 +14,28 @@ interface CityDao {
     suspend fun cities(): List<CityCache>
 
     @Query("SELECT * FROM CityCache WHERE nameCode=:cityCode")
+    suspend fun city(cityCode: String): CityCache?
+
+    @Query("SELECT * FROM CityCache WHERE nameCode=:cityCode")
     @Transaction
     suspend fun cityWithPoints(cityCode: String): CityWithPointsCache
+
+    @Query("SELECT cityId FROM CityCache WHERE nameCode=:cityCode")
+    suspend fun cityId(cityCode: String): Long?
 
     @Insert
     suspend fun insert(city: List<CityCache>)
 
     @Insert
     suspend fun insert(city: CityCache)
+
+    @Transaction
+    suspend fun insertOrUpdate(cities: List<CityCache>) {
+        cities.forEach { city ->
+            val id = cityId(city.nameCode)
+            if (id == null) insert(city) else update(city.copy(cityId = id))
+        }
+    }
 
     @Delete
     suspend fun delete(city: CityCache)

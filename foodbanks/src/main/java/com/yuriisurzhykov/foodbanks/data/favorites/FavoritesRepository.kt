@@ -12,6 +12,8 @@ interface FavoritesRepository {
 
     suspend fun removeFavorite(id: Long): Boolean
 
+    suspend fun unmarkFavorite(pointId: Long): Boolean
+
     abstract class Abstract(
         private val mapper: PointToFavoriteMapper,
         private val pointsCacheDataSource: PointsCacheDataSource,
@@ -35,6 +37,10 @@ interface FavoritesRepository {
         override suspend fun removeFavorite(id: Long): Boolean {
             // If number of deleted rows == 1, then the favorite deleted
             return favoritesDao.deleteFavorite(id) == 1
+        }
+
+        override suspend fun unmarkFavorite(pointId: Long): Boolean {
+            return favoritesDao.deleteFavoriteOfPoint(pointId) == 1
         }
     }
 

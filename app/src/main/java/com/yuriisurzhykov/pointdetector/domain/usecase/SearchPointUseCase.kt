@@ -1,8 +1,5 @@
 package com.yuriisurzhykov.pointdetector.domain.usecase
 
-import com.yuriisurzhykov.pointdetector.core.SuspendMapper
-import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
-import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,11 +10,16 @@ interface SearchPointUseCase {
     suspend fun searchPlaceByCondition(condition: String): Flow<List<PointUi>>
 
     open class Base @Inject constructor(
-        private val pointsMapper: SuspendMapper<List<PointCache>, List<PointUi>>,
-        private val pointsRepository: PointsRepository
+        private val fetchAllPointsUseCase: FetchAllPointsUseCase
     ) : SearchPointUseCase {
+
         override suspend fun searchPlaceByCondition(condition: String): Flow<List<PointUi>> {
-            return pointsRepository.fetchByCondition(condition).map { pointsMapper.map(it) }
+            return fetchAllPointsUseCase.fetchPoints().map { points ->
+                points.filter {
+                    it.placeName.contains(condition, ignoreCase = true)
+                            || it.address.contains(condition, ignoreCase = true)
+                }
+            }
         }
     }
 

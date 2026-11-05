@@ -87,6 +87,7 @@ kotlin {
 dependencies {
 
     implementation(project(":ui-components"))
+    implementation(project(":foodbanks"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
