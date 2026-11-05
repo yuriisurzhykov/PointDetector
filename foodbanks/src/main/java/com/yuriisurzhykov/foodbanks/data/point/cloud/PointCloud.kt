@@ -14,5 +14,8 @@ data class PointCloud(
     val placeName: String,
     val cityCode: String,
     @SerialName("working_hours")
-    val workingHours: List<WorkingHour>
+    val workingHours: List<WorkingHour>,
+    /** How to get help: fact type to whether it applies. A missing type means "not known". */
+    @SerialName("help")
+    val help: Map<String, Boolean> = emptyMap()
 )

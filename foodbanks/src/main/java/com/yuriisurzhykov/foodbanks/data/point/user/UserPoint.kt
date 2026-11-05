@@ -8,5 +8,7 @@ data class UserPoint(
     val placeName: String,
     val address: String,
     val coordinates: LatLng,
-    val workingHours: List<WorkingHour>
+    val workingHours: List<WorkingHour>,
+    /** Only the facts the user answered; leave a type out when it is not known. */
+    val help: Map<String, Boolean> = emptyMap()
 )

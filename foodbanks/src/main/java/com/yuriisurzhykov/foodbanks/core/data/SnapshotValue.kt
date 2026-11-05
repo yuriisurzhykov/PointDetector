@@ -25,6 +25,13 @@ interface SnapshotValue {
 
     fun values(key: String): List<SnapshotValue>
 
+    /**
+     * Reads an object whose values are flags, e.g. `help: { "appointment": true }`. The key can
+     * be absent and an entry that is not a boolean is skipped: an unknown answer is never
+     * turned into `false`.
+     */
+    fun booleans(key: String): Map<String, Boolean>
+
     class Base(private val raw: Map<*, *>) : SnapshotValue {
 
         override fun string(key: String): String =
@@ -51,6 +58,13 @@ interface SnapshotValue {
                 else -> emptyList<Any>()
             }
             return children.filterIsInstance<Map<*, *>>().map { Base(it) }
+        }
+
+        override fun booleans(key: String): Map<String, Boolean> {
+            val flags = raw[key] as? Map<*, *> ?: return emptyMap()
+            return flags.entries
+                .mapNotNull { (name, flag) -> (name as? String)?.let { n -> (flag as? Boolean)?.let { n to it } } }
+                .toMap()
         }
     }
 }

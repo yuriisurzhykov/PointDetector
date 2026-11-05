@@ -4,6 +4,7 @@ import android.content.Context
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointOrigin
 import com.yuriisurzhykov.foodbanks.domain.points.Point
+import com.yuriisurzhykov.foodbanks.domain.points.PointHelp
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.data.remote.DistanceCalculateService
@@ -82,7 +83,8 @@ class PointToUiMapper @Inject constructor(
             coordinates: com.yuriisurzhykov.geo.LatLng,
             workingHours: List<WorkingHour>,
             origin: PointOrigin,
-            favorite: Boolean
+            favorite: Boolean,
+            help: PointHelp
         ) = Fields(
             id, name, address, coordinates.lat, coordinates.lng, workingHours, origin, favorite
         )

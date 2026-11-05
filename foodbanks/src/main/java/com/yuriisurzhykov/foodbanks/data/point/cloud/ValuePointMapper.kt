@@ -28,7 +28,8 @@ interface ValuePointMapper : Mapper<SnapshotValue, PointCloud> {
                         hoursFrom = hour.string("hoursFrom"),
                         hoursTo = hour.string("hoursTo")
                     )
-                }
+                },
+                help = input.booleans("help")
             )
         }
     }
