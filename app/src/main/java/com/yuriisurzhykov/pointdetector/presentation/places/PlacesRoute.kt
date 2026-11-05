@@ -65,8 +65,7 @@ fun PlacesRoute(
         PlacesOverlay.City -> {
             val list by cities.list.collectAsStateWithLifecycle()
             val selected by cities.selected.collectAsStateWithLifecycle()
-            val failed by cities.detectionFailed.collectAsStateWithLifecycle()
-            CityPickerSheet(list, selected?.code, automatic, failed, cityActions)
+            CityPickerSheet(list, selected?.code, automatic, cityActions)
         }
 
         PlacesOverlay.Filters -> {
@@ -81,10 +80,9 @@ fun PlacesRoute(
             val addState by add.state.collectAsStateWithLifecycle()
             val list by cities.list.collectAsStateWithLifecycle()
             val selected by cities.selected.collectAsStateWithLifecycle()
-            val failed by cities.detectionFailed.collectAsStateWithLifecycle()
             BackHandler { addActions.onBack() }
             AddPlaceScreen(addState, selected, ui.addMapper, addActions)
-            if (addState.citySheet) CityPickerSheet(list, selected?.code, automatic, failed, addCityActions)
+            if (addState.citySheet) CityPickerSheet(list, selected?.code, automatic, addCityActions)
         }
 
         PlacesOverlay.None -> Unit

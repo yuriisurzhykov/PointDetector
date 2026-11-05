@@ -106,4 +106,8 @@
     <string name="add_show_on_map">Показать на карте</string>
     <string name="add_another">Добавить ещё одну</string>
     <string name="add_no_hours">Часы не заданы</string>
+    <string name="toast_no_connection">Нет подключения. Показаны сохранённые места.</string>
+    <string name="toast_sync_failed">Не удалось обновить места. Показаны сохранённые.</string>
+    <string name="toast_favorite_added">Добавлено в избранное</string>
+    <string name="toast_favorite_removed">Убрано из избранного</string>
 </resources>

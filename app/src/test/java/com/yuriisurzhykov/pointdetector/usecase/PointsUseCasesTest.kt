@@ -34,13 +34,21 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import com.yuriisurzhykov.pointdetector.domain.entities.Point as UserPoint
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessage
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import com.yuriisurzhykov.pointdetector.domain.entities.WeekDay
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class PointsUseCasesTest {
 
     private lateinit var city: FakeSelectedCity
     private lateinit var pointsList: FakePointsList
     private lateinit var fetchAll: FetchAllPointsUseCase
+    private lateinit var messages: AppMessages
+    private val told = mutableListOf<AppMessage>()
 
     @Before
     fun `init resources for test`() {
@@ -48,7 +56,37 @@ class PointsUseCasesTest {
         pointsList = FakePointsList(
             listOf(UseCaseResponse.Success(listOf(point(1, "Sunrise Food", "San Juan Ave"))))
         )
-        fetchAll = FetchAllPointsUseCase.Base(city, pointsList, FakeUiMapper())
+        messages = AppMessages()
+        CoroutineScope(UnconfinedTestDispatcher()).launch { messages.events.collect { told += it } }
+        fetchAll = FetchAllPointsUseCase.Base(city, pointsList, FakeUiMapper(), messages)
+    }
+
+    @Test
+    fun `test the person is told when there is no network`(): Unit = runBlocking {
+        pointsList.responses = listOf(UseCaseResponse.NoNetwork(listOf(point(1, "Old", "A"))))
+
+        fetchAll.fetchPoints().toList()
+
+        assertEquals(listOf<AppMessage>(AppMessage.NoConnection), told)
+    }
+
+    @Test
+    fun `test the person is told when the cloud failed`(): Unit = runBlocking {
+        pointsList.responses = listOf(
+            UseCaseResponse.Success(listOf(point(1, "Old", "A"))),
+            UseCaseResponse.NetworkError(),
+        )
+
+        fetchAll.fetchPoints().toList()
+
+        assertEquals(listOf<AppMessage>(AppMessage.SyncFailed), told)
+    }
+
+    @Test
+    fun `test nothing is said when the cloud answered`(): Unit = runBlocking {
+        fetchAll.fetchPoints().toList()
+
+        assertEquals(emptyList<AppMessage>(), told)
     }
 
     @Test

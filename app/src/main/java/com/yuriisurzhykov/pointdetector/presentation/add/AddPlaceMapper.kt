@@ -148,7 +148,7 @@ class AddPlaceMapper @Inject constructor(
         } else {
             PdPrimaryButton(PdStringText(R.string.button_save), onClick = actions::onSave)
         }
-        val footer = listOfNotNull(state.problem?.let { PdErrorFieldMessage(PdStringText(messageOf(it))) }, save)
+        val footer = listOf(save)
         return PdFormPage(
             topBar = topBar(2, R.string.title_points_add_info_screen, actions),
             body = listOf(
@@ -202,12 +202,6 @@ class AddPlaceMapper @Inject constructor(
                 PdChoice(ask.no, current == FactAnswer.No) { actions.onAnswer(type, FactAnswer.No) },
             ),
         )
-    }
-
-    private fun messageOf(problem: SaveProblem): Int = when (problem) {
-        SaveProblem.CityNotSelected -> R.string.error_city_not_selected
-        SaveProblem.AddressNotFound -> R.string.add_address_not_found
-        SaveProblem.Failed -> R.string.add_error_generic
     }
 
     // ---- step 3 ----

@@ -103,4 +103,8 @@
     <string name="add_show_on_map">Show on the map</string>
     <string name="add_another">Add another one</string>
     <string name="add_no_hours">Hours are not set</string>
+    <string name="toast_no_connection">No connection. Showing the saved places.</string>
+    <string name="toast_sync_failed">Could not update the places. Showing the saved ones.</string>
+    <string name="toast_favorite_added">Added to favorites</string>
+    <string name="toast_favorite_removed">Removed from favorites</string>
 </resources>

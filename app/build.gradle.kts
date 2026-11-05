@@ -87,6 +87,7 @@ dependencies {
 
     implementation(project(":ui-components"))
     implementation(project(":map-maplibre"))
+    implementation(project(":toast"))
     implementation(project(":foodbanks"))
 
     implementation(libs.androidx.core.ktx)

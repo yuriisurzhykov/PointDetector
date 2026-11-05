@@ -14,6 +14,7 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.CheckTimeAvailabilityUseC
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.GeoDecodeUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
@@ -38,8 +39,9 @@ object UseCaseModule {
         selectedCityUseCase: SelectedCityUseCase,
         pointsListUseCase: PointsListUseCase,
         mapper: SuspendMapper<List<FoodbankPoint>, List<PointUi>>,
+        messages: AppMessages,
     ): FetchAllPointsUseCase {
-        return FetchAllPointsUseCase.Base(selectedCityUseCase, pointsListUseCase, mapper)
+        return FetchAllPointsUseCase.Base(selectedCityUseCase, pointsListUseCase, mapper, messages)
     }
 
     @Provides

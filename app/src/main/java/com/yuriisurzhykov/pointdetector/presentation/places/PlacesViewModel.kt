@@ -10,7 +10,10 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.ConfigUnifiedSource
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
+import com.yuriisurzhykov.pointdetector.domain.messages.postFavoriteChange
 import com.yuriisurzhykov.pointdetector.presentation.entities.CityUi
+import com.yuriisurzhykov.pointdetector.presentation.entities.FavoriteState
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PdSheetState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +40,7 @@ class PlacesViewModel @Inject constructor(
     private val pointsSorter: ProjectSortTypeBuilder,
     private val favoritesApply: FavoritesApplyUseCase,
     private val config: ConfigUnifiedSource,
+    private val messages: AppMessages,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow(PlacesUiState())
@@ -116,6 +120,7 @@ class PlacesViewModel @Inject constructor(
     /** The heart changes at once on the screen and is saved in the background. */
     fun onFavorite(point: PointUi) {
         dispatchers.launchBackground(viewModelScope) { favoritesApply.applyFavorite(point) }
+        messages.postFavoriteChange(wasFavorite = point.favoriteState == FavoriteState.FavoriteEnabled)
         mutableState.update { current ->
             current.copy(places = current.places.map { if (it.id == point.id) it.toggledFavorite() else it })
         }

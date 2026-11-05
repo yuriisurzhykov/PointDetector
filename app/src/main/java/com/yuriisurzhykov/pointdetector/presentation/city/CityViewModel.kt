@@ -8,6 +8,8 @@ import com.yuriisurzhykov.foodbanks.domain.city.CityListUseCase
 import com.yuriisurzhykov.foodbanks.domain.city.CityNotDetectedException
 import com.yuriisurzhykov.foodbanks.domain.city.SelectedCityUseCase
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessage
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.presentation.entities.CityUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class CityViewModel @Inject constructor(
     private val selectedCityUseCase: SelectedCityUseCase,
     private val cityListUseCase: CityListUseCase,
-    private val dispatchers: Dispatchers
+    private val dispatchers: Dispatchers,
+    private val messages: AppMessages
 ) : ViewModel() {
 
     private val mutableSelected = MutableStateFlow<CityUi?>(null)
@@ -34,10 +37,6 @@ class CityViewModel @Inject constructor(
 
     private val mutableList = MutableStateFlow<CityListState>(CityListState.Loading)
     val list: StateFlow<CityListState> = mutableList.asStateFlow()
-
-    /** True after the automatic detection failed, until the person tries again or picks a city. */
-    private val mutableDetectionFailed = MutableStateFlow(false)
-    val detectionFailed: StateFlow<Boolean> = mutableDetectionFailed.asStateFlow()
 
     private var listJob: Job? = null
 
@@ -65,7 +64,6 @@ class CityViewModel @Inject constructor(
      * of points) reads it from the preference and must not find the old one there.
      */
     fun select(city: CityUi) {
-        mutableDetectionFailed.value = false
         dispatchers.launchBackground(viewModelScope) {
             selectedCityUseCase.select(city.code)
             mutableAutomatic.value = false
@@ -75,10 +73,10 @@ class CityViewModel @Inject constructor(
 
     /**
      * Takes the city where the person is now and then calls [onDetected] on the main thread, so the
-     * sheet can close itself. A failure is kept as a flag, the choice stays and [onDetected] is not called.
+     * sheet can close itself. A failure is told to the person with a message, the choice stays and
+     * [onDetected] is not called.
      */
     fun detect(onDetected: () -> Unit) {
-        mutableDetectionFailed.value = false
         dispatchers.launchBackground(viewModelScope) {
             try {
                 val city = selectedCityUseCase.detect().map(CityUi.Factory)
@@ -87,7 +85,7 @@ class CityViewModel @Inject constructor(
                 sync()
                 dispatchers.changeToUi { onDetected() }
             } catch (e: CityNotDetectedException) {
-                mutableDetectionFailed.value = true
+                messages.post(AppMessage.CityNotDetected)
             }
         }
     }
