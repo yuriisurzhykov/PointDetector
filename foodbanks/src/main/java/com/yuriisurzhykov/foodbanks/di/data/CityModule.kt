@@ -7,7 +7,11 @@ import com.yuriisurzhykov.foodbanks.data.city.CloudToCacheListMapper
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.city.cloud.CityCloudDataSource
+import com.yuriisurzhykov.foodbanks.data.city.cloud.CityKeysCloud
+import com.yuriisurzhykov.foodbanks.data.city.cloud.CityListReader
+import com.yuriisurzhykov.foodbanks.data.city.cloud.CityMetaCloud
 import com.yuriisurzhykov.foodbanks.data.city.cloud.SnapshotCityMapper
+import com.yuriisurzhykov.foodbanks.data.city.cloud.ValueCityMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,11 +30,22 @@ class CityModule {
 
     @Provides
     @Singleton
+    fun provideCityKeysCloud(database: FirebaseDatabase): CityKeysCloud = CityKeysCloud.Base(database)
+
+    @Provides
+    @Singleton
+    fun provideCityMetaCloud(database: FirebaseDatabase): CityMetaCloud = CityMetaCloud.Base(database)
+
+    @Provides
+    @Singleton
     fun provideCityCloudDataSource(
         database: FirebaseDatabase,
-        mapper: SnapshotCityMapper
+        mapper: SnapshotCityMapper,
+        keys: CityKeysCloud,
+        meta: CityMetaCloud,
+        valueMapper: ValueCityMapper
     ): CityCloudDataSource {
-        return CityCloudDataSource.Base(database, mapper)
+        return CityCloudDataSource.Base(database, mapper, CityListReader(keys, meta, valueMapper))
     }
 
     @Provides

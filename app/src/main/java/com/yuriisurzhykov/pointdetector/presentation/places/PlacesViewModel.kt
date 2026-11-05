@@ -81,9 +81,15 @@ class PlacesViewModel @Inject constructor(
         reload()
     }
 
+    /**
+     * A new city: the points of the old one go away at once and the list shows that it is loading,
+     * then the cached points of the new city come and, after the sync, the points of the cloud.
+     */
     fun onCityChanged(city: CityUi?) {
         val changed = mutableState.value.city?.code != city?.code
-        mutableState.update { it.copy(city = city) }
+        mutableState.update {
+            if (changed) it.copy(city = city, places = emptyList(), isLoading = true, selectedId = null) else it.copy(city = city)
+        }
         if (changed) reload()
     }
 

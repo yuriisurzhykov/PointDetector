@@ -71,3 +71,12 @@ cities
   that is not `true` / `false` is ignored, and so is a type the app has no text for yet, so a
   new type can be added to the data before the app learns it.
 - Fields that are not listed (`distance`, `isPointAvailable` from `sample1.json`) are ignored.
+- **An entry that cannot be read is skipped, it never stops the sync.** A point without
+  `coordinates`, `address` or `placeName` is not shown (a point that cannot be placed on the map
+  cannot be shown); an hour without `dayName`, `dayValue`, `hoursFrom` or `hoursTo` is dropped and
+  the point stays; a city without `name` or `name_code` is not in the list.
+- **The list of cities is read without the points**: the codes of the cities
+  (`cities.json?shallow=true`) and then `name`, `name_code`, `region`, `country` and `coordinates`
+  of each. The points of a city are read only when that city is the selected one. A city that has
+  no `coordinates` cannot be found by distance (only by the name of the locality), because its
+  center would need its points.
