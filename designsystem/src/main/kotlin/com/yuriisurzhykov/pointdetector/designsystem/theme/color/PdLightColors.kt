@@ -2,6 +2,7 @@ package com.yuriisurzhykov.pointdetector.designsystem.theme.color
 
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.ColorRole
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.ContentColors
+import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.MapColors
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.StatusColors
 import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.SurfaceColors
 
@@ -62,4 +63,11 @@ val PdLightColorScheme = PdColorScheme(
     ),
     outline = Palette.Slate200,
     divider = Palette.Slate100,
+    map = MapColors(
+        land = Palette.MapLandDay,
+        water = Palette.MapWaterDay,
+        park = Palette.MapParkDay,
+        road = Palette.White,
+        edge = Palette.MapEdgeDay,
+    ),
 )

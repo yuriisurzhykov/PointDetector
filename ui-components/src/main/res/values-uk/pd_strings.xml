@@ -12,4 +12,7 @@
     <string name="pd_today_format">%1$s · сьогодні</string>
     <string name="pd_hours_description">Години роботи: %1$s</string>
     <string name="pd_hours_now_description">Час доби: %1$s</string>
+    <string name="pd_sheet_handle">Змінити висоту списку</string>
+    <string name="pd_sheet_expand">Розгорнути список</string>
+    <string name="pd_sheet_collapse">Згорнути список</string>
 </resources>

@@ -11,6 +11,8 @@ data class PdShapes(
     val medium: Shape,
     val large: Shape,
     val full: Shape,
+    /** Rounded only at the top, for a sheet that rises from the bottom edge. */
+    val sheet: Shape,
 )
 
 val DefaultShapes = PdShapes(
@@ -18,4 +20,5 @@ val DefaultShapes = PdShapes(
     medium = RoundedCornerShape(12.dp),
     large = RoundedCornerShape(16.dp),
     full = RoundedCornerShape(percent = 50),
+    sheet = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
 )

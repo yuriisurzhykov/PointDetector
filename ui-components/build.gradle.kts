@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.kotlin.serialization.json)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlin.coroutines.test)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

@@ -13,4 +13,7 @@
     <string name="pd_today_format">%1$s · today</string>
     <string name="pd_hours_description">Working hours: %1$s</string>
     <string name="pd_hours_now_description">Time of day: %1$s</string>
+    <string name="pd_sheet_handle">Change list height</string>
+    <string name="pd_sheet_expand">Expand the list</string>
+    <string name="pd_sheet_collapse">Collapse the list</string>
 </resources>

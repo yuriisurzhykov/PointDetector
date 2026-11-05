@@ -41,6 +41,17 @@ internal object Palette {
     val NightTextSecondary = Color(0xFFA9B7CB)
     val NightTextTertiary = Color(0xFF8C9BB0)
 
+    // Map style
+    val MapLandDay = Color(0xFFEAF0F8)
+    val MapWaterDay = Color(0xFFCFE2F6)
+    val MapParkDay = Color(0xFFDCEBDD)
+    val MapEdgeDay = Color(0xFFD6DEEA)
+    val MapLandNight = Color(0xFF17222E)
+    val MapWaterNight = Color(0xFF12293C)
+    val MapParkNight = Color(0xFF1A2F2A)
+    val MapRoadNight = Color(0xFF25343F)
+    val MapEdgeNight = Color(0xFF0E161F)
+
     // Status hues
     val Green600 = Color(0xFF17794A)
     val Green50 = Color(0xFFD6F0E0)

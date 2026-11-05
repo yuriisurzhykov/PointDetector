@@ -25,6 +25,7 @@ data class PdMotion(
     val springStiffness: Float,
     val pressedScale: Float,
     val popPeakScale: Float,
+    val flingProjectionMillis: Int,
 ) {
     fun <T> spatial(): SpringSpec<T> = spring(dampingRatio = springDamping, stiffness = springStiffness)
 
@@ -46,6 +47,7 @@ val DefaultMotion = PdMotion(
     springStiffness = 380f,
     pressedScale = 0.96f,
     popPeakScale = 1.4f,
+    flingProjectionMillis = 260,
 )
 
 val ReducedMotion = PdMotion(
@@ -61,4 +63,5 @@ val ReducedMotion = PdMotion(
     springStiffness = 10_000f,
     pressedScale = 1f,
     popPeakScale = 1f,
+    flingProjectionMillis = 260,
 )
