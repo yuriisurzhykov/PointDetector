@@ -2,6 +2,7 @@ package com.yuriisurzhykov.swipe
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 
 /**
  * Swipes of the items of any list: give it the actions and attach it to the list, it takes care
@@ -23,7 +24,13 @@ interface SwipeEngine {
             }
         }
 
+        /**
+         * The action usually changes the item, so the item is bound again while it is still going
+         * back to its place. The change animation of the list would start from the place where
+         * the item is at that moment and take it back for the second time, so it is turned off.
+         */
         override fun attachTo(recyclerView: RecyclerView) {
+            (recyclerView.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
             ItemTouchHelper(SwipeCallback(actions)).attachToRecyclerView(recyclerView)
         }
     }
