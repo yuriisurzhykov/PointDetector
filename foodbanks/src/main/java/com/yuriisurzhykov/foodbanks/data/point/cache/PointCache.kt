@@ -13,7 +13,7 @@ import com.yuriisurzhykov.geo.LatLng
     tableName = "PointCache",
     indices = [
         Index(value = ["cityCodeId", "pointId"]),
-        Index(value = ["cityCodeId", "address"], unique = true)
+        Index(value = ["cityCodeId", "address", "origin"], unique = true)
     ],
     foreignKeys = [ForeignKey(
         entity = CityCache::class,
@@ -34,4 +34,6 @@ data class PointCache(
     val placeName: String,
     @Embedded
     var coordinates: LatLng = LatLng(0.0, 0.0),
+    @ColumnInfo(name = "origin", defaultValue = "CLOUD")
+    val origin: PointOrigin = PointOrigin.CLOUD
 )

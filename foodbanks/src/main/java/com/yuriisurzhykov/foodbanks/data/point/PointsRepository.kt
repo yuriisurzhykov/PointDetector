@@ -11,8 +11,13 @@ import javax.inject.Inject
 
 interface PointsRepository : Repository<List<PointCloud>, List<PointWithHours>> {
 
+    /**
+     * The cache gives the points of all sources combined (cloud and the ones added by the
+     * user), while the cloud is the source of only one of them, so only that one is synced.
+     */
     class Base @Inject constructor(
         private val pointDao: PointsDao,
+        private val pointsSource: PointsSource,
         private val selectedCityPreference: SelectedCityPreference,
         private val pointCloudDataSource: PointCloudDataSource,
         cloudCacheMapper: CloudToCachePointMapper,
@@ -22,7 +27,7 @@ interface PointsRepository : Repository<List<PointCloud>, List<PointWithHours>> 
 
         override suspend fun cached(): List<PointWithHours> {
             val city = selectedCityPreference.getPrefValue()
-            return pointDao.pointsByCity(city)
+            return pointsSource.points(city)
         }
 
         override suspend fun cloud(): List<PointCloud> {
