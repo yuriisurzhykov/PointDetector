@@ -73,6 +73,8 @@ class PlacesViewModel @Inject constructor(
 
     fun onSheet(sheet: PdSheetState) = mutableState.update { it.copy(sheet = sheet) }
 
+    fun onOverlay(overlay: PlacesOverlay) = mutableState.update { it.copy(overlay = overlay) }
+
     fun onCityChanged(city: CityUi?) {
         val changed = mutableState.value.city?.code != city?.code
         mutableState.update { it.copy(city = city) }
