@@ -79,4 +79,6 @@ internal val FixedComponentDimensions = ComponentDimensions(
     illustrationSmallIcon = 36.dp,
     illustrationRingScale = 1.7f,
     modalMaxFraction = 0.88f,
+    cityChipMaxWidth = 220.dp,
+    mapUserDotSize = 16.dp,
 )

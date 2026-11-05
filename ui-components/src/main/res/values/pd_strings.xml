@@ -26,4 +26,6 @@
     <string name="pd_empty_matches_title">Nothing found for “%1$s”</string>
     <string name="pd_empty_matches_message">Check the spelling or add the place yourself.</string>
     <string name="pd_offline_notice">No connection. Showing saved places.</string>
+    <string name="pd_empty_open_title">Nothing is open now</string>
+    <string name="pd_empty_open_message">Look at the other tabs or come back later.</string>
 </resources>
