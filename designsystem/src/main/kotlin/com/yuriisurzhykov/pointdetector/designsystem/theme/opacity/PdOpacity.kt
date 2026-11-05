@@ -8,6 +8,7 @@ data class PdOpacity(
     val subtle: Float,
     val dim: Float,
     val halo: Float,
+    val ring: Float,
 )
 
 val DefaultOpacity = PdOpacity(
@@ -15,4 +16,5 @@ val DefaultOpacity = PdOpacity(
     subtle = 0.12f,
     dim = 0.5f,
     halo = 0.16f,
+    ring = 0.4f,
 )
