@@ -12,8 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.presentation.city.CityPickerDialog
+import com.yuriisurzhykov.pointdetector.presentation.city.CityViewModel
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
 import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
+import com.yuriisurzhykov.pointdetector.presentation.entities.CityUi
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.favorites.BothSideSwipeCallback
 import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
@@ -35,10 +38,14 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     private val viewModel: PointsListViewModel by viewModels()
     private val favoritesViewModel: FavoriteListViewModel by viewModels()
+    private val cityViewModel: CityViewModel by viewModels()
     private val listAdapter = PointsListAdapter()
     private var navigationCallback: NavigationCallback? = null
+    private var shownCityCode: String? = null
+    private var isCityShown = false
 
     private val filterButton: TextView by findView(R.id.search_filter)
+    private val cityButton: TextView by findView(R.id.city_selector)
     private val fragmentMenuProvider = PointListMenuProvider {
         onCreateNewPointClick()
     }
@@ -76,6 +83,10 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
             addTextChangedListener { viewModel.startLoadPoints(it.toString()) }
         }
         filterButton.setOnClickListener(filterClickListener)
+        cityButton.setOnClickListener {
+            CityPickerDialog().show(childFragmentManager, CityPickerDialog.TAG)
+        }
+        cityViewModel.observeSelectedCity(viewLifecycleOwner) { onCityChanged(it) }
         activity?.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner)
         listAdapter.setOnItemClickListener { item: ViewHolderItem ->
             if (item is EmptyStateData) {
@@ -104,6 +115,21 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
 
     override fun onLocationReceived(location: Location) {
         viewModel.updateUserLocation(location)
+        cityViewModel.refresh()
+    }
+
+    /**
+     * The points belong to the city, so a different city (chosen by the user or detected
+     * later) means different points. The first value is shown by the usual loading of the list.
+     */
+    private fun onCityChanged(city: CityUi?) {
+        cityButton.text = city?.label ?: getString(R.string.city_not_selected)
+        val changed = isCityShown && shownCityCode != city?.code
+        isCityShown = true
+        shownCityCode = city?.code
+        if (changed) {
+            viewModel.startLoadPoints(viewModel.getSearchCondition().toString())
+        }
     }
 
     private fun openPointDetailsFragment(item: PointUi) {

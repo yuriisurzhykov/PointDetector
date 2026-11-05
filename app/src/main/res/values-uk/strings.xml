@@ -25,6 +25,7 @@
     <string name="error_city_not_selected">Не вдалося зберегти точку, спочатку оберіть місто</string>
     <string name="city_not_selected">Обрати місто</string>
     <string name="title_dialog_choose_city">Оберіть місто</string>
+    <string name="message_cities_not_loaded">Список міст ще не завантажено. Перевірте підключення до інтернету та спробуйте знову.</string>
     <string name="label_point_open">Відкрито</string>
     <string name="label_point_closed">Зачинено</string>
     <string name="label_point_successfully_created">Точку успішно додана!</string>

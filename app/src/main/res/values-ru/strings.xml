@@ -28,6 +28,7 @@
     <string name="error_city_not_selected">Не удалось сохранить точку, сначала выберите город</string>
     <string name="city_not_selected">Выбрать город</string>
     <string name="title_dialog_choose_city">Выберите город</string>
+    <string name="message_cities_not_loaded">Список городов ещё не загружен. Проверьте подключение к интернету и попробуйте снова.</string>
 
     <string name="label_point_open">Открыто</string>
     <string name="label_point_closed">Закрыто</string>

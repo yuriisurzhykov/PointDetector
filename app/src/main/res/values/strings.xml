@@ -27,6 +27,7 @@
     <string name="error_city_not_selected">Cannot save the point, choose a city first</string>
     <string name="city_not_selected">Choose city</string>
     <string name="title_dialog_choose_city">Choose city</string>
+    <string name="message_cities_not_loaded">The list of cities is not loaded yet. Check the internet connection and try again.</string>
 
     <string name="label_point_open">Open</string>
     <string name="label_point_closed">Closed</string>
