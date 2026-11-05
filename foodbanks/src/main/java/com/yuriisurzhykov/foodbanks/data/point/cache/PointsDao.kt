@@ -30,6 +30,9 @@ interface PointsDao {
     @Query("DELETE FROM WorkingHourCache WHERE pointId=:pointId")
     suspend fun deleteWorkingHours(pointId: Long)
 
+    @Query("DELETE FROM HelpFactCache WHERE pointId=:pointId")
+    suspend fun deleteHelpFacts(pointId: Long)
+
     @Query("DELETE FROM FavoritePoint WHERE pointId=:pointId")
     suspend fun deleteFavorites(pointId: Long)
 
@@ -42,10 +45,16 @@ interface PointsDao {
     @Insert
     suspend fun insert(workingHourCache: WorkingHourCache)
 
+    @Insert
+    suspend fun insert(helpFact: HelpFactCache)
+
     @Transaction
     suspend fun insert(point: PointWithHours) {
         val id = insert(point.point)
         point.workingHours.forEach {
+            insert(it.copy(pointId = id))
+        }
+        point.helpFacts.forEach {
             insert(it.copy(pointId = id))
         }
     }
@@ -59,6 +68,8 @@ interface PointsDao {
             update(point.point.copy(pointId = id))
             deleteWorkingHours(id)
             point.workingHours.forEach { insert(it.copy(pointId = id)) }
+            deleteHelpFacts(id)
+            point.helpFacts.forEach { insert(it.copy(pointId = id)) }
         }
     }
 

@@ -80,6 +80,30 @@ class ValueCityMapperTest {
         assertEquals(-121.0, city.points.first().coordinates.lng, 0.0)
     }
 
+    @Test
+    fun `test help facts are read as flags`() {
+        val point = pointValue("Address 1") + ("help" to mapOf("appointment" to true, "documents" to false))
+        val city = mapper.map(SnapshotValue.Base(cityValue(listOf(point))))
+
+        assertEquals(mapOf("appointment" to true, "documents" to false), city.points.first().help)
+    }
+
+    @Test
+    fun `test point without help has no facts`() {
+        val city = mapper.map(SnapshotValue.Base(cityValue(listOf(pointValue("Address 1")))))
+
+        assertEquals(emptyMap<String, Boolean>(), city.points.first().help)
+    }
+
+    @Test
+    fun `test help values that are not flags are skipped instead of turned into false`() {
+        val help = mapOf("appointment" to true, "documents" to "yes", "delivery" to null, "parking" to 1L)
+        val point = pointValue("Address 1") + ("help" to help)
+        val city = mapper.map(SnapshotValue.Base(cityValue(listOf(point))))
+
+        assertEquals(mapOf("appointment" to true), city.points.first().help)
+    }
+
     private fun cityValue(points: Any?): Map<String, Any?> = mapOf(
         "name" to "Sacramento",
         "name_code" to "sacramento-ca-usa",

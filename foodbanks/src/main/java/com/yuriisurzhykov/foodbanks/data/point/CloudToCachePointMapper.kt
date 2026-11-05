@@ -1,6 +1,7 @@
 package com.yuriisurzhykov.foodbanks.data.point
 
 import com.yuriisurzhykov.foodbanks.core.data.Mapper
+import com.yuriisurzhykov.foodbanks.data.point.cache.HelpFactCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointWithHours
 import com.yuriisurzhykov.foodbanks.data.point.cache.WorkingHourCache
@@ -34,7 +35,8 @@ interface CloudToCachePointMapper : Mapper<List<PointCloud>, List<PointWithHours
                         it.hoursTo,
                         0
                     )
-                }
+                },
+                helpFacts = input.help.map { (type, enabled) -> HelpFactCache(type, enabled, 0) }
             )
         }
     }

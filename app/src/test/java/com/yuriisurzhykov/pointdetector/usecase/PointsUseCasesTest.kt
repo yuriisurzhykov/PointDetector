@@ -10,6 +10,7 @@ import com.yuriisurzhykov.foodbanks.domain.city.SelectedCityUseCase
 import com.yuriisurzhykov.foodbanks.domain.favorites.Favorite
 import com.yuriisurzhykov.foodbanks.domain.favorites.FavoritesUseCase
 import com.yuriisurzhykov.foodbanks.domain.points.Point
+import com.yuriisurzhykov.foodbanks.domain.points.PointHelp
 import com.yuriisurzhykov.foodbanks.domain.points.PointsListUseCase
 import com.yuriisurzhykov.foodbanks.domain.points.UserPointsUseCase
 import com.yuriisurzhykov.geo.LatLng
@@ -238,7 +239,8 @@ private class FakeUiMapper : SuspendMapper<List<Point>, List<PointUi>> {
                 coordinates: LatLng,
                 workingHours: List<WorkingHour>,
                 origin: PointOrigin,
-                favorite: Boolean
+                favorite: Boolean,
+                help: PointHelp
             ) = PointUi(
                 address = address,
                 coordinates = UiLatLng(coordinates.lat, coordinates.lng),

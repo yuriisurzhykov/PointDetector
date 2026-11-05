@@ -7,6 +7,7 @@ import com.yuriisurzhykov.foodbanks.data.city.cache.CityCache
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityDao
 import com.yuriisurzhykov.foodbanks.data.favorites.FavoritePointCache
 import com.yuriisurzhykov.foodbanks.data.favorites.FavoritesDao
+import com.yuriisurzhykov.foodbanks.data.point.cache.HelpFactCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointsDao
 import com.yuriisurzhykov.foodbanks.data.point.cache.WorkingHourCache
@@ -22,13 +23,15 @@ import com.yuriisurzhykov.foodbanks.data.sync.cache.SyncDao
         PreferenceCache::class,
         SyncProperty::class,
         WorkingHourCache::class,
-        FavoritePointCache::class
+        FavoritePointCache::class,
+        HelpFactCache::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3)
+        AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4)
     ]
 )
 abstract class FoodbankDatabase : RoomDatabase() {

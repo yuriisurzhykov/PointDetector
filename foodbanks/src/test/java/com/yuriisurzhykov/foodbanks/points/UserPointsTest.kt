@@ -3,6 +3,7 @@ package com.yuriisurzhykov.foodbanks.points
 import com.yuriisurzhykov.foodbanks.data.point.CloudToCachePointMapper
 import com.yuriisurzhykov.foodbanks.data.point.PointsSource
 import com.yuriisurzhykov.foodbanks.data.point.WorkingHour
+import com.yuriisurzhykov.foodbanks.data.point.cache.HelpFactCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointCache
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointOrigin
 import com.yuriisurzhykov.foodbanks.data.point.cache.PointWithHours
@@ -184,6 +185,7 @@ private class FakePointsDao : PointsDao {
 
     private val points = mutableListOf<PointCache>()
     private val hours = mutableListOf<WorkingHourCache>()
+    private val helpFacts = mutableListOf<HelpFactCache>()
     private var nextId = 1L
 
     override suspend fun pointsByCity(cityId: String) =
@@ -205,6 +207,10 @@ private class FakePointsDao : PointsDao {
         hours.removeAll { it.pointId == pointId }
     }
 
+    override suspend fun deleteHelpFacts(pointId: Long) {
+        helpFacts.removeAll { it.pointId == pointId }
+    }
+
     override suspend fun deleteFavorites(pointId: Long) {
         favoritesRemovedFor.add(pointId)
     }
@@ -212,6 +218,7 @@ private class FakePointsDao : PointsDao {
     override suspend fun delete(pointId: Long, origin: PointOrigin): Int {
         val removed = points.removeAll { it.pointId == pointId && it.origin == origin }
         hours.removeAll { it.pointId == pointId }
+        helpFacts.removeAll { it.pointId == pointId }
         return if (removed) 1 else 0
     }
 
@@ -223,6 +230,10 @@ private class FakePointsDao : PointsDao {
 
     override suspend fun insert(workingHourCache: WorkingHourCache) {
         hours.add(workingHourCache)
+    }
+
+    override suspend fun insert(helpFact: HelpFactCache) {
+        helpFacts.add(helpFact)
     }
 
     override suspend fun insert(point: List<PointCache>) {

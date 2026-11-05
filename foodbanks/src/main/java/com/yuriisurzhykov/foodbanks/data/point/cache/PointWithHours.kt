@@ -10,5 +10,7 @@ data class PointWithHours(
     @Relation(parentColumn = "pointId", entityColumn = "pointId")
     val workingHours: List<WorkingHourCache>,
     @Relation(parentColumn = "pointId", entityColumn = "pointId")
-    val favorites: List<FavoritePointCache> = emptyList()
+    val favorites: List<FavoritePointCache> = emptyList(),
+    @Relation(parentColumn = "pointId", entityColumn = "pointId")
+    val helpFacts: List<HelpFactCache> = emptyList()
 )
