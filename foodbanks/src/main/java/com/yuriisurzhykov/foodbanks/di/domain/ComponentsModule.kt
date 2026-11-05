@@ -3,7 +3,6 @@ package com.yuriisurzhykov.foodbanks.di.domain
 import android.content.Context
 import com.yuriisurzhykov.foodbanks.data.ConnectivityCheck
 import com.yuriisurzhykov.foodbanks.domain.network.AndroidConnectivityCheck
-import com.yuriisurzhykov.foodbanks.domain.network.networkRequest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +18,6 @@ class ComponentsModule {
     @Provides
     @Singleton
     fun provideConnectivityCheck(@ApplicationContext context: Context): ConnectivityCheck {
-        return AndroidConnectivityCheck(context, networkRequest)
+        return AndroidConnectivityCheck(context)
     }
 }

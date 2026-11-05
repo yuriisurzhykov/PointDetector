@@ -2,37 +2,21 @@ package com.yuriisurzhykov.foodbanks.domain.network
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkRequest
+import android.net.NetworkCapabilities
 import com.yuriisurzhykov.foodbanks.data.ConnectivityCheck
 
-class AndroidConnectivityCheck(context: Context, networkRequest: NetworkRequest) :
-    ConnectivityCheck,
-    ConnectivityManager.NetworkCallback() {
-
-    private var isNetworkAvailable: Boolean = false
+/**
+ * Asks the system every time instead of remembering the state from a callback: the callback
+ * is called later than the first request for data is made, so the first answer would be wrong.
+ */
+class AndroidConnectivityCheck(context: Context) : ConnectivityCheck {
 
     private val manager =
         (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
 
-    init {
-        manager.registerNetworkCallback(networkRequest, this)
+    override fun isNetworkAvailable(): Boolean {
+        val capabilities = manager.getNetworkCapabilities(manager.activeNetwork) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
-
-    override fun onAvailable(network: Network) {
-        super.onAvailable(network)
-        isNetworkAvailable = false
-    }
-
-    override fun onLost(network: Network) {
-        super.onLost(network)
-        isNetworkAvailable = false
-    }
-
-    override fun onUnavailable() {
-        super.onUnavailable()
-        isNetworkAvailable = false
-    }
-
-    override fun isNetworkAvailable(): Boolean = isNetworkAvailable
 }
