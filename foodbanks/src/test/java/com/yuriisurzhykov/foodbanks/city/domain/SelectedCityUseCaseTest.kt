@@ -9,6 +9,7 @@ import com.yuriisurzhykov.geo.data.LocalityGeocoder
 import com.yuriisurzhykov.geo.data.LocationUnavailableException
 import com.yuriisurzhykov.geo.data.UserLocationSource
 import com.yuriisurzhykov.geo.LatLng
+import com.yuriisurzhykov.foodbanks.data.prefs.CityModePreference
 import com.yuriisurzhykov.foodbanks.data.prefs.NoPreferenceException
 import com.yuriisurzhykov.foodbanks.data.prefs.SelectedCityPreference
 import com.yuriisurzhykov.foodbanks.domain.city.City
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -32,6 +34,7 @@ class SelectedCityUseCaseTest {
     private val oakland = CityCache(2, "Oakland", "oakland", "CA", "USA", 37.80, -122.27)
 
     private lateinit var preference: FakeSelectedCityPreference
+    private lateinit var mode: FakeCityModePreference
     private lateinit var cache: FakeCityCacheDataSource
     private lateinit var repository: FakeCityRepository
     private lateinit var location: FakeUserLocationSource
@@ -41,6 +44,7 @@ class SelectedCityUseCaseTest {
     @Before
     fun `init resources for test`() {
         preference = FakeSelectedCityPreference()
+        mode = FakeCityModePreference()
         cache = FakeCityCacheDataSource(mutableListOf(sacramento, oakland))
         repository = FakeCityRepository(cache, listOf(sacramento, oakland))
         location = FakeUserLocationSource(LatLng(38.6, -121.4))
@@ -163,17 +167,70 @@ class SelectedCityUseCaseTest {
         assertEquals(oakland.nameCode, preference.value)
     }
 
+    @Test
+    fun `test a city is not automatic until the app took it by the location`(): Unit = runBlocking {
+        assertFalse(useCase.isAutomatic())
+    }
+
+    @Test
+    fun `test a city taken by the location is automatic`(): Unit = runBlocking {
+        useCase.detect()
+
+        assertTrue(useCase.isAutomatic())
+    }
+
+    @Test
+    fun `test the city found on the first start is automatic`(): Unit = runBlocking {
+        useCase.selectedCity()
+
+        assertTrue(useCase.isAutomatic())
+    }
+
+    @Test
+    fun `test a city picked by hand is no more automatic`(): Unit = runBlocking {
+        useCase.detect()
+
+        useCase.select(oakland.nameCode)
+
+        assertFalse(useCase.isAutomatic())
+    }
+
+    @Test
+    fun `test a failed detection keeps the mode of the chosen city`(): Unit = runBlocking {
+        useCase.select(oakland.nameCode)
+        location.location = null
+
+        runCatching { useCase.detect() }
+
+        assertFalse(useCase.isAutomatic())
+    }
+
     private fun createUseCase(): SelectedCityUseCase {
         val detector = CityDetector.Base(
             location, geocoder, cache, repository, CityMatcher.Base(DistanceCalculator.Base())
         )
-        return SelectedCityUseCase.Base(preference, cache, detector, CityCacheToDomainMapper.Base())
+        return SelectedCityUseCase.Base(preference, mode, cache, detector, CityCacheToDomainMapper.Base())
     }
 
     private fun City.code(): String = map(object : City.Mapper<String> {
         override fun map(cityName: String, cityCode: String, country: String, region: String) =
             cityCode
     })
+}
+
+private class FakeCityModePreference : CityModePreference {
+
+    var value: String? = null
+
+    override suspend fun getPrefValue(): String = value ?: throw NoPreferenceException("fake")
+
+    override suspend fun savePref(value: String) {
+        this.value = value
+    }
+
+    override suspend fun updatePref(value: String) {
+        this.value = value
+    }
 }
 
 private class FakeSelectedCityPreference : SelectedCityPreference {

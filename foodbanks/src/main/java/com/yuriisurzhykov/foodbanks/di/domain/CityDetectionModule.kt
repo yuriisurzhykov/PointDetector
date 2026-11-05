@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.di.domain
 
 import com.yuriisurzhykov.foodbanks.data.city.CityRepository
 import com.yuriisurzhykov.foodbanks.data.city.cache.CityCacheDataSource
+import com.yuriisurzhykov.foodbanks.data.prefs.CityModePreference
 import com.yuriisurzhykov.foodbanks.data.prefs.SelectedCityPreference
 import com.yuriisurzhykov.foodbanks.domain.city.CityCacheToDomainMapper
 import com.yuriisurzhykov.foodbanks.domain.city.CityDetector
@@ -50,10 +51,11 @@ class CityDetectionModule {
     @Singleton
     fun provideSelectedCityUseCase(
         preference: SelectedCityPreference,
+        modePreference: CityModePreference,
         cityCacheDataSource: CityCacheDataSource,
         detector: CityDetector,
         mapper: CityCacheToDomainMapper
     ): SelectedCityUseCase {
-        return SelectedCityUseCase.Base(preference, cityCacheDataSource, detector, mapper)
+        return SelectedCityUseCase.Base(preference, modePreference, cityCacheDataSource, detector, mapper)
     }
 }

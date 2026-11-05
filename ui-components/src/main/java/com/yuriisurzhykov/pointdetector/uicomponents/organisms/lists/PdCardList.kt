@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.uicomponents.component.PdBaseComponent
@@ -28,8 +30,11 @@ class PdCardList(
     override fun Render(modifier: Modifier) {
         val spacing = PdTheme.dimensions.spacing
         val listState = rememberLazyListState()
-        LaunchedEffect(scroll, cards) {
-            val index = scroll.indexIn(cards.map { it.key })
+        // An order is carried out once. The cards change often (the clock, a heart, a new position of
+        // the phone) and must not pull the list back to the selected card while it is being browsed.
+        val latestCards by rememberUpdatedState(cards)
+        LaunchedEffect(scroll) {
+            val index = scroll.indexIn(latestCards.map { it.key })
             if (index >= 0) listState.animateScrollToItem(index)
         }
         LazyColumn(

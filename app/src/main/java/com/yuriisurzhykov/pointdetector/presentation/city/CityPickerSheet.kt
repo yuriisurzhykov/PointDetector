@@ -44,12 +44,13 @@ interface CityPickerActions {
 fun CityPickerSheet(
     list: CityListState,
     selectedCode: String?,
+    automatic: Boolean,
     detectionFailed: Boolean,
     actions: CityPickerActions,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
-    val body = remember(list, selectedCode, detectionFailed, query, actions) {
-        body(list, selectedCode, detectionFailed, query, actions) { query = it }
+    val body = remember(list, selectedCode, automatic, detectionFailed, query, actions) {
+        body(list, selectedCode, automatic, detectionFailed, query, actions) { query = it }
     }
     remember(body, actions) {
         PdModalSheet(
@@ -64,6 +65,7 @@ fun CityPickerSheet(
 private fun body(
     list: CityListState,
     selectedCode: String?,
+    automatic: Boolean,
     detectionFailed: Boolean,
     query: String,
     actions: CityPickerActions,
@@ -79,7 +81,7 @@ private fun body(
     return when (list) {
         is CityListState.Loading -> listOf(search, PdBorderedRows(List(SKELETON_ROWS) { PdSkeletonListRow }))
         is CityListState.Failed -> listOf(search, PdLoadErrorPanel(PdStringText(R.string.message_cities_not_loaded), actions::onRetry))
-        is CityListState.Loaded -> loaded(search, list.cities, selectedCode, detectionFailed, query, actions)
+        is CityListState.Loaded -> loaded(search, list.cities, selectedCode, automatic, detectionFailed, query, actions)
     }
 }
 
@@ -87,15 +89,22 @@ private fun loaded(
     search: PdComponent,
     cities: List<CityUi>,
     selectedCode: String?,
+    automatic: Boolean,
     detectionFailed: Boolean,
     query: String,
     actions: CityPickerActions,
 ): List<PdComponent> {
+    // The mode is shown like a chosen city: the title in the brand colour and a check at the end.
     val auto = PdIconListRow(
         icon = PdIcons.Locate,
         title = PdStringText(R.string.city_auto),
         subtitle = PdPlainText(PdStringText(R.string.city_auto_hint), PdTextRole.BodySmall, PdContentTone.Secondary, maxLines = 1),
-        trailing = PdDecorativeIcon(PdIcons.Chevron, PdIconSize.Regular, PdContentTone.Secondary),
+        trailing = if (automatic) {
+            PdDecorativeIcon(PdIcons.Check, PdIconSize.Regular, PdContentTone.Brand)
+        } else {
+            PdDecorativeIcon(PdIcons.Chevron, PdIconSize.Regular, PdContentTone.Secondary)
+        },
+        selected = automatic,
         onClick = actions::onDetect,
     )
     val shown = CityRows.matching(cities, query)

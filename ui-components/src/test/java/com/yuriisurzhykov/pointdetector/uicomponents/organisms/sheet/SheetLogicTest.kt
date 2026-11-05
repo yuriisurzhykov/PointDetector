@@ -4,6 +4,10 @@ import androidx.compose.animation.core.spring
 import androidx.compose.runtime.mutableFloatStateOf
 import com.yuriisurzhykov.pointdetector.designsystem.theme.dimens.CompactDimensions
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PdSheetState
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.unit.Velocity
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -75,6 +79,64 @@ class SheetLogicTest {
         controller.settle(velocity = 0f)
 
         assertEquals(listOf(PdSheetState.Full, PdSheetState.Peek), changes)
+    }
+
+    // ---- the list scrolls in every position ----
+
+    @Test
+    fun `test the list is never stopped by the sheet before it scrolls`() {
+        val visible = mutableFloatStateOf(stops.visible(PdSheetState.Peek))
+        val nested = PdSheetNestedScroll(controller(visible))
+
+        // The default of a connection is to leave the drag to the list: nothing is taken before it.
+        assertEquals(Offset.Zero, nested.onPreScroll(Offset(0f, -40f), NestedScrollSource.UserInput))
+        assertEquals(Offset.Zero, nested.onPreScroll(Offset(0f, 40f), NestedScrollSource.UserInput))
+        assertEquals(stops.visible(PdSheetState.Peek), visible.floatValue, 0f)
+    }
+
+    @Test
+    fun `test a drag down that the list cannot use closes the sheet`() {
+        val visible = mutableFloatStateOf(stops.visible(PdSheetState.Half))
+        val nested = PdSheetNestedScroll(controller(visible))
+
+        val taken = nested.onPostScroll(Offset.Zero, Offset(0f, 30f), NestedScrollSource.UserInput)
+
+        assertEquals(30f, taken.y, 0.001f)
+        assertEquals(stops.visible(PdSheetState.Half) - 30f, visible.floatValue, 0.001f)
+    }
+
+    @Test
+    fun `test a drag up that the list cannot use leaves the sheet where it is`() {
+        val visible = mutableFloatStateOf(stops.visible(PdSheetState.Peek))
+        val nested = PdSheetNestedScroll(controller(visible))
+
+        nested.onPostScroll(Offset.Zero, Offset(0f, -30f), NestedScrollSource.UserInput)
+
+        assertEquals(stops.visible(PdSheetState.Peek), visible.floatValue, 0f)
+    }
+
+    @Test
+    fun `test a fling of the list alone never changes the position of the sheet`() = runBlocking {
+        val changes = mutableListOf<PdSheetState>()
+        val visible = mutableFloatStateOf(stops.visible(PdSheetState.Peek))
+        val nested = PdSheetNestedScroll(controller(visible) { changes.add(it) })
+
+        nested.onPostFling(Velocity.Zero, Velocity(0f, -4_000f))
+
+        assertTrue(changes.isEmpty())
+    }
+
+    @Test
+    fun `test a fling after the sheet was moved settles it once`() = runBlocking {
+        val changes = mutableListOf<PdSheetState>()
+        val visible = mutableFloatStateOf(stops.visible(PdSheetState.Half))
+        val nested = PdSheetNestedScroll(controller(visible) { changes.add(it) })
+
+        nested.onPostScroll(Offset.Zero, Offset(0f, 200f), NestedScrollSource.UserInput)
+        nested.onPostFling(Velocity.Zero, Velocity(0f, 0f))
+        nested.onPostFling(Velocity.Zero, Velocity(0f, 0f))
+
+        assertEquals(1, changes.size)
     }
 
     private fun controller(
