@@ -50,8 +50,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
         buildConfig = true
     }
 
@@ -92,12 +90,7 @@ dependencies {
     implementation(project(":foodbanks"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.recyclerview.selection)
-    implementation(libs.androidx.databinding.runtime)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
@@ -109,11 +102,11 @@ dependencies {
     implementation(libs.google.play.services.location)
 
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.google.maps.utils)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Previews live in src/debug only.
     debugImplementation(libs.androidx.compose.ui.tooling)
@@ -129,9 +122,6 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.database)
-
-    // reflection-free flavor
-    implementation(libs.viewbinding.delegate.no.reflection)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.coroutines.test)

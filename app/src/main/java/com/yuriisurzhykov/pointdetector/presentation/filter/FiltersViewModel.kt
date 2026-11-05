@@ -7,7 +7,7 @@ import com.yuriisurzhykov.pointdetector.data.cache.configs.MeasureUnitConfig
 import com.yuriisurzhykov.pointdetector.data.cache.configs.SortingTypeConfig
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAvailableMeasureUnitUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAvailableSortingTypesUseCase
-import com.yuriisurzhykov.pointdetector.uicomponents.textselect.SelectOption
+import com.yuriisurzhykov.pointdetector.domain.entities.SelectOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,8 +41,8 @@ class FiltersViewModel @Inject constructor(
             mutableState.value = FiltersState(
                 sorts = sorts.map(::option),
                 units = units.map(::option),
-                sortId = sorts.firstOrNull { it.isSelected() }?.selectId ?: FilterDefaults.SORT,
-                unitId = units.firstOrNull { it.isSelected() }?.selectId ?: FilterDefaults.unit(),
+                sortId = sorts.firstOrNull { it.isSelected }?.selectId ?: FilterDefaults.SORT,
+                unitId = units.firstOrNull { it.isSelected }?.selectId ?: FilterDefaults.unit(),
             )
         }
     }

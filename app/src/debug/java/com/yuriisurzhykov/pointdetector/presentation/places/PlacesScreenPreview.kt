@@ -11,7 +11,7 @@ import com.yuriisurzhykov.pointdetector.presentation.places.help.AppointmentFact
 import com.yuriisurzhykov.pointdetector.presentation.places.help.DocumentsFactFactory
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PdSheetState
 import com.yuriisurzhykov.pointdetector.uicomponents.organisms.map.PdSketchMapFactory
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.domain.entities.WeekDay
 import java.time.DayOfWeek
 
 private val MONDAY_NOON = PlacesClock(DayOfWeek.MONDAY, 12 * 60)

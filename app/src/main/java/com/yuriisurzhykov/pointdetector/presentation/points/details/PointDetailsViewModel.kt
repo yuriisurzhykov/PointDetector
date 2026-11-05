@@ -1,6 +1,5 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.details
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
@@ -17,23 +16,23 @@ import javax.inject.Inject
 /** The place of the screen. The heart changes at once and is saved in the background. */
 @HiltViewModel
 class PointDetailsViewModel @Inject constructor(
-    savedState: SavedStateHandle,
     private val dispatchers: Dispatchers,
     private val favoritesApply: FavoritesApplyUseCase,
 ) : ViewModel() {
 
-    private val mutablePoint = MutableStateFlow(
-        checkNotNull(savedState.get<PointUi>(ARG_ENTITY)) { "The place screen needs a point in its arguments" },
-    )
-    val point: StateFlow<PointUi> = mutablePoint.asStateFlow()
+    private val mutablePoint = MutableStateFlow<PointUi?>(null)
 
-    fun onFavorite() {
-        val current = mutablePoint.value
-        dispatchers.launchBackground(viewModelScope) { favoritesApply.applyFavorite(current) }
-        mutablePoint.update { it.toggledFavorite() }
+    /** Null until [show] is called; the screen draws the point it was opened with meanwhile. */
+    val point: StateFlow<PointUi?> = mutablePoint.asStateFlow()
+
+    /** Takes the place of the screen. A place that is already shown is kept, so a changed heart is not lost. */
+    fun show(point: PointUi) {
+        mutablePoint.update { current -> current?.takeIf { it.id == point.id } ?: point }
     }
 
-    companion object {
-        const val ARG_ENTITY = "argument_name"
+    fun onFavorite() {
+        val current = mutablePoint.value ?: return
+        dispatchers.launchBackground(viewModelScope) { favoritesApply.applyFavorite(current) }
+        mutablePoint.update { it?.toggledFavorite() }
     }
 }

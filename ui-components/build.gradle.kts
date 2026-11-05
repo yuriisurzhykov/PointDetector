@@ -47,7 +47,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling.preview)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.google.material)
     implementation(libs.kotlin.serialization.json)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.coroutines.test)

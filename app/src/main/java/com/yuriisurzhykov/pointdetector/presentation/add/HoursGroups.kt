@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.pointdetector.presentation.add
 
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.domain.entities.WeekDay
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale

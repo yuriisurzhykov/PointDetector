@@ -34,7 +34,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import com.yuriisurzhykov.pointdetector.domain.entities.Point as UserPoint
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.domain.entities.WeekDay
 
 class PointsUseCasesTest {
 

@@ -2,8 +2,6 @@ package com.yuriisurzhykov.pointdetector.domain.entities
 
 import com.google.firebase.database.PropertyName
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
-import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
 import java.io.Serializable
 
 @kotlinx.serialization.Serializable
@@ -14,12 +12,4 @@ data class Point(
     @PropertyName("workingHours") var workingHours: List<WeekDay> = emptyList(),
     /** Only the facts the person answered; a kind that is not known is left out. */
     @PropertyName("help") var help: Map<String, Boolean> = emptyMap()
-) : Serializable, ViewHolderItem {
-    override fun areItemsTheSame(other: Any): Boolean {
-        return other is Point && other.address == this.address
-    }
-
-    override fun areContentsTheSame(other: Any): Boolean {
-        return other is Point && other.address == this.address && other.placeName == this.placeName && other.workingHours == this.workingHours
-    }
-}
+) : Serializable
