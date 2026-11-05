@@ -1,0 +1,40 @@
+{
+  "sacramento-ca-usa": {
+    "name": "Sacramento",
+    "name_code": "sacramento-ca-usa",
+    "region": "CA",
+    "country": "United States",
+    "coordinates": {
+      "lat": 38.5816,
+      "lng": -121.4944
+    },
+    "points": [
+      {
+        "placeName": "Sunrise Christian Food Ministry",
+        "address": "5901 San Juan Ave, Citrus Heights, CA 95610, USA",
+        "coordinates": {
+          "lat": 38.6730367,
+          "lng": -121.2933471
+        },
+        "workingHours": [
+          { "dayName": "Mon", "dayValue": -1, "hoursFrom": "11:30", "hoursTo": "15:00" },
+          { "dayName": "Tue", "dayValue": -1, "hoursFrom": "11:30", "hoursTo": "15:00" },
+          { "dayName": "Wed", "dayValue": 0, "hoursFrom": "11:30", "hoursTo": "15:00" },
+          { "dayName": "Thu", "dayValue": -1, "hoursFrom": "11:30", "hoursTo": "15:00" },
+          { "dayName": "Fri", "dayValue": -1, "hoursFrom": "11:30", "hoursTo": "15:00" }
+        ]
+      },
+      {
+        "placeName": "7th Day Adventist Church",
+        "address": "5810 Pecan Ave, Orangevale, CA 95662, USA",
+        "coordinates": {
+          "lat": 38.6712236,
+          "lng": -121.2206917
+        },
+        "workingHours": [
+          { "dayName": "Tue", "dayValue": -1, "hoursFrom": "09:00", "hoursTo": "12:00" }
+        ]
+      }
+    ]
+  }
+}

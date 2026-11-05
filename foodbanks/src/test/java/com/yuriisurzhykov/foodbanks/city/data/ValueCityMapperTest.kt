@@ -5,6 +5,7 @@ import com.yuriisurzhykov.foodbanks.core.data.SnapshotValue
 import com.yuriisurzhykov.foodbanks.data.city.cloud.ValueCityMapper
 import com.yuriisurzhykov.foodbanks.data.point.cloud.ValuePointMapper
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
@@ -51,6 +52,18 @@ class ValueCityMapperTest {
     fun `test city without points has empty points list`() {
         val value = cityValue(null)
         assertEquals(emptyList<Any>(), mapper.map(SnapshotValue.Base(value)).points)
+    }
+
+    @Test
+    fun `test city coordinates are optional`() {
+        val without = mapper.map(SnapshotValue.Base(cityValue(null)))
+        val with = mapper.map(
+            SnapshotValue.Base(cityValue(null) + ("coordinates" to mapOf("lat" to 38.58, "lng" to -121.49)))
+        )
+
+        assertNull(without.coordinates)
+        assertEquals(38.58, with.coordinates!!.lat, 0.0)
+        assertEquals(-121.49, with.coordinates!!.lng, 0.0)
     }
 
     @Test(expected = MappingException::class)

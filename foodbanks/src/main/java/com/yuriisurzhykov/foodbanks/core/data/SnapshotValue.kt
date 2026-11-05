@@ -21,6 +21,8 @@ interface SnapshotValue {
     @kotlin.jvm.Throws(MappingException::class)
     fun value(key: String): SnapshotValue
 
+    fun valueOrNull(key: String): SnapshotValue?
+
     fun values(key: String): List<SnapshotValue>
 
     class Base(private val raw: Map<*, *>) : SnapshotValue {
@@ -38,6 +40,9 @@ interface SnapshotValue {
 
         override fun value(key: String): SnapshotValue =
             Base(raw[key] as? Map<*, *> ?: throw MappingException(raw, SnapshotValue::class))
+
+        override fun valueOrNull(key: String): SnapshotValue? =
+            if (raw.containsKey(key)) value(key) else null
 
         override fun values(key: String): List<SnapshotValue> {
             val children = when (val value = raw[key]) {

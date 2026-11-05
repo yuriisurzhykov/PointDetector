@@ -29,6 +29,16 @@ class CloudToCacheMapperTest {
     }
 
     @Test
+    fun `test explicit city coordinates win over points average`() {
+        val city = mapper.map(
+            city(point(LatLng(10.0, 20.0))).copy(coordinates = LatLng(1.5, 2.5))
+        )
+
+        assertEquals(1.5, city.latitude!!, 0.0)
+        assertEquals(2.5, city.longitude!!, 0.0)
+    }
+
+    @Test
     fun `test city without points has no center`() {
         val city = mapper.map(city())
 
