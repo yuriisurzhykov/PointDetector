@@ -4,50 +4,78 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
+import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yuriisurzhykov.pointdetector.R
+import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.presentation.city.CityPickerDialog
 import com.yuriisurzhykov.pointdetector.presentation.city.CityViewModel
 import com.yuriisurzhykov.pointdetector.presentation.core.NavigationCallback
-import com.yuriisurzhykov.pointdetector.presentation.delegate.findView
-import com.yuriisurzhykov.pointdetector.presentation.entities.CityUi
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointdetector.presentation.favorites.BothSideSwipeCallback
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteListViewModel
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoriteSwipeCallback
-import com.yuriisurzhykov.pointdetector.presentation.favorites.FavoritesApply
 import com.yuriisurzhykov.pointdetector.presentation.filter.SearchFilterFragment
 import com.yuriisurzhykov.pointdetector.presentation.map.AbstractLocationFragment
+import com.yuriisurzhykov.pointdetector.presentation.places.PlaceCardMapper
+import com.yuriisurzhykov.pointdetector.presentation.places.PlaceStatusMapper
+import com.yuriisurzhykov.pointdetector.presentation.places.PlacesActions
+import com.yuriisurzhykov.pointdetector.presentation.places.PlacesScreen
+import com.yuriisurzhykov.pointdetector.presentation.places.PlacesTab
+import com.yuriisurzhykov.pointdetector.presentation.places.PlacesViewModel
 import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
-import com.yuriisurzhykov.pointdetector.presentation.vibration.VibrationService
-import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
-import com.yuriisurzhykov.pointdetector.uicomponents.list.LayoutManagerFactory
-import com.yuriisurzhykov.pointdetector.uicomponents.list.SwipeDeleteCallback
-import com.yuriisurzhykov.pointdetector.uicomponents.list.ViewHolderItem
+import com.yuriisurzhykov.pointdetector.uicomponents.model.PdSheetState
+import com.yuriisurzhykov.pointdetector.uicomponents.organisms.map.PdMapFactory
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+/**
+ * Hosts the main screen. The screen itself is Compose ([PlacesScreen]); this fragment keeps what
+ * still belongs to the platform: the permission and the location, the city picker, the other
+ * screens that are not redesigned yet.
+ */
 @AndroidEntryPoint
-class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_list) {
+class PointsListFragment : AbstractLocationFragment() {
 
-    private val viewModel: PointsListViewModel by viewModels()
-    private val favoritesViewModel: FavoriteListViewModel by viewModels()
+    private val viewModel: PlacesViewModel by viewModels()
     private val cityViewModel: CityViewModel by viewModels()
-    private val listAdapter = PointsListAdapter()
-    private var navigationCallback: NavigationCallback? = null
-    private var shownCityCode: String? = null
-    private var isCityShown = false
 
-    private val filterButton: TextView by findView(R.id.search_filter)
-    private val cityButton: TextView by findView(R.id.city_selector)
-    private val fragmentMenuProvider = PointListMenuProvider {
-        onCreateNewPointClick()
+    @Inject
+    lateinit var mapFactory: PdMapFactory
+
+    @Inject
+    lateinit var cardMapper: PlaceCardMapper
+
+    @Inject
+    lateinit var statusMapper: PlaceStatusMapper
+
+    private var navigationCallback: NavigationCallback? = null
+
+    private val actions = object : PlacesActions {
+        override fun onOpenPlace(point: PointUi) {
+            openFragment(PointDetailsFragment.newInstance(point), "point_details_stack_name")
+        }
+
+        override fun onFavorite(point: PointUi) = viewModel.onFavorite(point)
+        override fun onSelect(pointId: Long) = viewModel.onSelect(pointId)
+        override fun onTab(tab: PlacesTab) = viewModel.onTab(tab)
+        override fun onQuery(text: String) = viewModel.onQuery(text)
+        override fun onSearching(searching: Boolean) = viewModel.onSearching(searching)
+        override fun onSheet(state: PdSheetState) = viewModel.onSheet(state)
+        override fun onLocate() = viewModel.onLocate()
+        override fun onFilters() = openFragment(SearchFilterFragment(), "filters_screen")
+
+        override fun onCity() {
+            CityPickerDialog().show(childFragmentManager, CityPickerDialog.TAG)
+        }
+
+        override fun onAdd() {
+            startActivity(Intent(activity, PointsCreateActivity::class.java))
+        }
     }
 
     override fun getTitle() = resources.getString(R.string.title_points_list_screen)
@@ -65,52 +93,35 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         navigationCallback = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        with(view.findViewById<RecyclerView>(R.id.recycler)) {
-            adapter = listAdapter
-            layoutManager = LayoutManagerFactory().produce(view.context)
-            ItemTouchHelper(
-                BothSideSwipeCallback(
-                    FavoriteSwipeCallback(listAdapter, view.context, VibrationService()),
-                    SwipeDeleteCallback(listAdapter, view.context),
-                    listAdapter
-                )
-            ).attachToRecyclerView(this)
-        }
-        with(view.findViewById<EditText>(R.id.search_text_input)) {
-            setText(viewModel.getSearchCondition())
-            addTextChangedListener { viewModel.startLoadPoints(it.toString()) }
-        }
-        filterButton.setOnClickListener(filterClickListener)
-        cityButton.setOnClickListener {
-            CityPickerDialog().show(childFragmentManager, CityPickerDialog.TAG)
-        }
-        cityViewModel.observeSelectedCity(viewLifecycleOwner) { onCityChanged(it) }
-        activity?.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner)
-        listAdapter.setOnItemClickListener { item: ViewHolderItem ->
-            if (item is EmptyStateData) {
-                onCreateNewPointClick()
-            } else if (item is PointUi) {
-                openPointDetailsFragment(item)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            PdTheme {
+                val state by viewModel.state.collectAsStateWithLifecycle()
+                PlacesScreen(state, actions, mapFactory, cardMapper, statusMapper)
             }
-        }
-        listAdapter.favoritesApply = FavoritesApply { holderItem ->
-            (holderItem as? PointUi)?.let { pointUi -> favoritesViewModel.applyFavorite(pointUi) }
-        }
-        viewModel.observePointsList(viewLifecycleOwner) {
-            this@PointsListFragment.view?.post { listAdapter.submitList(it) }
         }
     }
 
-    private fun onCreateNewPointClick() {
-        startActivity(Intent(activity, PointsCreateActivity::class.java))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        cityViewModel.observeSelectedCity(viewLifecycleOwner) { viewModel.onCityChanged(it) }
     }
 
     override fun onStart() {
         super.onStart()
+        toolbar()?.visibility = View.GONE
         checkPermissions()
-        viewModel.startLoadPoints()
+        viewModel.reload()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        toolbar()?.visibility = View.VISIBLE
     }
 
     override fun onLocationReceived(location: Location) {
@@ -118,26 +129,6 @@ class PointsListFragment : AbstractLocationFragment(R.layout.fragment_points_lis
         cityViewModel.refresh()
     }
 
-    /**
-     * The points belong to the city, so a different city (chosen by the user or detected
-     * later) means different points. The first value is shown by the usual loading of the list.
-     */
-    private fun onCityChanged(city: CityUi?) {
-        cityButton.text = city?.label ?: getString(R.string.city_not_selected)
-        val changed = isCityShown && shownCityCode != city?.code
-        isCityShown = true
-        shownCityCode = city?.code
-        if (changed) {
-            viewModel.startLoadPoints(viewModel.getSearchCondition().toString())
-        }
-    }
-
-    private fun openPointDetailsFragment(item: PointUi) {
-        openFragment(PointDetailsFragment.newInstance(item), "point_details_stack_name")
-    }
-
-    private val filterClickListener = View.OnClickListener {
-        openFragment(SearchFilterFragment(), "filters_screen")
-    }
-
+    /** The screen draws its own bars under the system ones, so the shared toolbar is hidden here. */
+    private fun toolbar(): View? = activity?.findViewById(R.id.toolbar)
 }

@@ -54,4 +54,36 @@
     <string name="label_nothing_selected">Empty options</string>
     <string name="title_filter_screen">Filters</string>
     <string name="title_working_hours_input">Select working hours</string>
+
+    <!-- Main screen -->
+    <string name="place_next_tomorrow">tomorrow</string>
+    <string name="tag_appointment">By appointment</string>
+    <string name="tag_walk_in">No appointment</string>
+    <string name="tag_documents">ID needed</string>
+    <string name="help_title">How to get help</string>
+    <string name="help_appointment">Appointment</string>
+    <string name="help_appointment_required">Required</string>
+    <string name="help_appointment_not_required">Not required</string>
+    <string name="help_documents">Documents</string>
+    <string name="help_documents_required">Required</string>
+    <string name="help_documents_not_required">Not required</string>
+    <string name="places_favorite_add">Add to favorites</string>
+    <string name="places_favorite_remove">Remove from favorites</string>
+    <string name="places_title_open">%1$s open now</string>
+    <string name="places_title_favorites">%1$s in favorites</string>
+    <string name="places_order_distance">Nearest first</string>
+    <string name="places_order_name">By name</string>
+    <string name="places_tab_all">All</string>
+    <string name="places_tab_open">Open now</string>
+    <string name="places_tab_favorites">Favorites</string>
+    <string name="places_search_hint">Find help nearby</string>
+    <string name="places_filters">Filters</string>
+    <string name="places_clear">Clear</string>
+    <string name="places_my_location">My location</string>
+    <string name="places_add">Add a place</string>
+    <string name="places_city_description">Choose a city</string>
+    <plurals name="places_title_all">
+        <item quantity="one">%d place nearby</item>
+        <item quantity="other">%d places nearby</item>
+    </plurals>
 </resources>

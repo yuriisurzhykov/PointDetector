@@ -50,4 +50,38 @@
     <string name="title_working_hours_input">Оберіть часи работи</string>
     <string name="label_nothing_selected">Нічого не задано</string>
     <string name="title_filter_screen">Фільтри</string>
+
+    <!-- Main screen -->
+    <string name="place_next_tomorrow">завтра</string>
+    <string name="tag_appointment">Потрібен запис</string>
+    <string name="tag_walk_in">Без запису</string>
+    <string name="tag_documents">Потрібен документ</string>
+    <string name="help_title">Як отримати допомогу</string>
+    <string name="help_appointment">Запис</string>
+    <string name="help_appointment_required">Потрібен</string>
+    <string name="help_appointment_not_required">Не потрібен</string>
+    <string name="help_documents">Документи</string>
+    <string name="help_documents_required">Потрібні</string>
+    <string name="help_documents_not_required">Не потрібні</string>
+    <string name="places_favorite_add">В обране</string>
+    <string name="places_favorite_remove">Прибрати з обраного</string>
+    <string name="places_title_open">Відчинено зараз: %1$s</string>
+    <string name="places_title_favorites">В обраному: %1$s</string>
+    <string name="places_order_distance">Спочатку найближчі</string>
+    <string name="places_order_name">За назвою</string>
+    <string name="places_tab_all">Усі</string>
+    <string name="places_tab_open">Відчинено зараз</string>
+    <string name="places_tab_favorites">Обране</string>
+    <string name="places_search_hint">Знайти допомогу поруч</string>
+    <string name="places_filters">Фільтри</string>
+    <string name="places_clear">Очистити</string>
+    <string name="places_my_location">Моє місцезнаходження</string>
+    <string name="places_add">Додати місце</string>
+    <string name="places_city_description">Вибрати місто</string>
+    <plurals name="places_title_all">
+        <item quantity="one">%d місце поруч</item>
+        <item quantity="few">%d місця поруч</item>
+        <item quantity="many">%d місць поруч</item>
+        <item quantity="other">%d місця поруч</item>
+    </plurals>
 </resources>
