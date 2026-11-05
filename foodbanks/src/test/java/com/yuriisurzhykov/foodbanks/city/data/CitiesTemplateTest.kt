@@ -20,12 +20,13 @@ class CitiesTemplateTest {
     @Test
     fun `test there are files to import`() {
         assertTrue(importFiles().any { it.name == "cities.template.json" })
+        assertTrue(importFiles().any { it.name.startsWith("root.") })
     }
 
     @Test
     fun `test every city of every file is mapped`() {
         importFiles().forEach { file ->
-            val cities = file.reader().use { Gson().fromJson(it, Map::class.java) }
+            val cities = cities(file)
 
             assertTrue("${file.name} is empty", cities.isNotEmpty())
             cities.forEach { (key, value) ->
@@ -45,9 +46,7 @@ class CitiesTemplateTest {
     @Test
     fun `test addresses are unique inside of a city`() {
         importFiles().forEach { file ->
-            val cities = file.reader().use { Gson().fromJson(it, Map::class.java) }
-
-            cities.values.forEach { value ->
+            cities(file).values.forEach { value ->
                 val city = mapper.map(SnapshotValue.Base(value as Map<*, *>))
                 val addresses = city.points.map { it.address }
 
@@ -57,6 +56,14 @@ class CitiesTemplateTest {
                 )
             }
         }
+    }
+
+    /**
+     * The files imported into the root of the database keep the cities inside of "cities".
+     */
+    private fun cities(file: File): Map<*, *> {
+        val content = file.reader().use { Gson().fromJson(it, Map::class.java) }
+        return if (file.name.startsWith("root.")) content["cities"] as Map<*, *> else content
     }
 
     private fun importFiles(): List<File> {

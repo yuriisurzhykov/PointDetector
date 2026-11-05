@@ -6,18 +6,31 @@ data, keep the structure.
 
 ## Files
 
-- `cities.sacramento.json` is ready to import: the real data of Sacramento (20 points), converted
-  from `points-grouped` of `app/src/main/assets/sample1.json`.
-- `cities.template.json` is the template for a new city, two points as an example.
+- `root.sacramento.json` is the real data of Sacramento (20 points, converted from `points-grouped`
+  of `app/src/main/assets/sample1.json`) already wrapped into `cities`. **Imported into the root
+  of the database.**
+- `cities.sacramento.json` is the same data without the wrapper. It is the content of `cities`,
+  imported into the existing `cities` node.
+- `cities.template.json` is the template of a new city (two points as an example), imported the
+  same way as `cities.sacramento.json`.
 
 Every file here is checked by `CitiesTemplateTest`.
 
 ## Importing
 
-Realtime Database console → open the `cities` node → ⋮ → **Import JSON** and choose the file.
-The file is the *content* of `cities`, so it must be imported into that node, not into the root:
-importing into the root replaces the whole database, including the old `points` node that the
-released app still reads.
+Realtime Database console → ⋮ of a node → **Import JSON**. The import **replaces everything** at
+that location. The console can't create an empty node, so there are two cases:
+
+**The database is empty, or holds nothing you need** (there is no `points` node of the released app,
+no other data): import `root.sacramento.json` into the root. One step, the result is `cities → …`.
+
+**The database holds data you must keep** (for example the old `points` node that the released
+app reads): don't touch the root. Add a node named `cities` with any value through **+**, then
+⋮ of `cities` → **Import JSON** → `cities.sacramento.json`. The value is replaced by the content
+of the file.
+
+To check the result open
+`https://<database>.firebaseio.com/cities.json?shallow=true`, it must list the city codes.
 
 (The JSON is not importable into Firestore as is. The module reads Realtime Database only.)
 
