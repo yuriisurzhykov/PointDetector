@@ -246,3 +246,13 @@ Growing metrics: `interfaces`, `implementations`, `abstractBases` (from `metrics
 7. Konsist rules and self-tests (section 8), mutation check.
 8. A section in the project's `CLAUDE.md` with the commands and a link to this skill.
 9. A report with the metrics (section 9).
+
+## 12. Using the components in an app screen
+
+The components are consumed through three small pieces, none of which is a component:
+
+- **`*Screen`** — a composable over plain state and an `Actions` interface (`PlacesScreen(state, actions, ...)`). It turns the state into components with `remember(state-parts)` and calls `Content(Modifier)` on them. No view model, no platform calls.
+- **`*Mapper`** (an `@Inject` class, pure) — the only place with `java.time`, formatting, `R.string` ids and nullable data: `PlaceDetailsMapper`, `AddPlaceMapper`. Its logic that has no components in it (hours of the week, groups of days, the answers of a form) lives in plain objects and is unit tested; the components are checked by previews.
+- **`*Route`** — takes the view models (`hiltViewModel()`), collects their `StateFlow`s with `collectAsStateWithLifecycle()`, builds the `Actions` object that delegates to them and passes everything to the screen. Platform work (intents, location) is in the route or the activity, never in the screen.
+
+A view model holds plain state (`data class` with nullable values at the data boundary) and never a `Pd*` type. A flow of several steps (adding a place) is one view model with a `step` in its state, not several screens. What lies over a screen (sheets, a flow) is a value in the state of that screen, so Back closes it before it leaves the screen (`BackHandler`, last registered wins).

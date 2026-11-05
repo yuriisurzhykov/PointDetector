@@ -2,13 +2,18 @@ package com.yuriisurzhykov.pointdetector.presentation.permissions
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
-import com.yuriisurzhykov.pointdetector.presentation.core.AbstractPermissionCheckActivity
 import com.yuriisurzhykov.pointdetector.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,46 +23,46 @@ import dagger.hilt.android.AndroidEntryPoint
  * not ask again, leads to the settings. The person can always go on without the location.
  */
 @AndroidEntryPoint
-class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
+class PermissionsCheckActivity : ComponentActivity() {
 
     private var step by mutableStateOf(PermissionStep.Request)
 
-    private val settingsLauncher = registerForActivityResult(SettingsActivityContract { this }) {
-        if (it || checkPermissions()) {
+    private val requestLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+        if (result.isNotEmpty() && result.all { it.value }) {
             startMainScreen()
+        } else {
+            step = PermissionStep.afterDenial(shouldShowRationale())
         }
+    }
+
+    private val settingsLauncher = registerForActivityResult(SettingsActivityContract { this }) {
+        if (it || isGranted()) startMainScreen()
     }
 
     private val actions = object : PermissionActions {
-        override fun onGrant() = requestPermissions()
-        override fun onOpenSettings() = openLocationSettings()
+        override fun onGrant() = requestLauncher.launch(LOCATION_PERMISSIONS)
+        override fun onOpenSettings() = settingsLauncher.launch(LOCATION_PERMISSIONS)
         override fun onContinue() = startMainScreen()
     }
 
-    override fun getPermissionsArray(): Array<String> = LOCATION_PERMISSIONS
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (checkPermissions()) {
+        if (isGranted()) {
             startMainScreen()
             return
         }
+        enableEdgeToEdge()
         setContent {
             PdTheme { PermissionScreen(step, actions) }
         }
     }
 
-    override fun onPermissionsGranted() {
-        super.onPermissionsGranted()
-        startMainScreen()
+    private fun isGranted(): Boolean = LOCATION_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    override fun onPermissionsDenied(shouldShowRationale: Boolean) {
-        super.onPermissionsDenied(shouldShowRationale)
-        step = PermissionStep.afterDenial(shouldShowRationale)
-    }
-
-    override fun openMainFragment() {
+    private fun shouldShowRationale(): Boolean = LOCATION_PERMISSIONS.any {
+        ActivityCompat.shouldShowRequestPermissionRationale(this, it)
     }
 
     private fun startMainScreen() {
@@ -67,12 +72,8 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
         finish()
     }
 
-    private fun openLocationSettings() {
-        settingsLauncher.launch(getPermissionsArray())
-    }
-
-    companion object {
-        private val LOCATION_PERMISSIONS = arrayOf(
+    private companion object {
+        val LOCATION_PERMISSIONS = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )

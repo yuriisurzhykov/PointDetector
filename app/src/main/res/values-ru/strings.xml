@@ -4,16 +4,11 @@
     <string name="hint_input_your_address">Введите адрес</string>
     <string name="kilometers_format" translatable="false">%.3f км</string>
     <string name="miles_format" translatable="false">%.2f мили</string>
-    <string name="action_text_search_filter">Фильтр</string>
-    <string name="title_points_list_screen">Ближайшие точки</string>
     <string name="title_points_add_screen">Поиск точек</string>
     <string name="title_points_add_info_screen">Сохранение точки</string>
-    <string name="button_add_point">Добавить новую точку</string>
     <string name="hint_place_name">Название точки</string>
     <string name="hint_place_address">Адрес точки</string>
     <string name="hint_place_working_hours">Рабочие часы</string>
-    <string name="label_no_results_found">Ничего не найдено</string>
-    <string name="button_empty_state_add_record">Добавить новую запись</string>
 
     <!--Location permission-->
     <string name="title_location_permission_denied">Не удалось получить разрешения</string>
@@ -30,25 +25,13 @@
     <string name="title_dialog_choose_city">Выберите город</string>
     <string name="message_cities_not_loaded">Список городов ещё не загружен. Проверьте подключение к интернету и попробуйте снова.</string>
 
-    <string name="label_point_open">Открыто</string>
-    <string name="label_point_closed">Закрыто</string>
     <string name="label_point_successfully_created">Точка успешно была добавлена!</string>
 
-    <string name="button_create_new_point_label">Добавить точку!</string>
-    <string name="title_empty_points_list">Ничего не найдено</string>
-    <string name="description_empty_points_list">Нет записей в локальной базе данных. Для того чтобы увидеть записи попробуйте добавить ее нажав на кнопку снизу.</string>
     <string name="label_description_search_address">Начните печатать в поле выше и в списке появятся возможные точки</string>
-    <string name="label_empty_search_data">Ничего не найдено по запросу</string>
     <string name="title_location_permission_request">Нет доступа к геоданным</string>
     <string name="button_continue_anyway">Все равно продолжить</string>
     <string name="button_provide_location_permissions_never_ask">Открыть настройки</string>
     <string name="snackbar_location_permissions_denied">Для того, чтобы предоставить разрешения, откройте настройки.</string>
-    <string name="label_point_deletec_action">Точка удалена. Если удалили по ошибке, нажмите на кноку снизу</string>
-    <string name="button_undo">Отменить</string>
-    <string name="title_point_details">Детали точки</string>
-    <string name="build_route">Построить маршрут</string>
-    <string name="share_address">Поделиться адресом</string>
-    <string name="label_format_working_days">%s, %s - %s</string>
     <string name="label_sorting_type">Вариант сортировки</string>
     <string name="label_measure_type">Единицы измерения</string>
     <string name="button_apply_filters">Применить фильтры</string>

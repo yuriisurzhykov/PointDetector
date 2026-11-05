@@ -3,7 +3,7 @@ package com.yuriisurzhykov.pointdetector.presentation.places
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.presentation.entities.FavoriteState
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
-import com.yuriisurzhykov.pointdetector.uicomponents.workday.entity.WeekDay
+import com.yuriisurzhykov.pointdetector.domain.entities.WeekDay
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
