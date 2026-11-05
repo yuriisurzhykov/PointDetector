@@ -187,10 +187,7 @@ private fun content(model: PlacesModel, state: PlacesUiState, actions: PlacesAct
                 row = row,
                 number = index + 1,
                 selected = row.point.id == state.selectedId,
-                onOpen = { point ->
-                    actions.onSelect(point.id)
-                    actions.onOpenPlace(point)
-                },
+                onOpen = actions::onOpenPlace,
                 onFavorite = actions::onFavorite,
             )
         }

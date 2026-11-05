@@ -93,14 +93,17 @@ class PlacesViewModel @Inject constructor(
         if (changed) reload()
     }
 
-    /** Selects a place: the camera goes to it and the list brings its card into view. */
-    fun onSelect(pointId: Long) {
+    /**
+     * Selects a place: the camera goes to it and, when [bringIntoView] is set (the pin was tapped on
+     * the map), the list brings its card into view. A tap on the card itself must not move the list.
+     */
+    fun onSelect(pointId: Long, bringIntoView: Boolean = true) {
         val point = mutableState.value.places.firstOrNull { it.id == pointId } ?: return
         mutableState.update {
             it.copy(
                 selectedId = pointId,
                 camera = cameraAt(point.coordinates.lat, point.coordinates.lng),
-                scroll = ScrollRequest(pointId, ++requests),
+                scroll = if (bringIntoView) ScrollRequest(pointId, ++requests) else it.scroll,
             )
         }
     }

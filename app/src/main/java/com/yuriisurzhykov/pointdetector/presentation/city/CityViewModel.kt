@@ -28,6 +28,10 @@ class CityViewModel @Inject constructor(
     private val mutableSelected = MutableStateFlow<CityUi?>(null)
     val selected: StateFlow<CityUi?> = mutableSelected.asStateFlow()
 
+    /** True while the city is the one taken by the location, false after the person picked a city. */
+    private val mutableAutomatic = MutableStateFlow(false)
+    val automatic: StateFlow<Boolean> = mutableAutomatic.asStateFlow()
+
     private val mutableList = MutableStateFlow<CityListState>(CityListState.Loading)
     val list: StateFlow<CityListState> = mutableList.asStateFlow()
 
@@ -52,6 +56,7 @@ class CityViewModel @Inject constructor(
     fun refresh() {
         dispatchers.launchBackground(viewModelScope) {
             mutableSelected.value = currentCity()
+            mutableAutomatic.value = selectedCityUseCase.isAutomatic()
         }
     }
 
@@ -63,17 +68,24 @@ class CityViewModel @Inject constructor(
         mutableDetectionFailed.value = false
         dispatchers.launchBackground(viewModelScope) {
             selectedCityUseCase.select(city.code)
+            mutableAutomatic.value = false
             mutableSelected.value = city
         }
     }
 
-    /** Takes the city where the person is now. A failure is kept as a flag and the choice stays. */
-    fun detect() {
+    /**
+     * Takes the city where the person is now and then calls [onDetected] on the main thread, so the
+     * sheet can close itself. A failure is kept as a flag, the choice stays and [onDetected] is not called.
+     */
+    fun detect(onDetected: () -> Unit) {
         mutableDetectionFailed.value = false
         dispatchers.launchBackground(viewModelScope) {
             try {
-                mutableSelected.value = selectedCityUseCase.detect().map(CityUi.Factory)
+                val city = selectedCityUseCase.detect().map(CityUi.Factory)
+                mutableAutomatic.value = true
+                mutableSelected.value = city
                 sync()
+                dispatchers.changeToUi { onDetected() }
             } catch (e: CityNotDetectedException) {
                 mutableDetectionFailed.value = true
             }

@@ -6,29 +6,26 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 
 /**
- * The nested scroll contract of the sheet: until it is fully open the sheet takes the drag, so
- * the list does not scroll; once open the list scrolls, and a drag down from the top of the list
- * goes back to the sheet. A fling is always settled to the nearest position.
+ * The nested scroll contract of the sheet: **the list always scrolls first**, in every position
+ * of the sheet, so the cards can be browsed while the sheet is low. The sheet takes only what the
+ * list cannot use: a drag down from the top of the list closes the sheet. The sheet is opened by
+ * its handle and header, which are draggable too. A fling settles the sheet only when the sheet
+ * has moved during that gesture, so a fling of the list alone never changes the position.
  */
 internal class PdSheetNestedScroll(private val controller: PdSheetController) : NestedScrollConnection {
 
-    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        if (controller.isFull) return Offset.Zero
-        return Offset(0f, controller.drag(available.y))
-    }
+    private var moved = false
 
     override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
         if (available.y <= 0f) return Offset.Zero
-        return Offset(0f, controller.drag(available.y))
-    }
-
-    override suspend fun onPreFling(available: Velocity): Velocity {
-        if (controller.isFull) return Velocity.Zero
-        controller.settle(available.y)
-        return available
+        val used = controller.drag(available.y)
+        if (used != 0f) moved = true
+        return Offset(0f, used)
     }
 
     override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+        if (!moved) return Velocity.Zero
+        moved = false
         controller.settle(available.y)
         return available
     }

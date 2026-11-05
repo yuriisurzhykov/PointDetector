@@ -215,6 +215,8 @@ private class FakeSelectedCity : SelectedCityUseCase {
     override suspend fun select(cityCode: String) = Unit
 
     override suspend fun detect(): City = selectedCity()
+
+    override suspend fun isAutomatic(): Boolean = false
 }
 
 private class FakePointsList(var responses: List<UseCaseResponse<List<Point>>>) :

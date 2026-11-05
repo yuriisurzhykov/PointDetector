@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.di.data
 
 import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
 import com.yuriisurzhykov.foodbanks.data.prefs.PreferencesDao
+import com.yuriisurzhykov.foodbanks.data.prefs.CityModePreference
 import com.yuriisurzhykov.foodbanks.data.prefs.SelectedCityPreference
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,14 @@ class PreferenceModule {
         dao: PreferencesDao
     ): SelectedCityPreference {
         return SelectedCityPreference.Base(converter, dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCityModePreference(
+        converter: DataStringConverter,
+        dao: PreferencesDao
+    ): CityModePreference {
+        return CityModePreference.Base(converter, dao)
     }
 }

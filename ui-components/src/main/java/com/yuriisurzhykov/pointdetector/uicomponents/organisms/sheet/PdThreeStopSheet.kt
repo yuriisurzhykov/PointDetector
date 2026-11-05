@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -36,7 +34,6 @@ import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.IntOffset
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.uicomponents.R
 import com.yuriisurzhykov.pointdetector.uicomponents.component.PdBaseComponent
@@ -50,10 +47,12 @@ private const val MILLIS_IN_SECOND = 1000f
 
 /**
  * The sheet of the main screen with three resting positions. A drag on the handle and the header
- * moves it; the content scrolls only when the sheet is fully open, otherwise a drag on the
- * content moves the sheet too. A release snaps to the nearest position, taking the speed into
- * account. The slots are components, not lambdas. [floating] rides the top edge of the sheet and
- * fades out as the sheet nears the top.
+ * moves it. The content scrolls in every position, so the cards can be browsed while the sheet
+ * is low; only a drag down from the top of the content closes the sheet (see
+ * [PdSheetNestedScroll]). The sheet is exactly as tall as the part that is shown, so the content
+ * can always be scrolled to its end inside the visible part. A release snaps to the nearest
+ * position, taking the speed into account. The slots are components, not lambdas. [floating]
+ * rides the top edge of the sheet and fades out as the sheet nears the top.
  */
 @Immutable
 class PdThreeStopSheet(
@@ -99,8 +98,7 @@ class PdThreeStopSheet(
                 Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .height(with(density) { stops.full.toDp() })
-                    .offset { IntOffset(0, (stops.full - visible.floatValue).roundToInt()) },
+                    .sheetHeight { visible.floatValue },
             ) {
                 Column(
                     Modifier
@@ -173,6 +171,16 @@ class PdThreeStopSheet(
         PdSheetState.Half -> PdSheetState.Full
         PdSheetState.Full -> PdSheetState.Peek
     }
+}
+
+/**
+ * Gives the sheet the height of the part that is shown. The height is read while measuring, so a
+ * drag re-measures the sheet without recomposing it.
+ */
+private fun Modifier.sheetHeight(height: () -> Float): Modifier = layout { measurable, constraints ->
+    val fixed = height().roundToInt().coerceIn(0, constraints.maxHeight)
+    val placeable = measurable.measure(constraints.copy(minHeight = fixed, maxHeight = fixed))
+    layout(placeable.width, placeable.height) { placeable.place(0, 0) }
 }
 
 /** Puts a child just above the top edge of its parent, so it rides along with a moving sheet. */

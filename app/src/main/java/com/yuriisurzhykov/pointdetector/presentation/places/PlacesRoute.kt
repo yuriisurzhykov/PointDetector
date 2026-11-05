@@ -46,6 +46,7 @@ fun PlacesRoute(
     val addActions = remember(places, add) { addPlaceActions(places, add) }
     val cityActions = remember(places, cities) { cityActions(cities) { places.onOverlay(PlacesOverlay.None) } }
     val addCityActions = remember(cities, add) { cityActions(cities) { add.onCitySheet(false) } }
+    val automatic by cities.automatic.collectAsStateWithLifecycle()
     val filtersActions = remember(places, filters) { filtersActions(filters) { places.onOverlay(PlacesOverlay.None) } }
 
     // The chip and the list follow the selected city: a new city clears the list and loads its places.
@@ -65,7 +66,7 @@ fun PlacesRoute(
             val list by cities.list.collectAsStateWithLifecycle()
             val selected by cities.selected.collectAsStateWithLifecycle()
             val failed by cities.detectionFailed.collectAsStateWithLifecycle()
-            CityPickerSheet(list, selected?.code, failed, cityActions)
+            CityPickerSheet(list, selected?.code, automatic, failed, cityActions)
         }
 
         PlacesOverlay.Filters -> {
@@ -83,7 +84,7 @@ fun PlacesRoute(
             val failed by cities.detectionFailed.collectAsStateWithLifecycle()
             BackHandler { addActions.onBack() }
             AddPlaceScreen(addState, selected, ui.addMapper, addActions)
-            if (addState.citySheet) CityPickerSheet(list, selected?.code, failed, addCityActions)
+            if (addState.citySheet) CityPickerSheet(list, selected?.code, automatic, failed, addCityActions)
         }
 
         PlacesOverlay.None -> Unit
@@ -97,7 +98,10 @@ private fun placesActions(
     add: AddPlaceViewModel,
     onOpenPlace: (PointUi) -> Unit,
 ) = object : PlacesActions {
-    override fun onOpenPlace(point: PointUi) = onOpenPlace(point)
+    override fun onOpenPlace(point: PointUi) {
+        places.onSelect(point.id, bringIntoView = false)
+        onOpenPlace(point)
+    }
     override fun onFavorite(point: PointUi) = places.onFavorite(point)
     override fun onSelect(pointId: Long) = places.onSelect(pointId)
     override fun onTab(tab: PlacesTab) = places.onTab(tab)
@@ -124,7 +128,7 @@ private fun placesActions(
 
 private fun cityActions(cities: CityViewModel, close: () -> Unit) = object : CityPickerActions {
     override fun onSelect(city: CityUi) = cities.select(city)
-    override fun onDetect() = cities.detect()
+    override fun onDetect() = cities.detect(onDetected = close)
     override fun onRetry() = cities.retry()
     override fun onClose() = close()
 }
