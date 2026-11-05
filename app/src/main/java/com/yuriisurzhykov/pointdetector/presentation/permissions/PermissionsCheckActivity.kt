@@ -3,26 +3,35 @@ package com.yuriisurzhykov.pointdetector.presentation.permissions
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import com.yuriisurzhykov.pointdetector.R
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.presentation.core.AbstractPermissionCheckActivity
 import com.yuriisurzhykov.pointdetector.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * The first screen of the app. With the location granted it goes straight to the main screen;
+ * otherwise it explains why the location is needed and asks for it, or, when the system will
+ * not ask again, leads to the settings. The person can always go on without the location.
+ */
 @AndroidEntryPoint
 class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
 
-    private var continueButton: Button? = null
-    private var requestPermissionsButton: Button? = null
-    private var shouldShowRationale = true
+    private var step by mutableStateOf(PermissionStep.Request)
 
     private val settingsLauncher = registerForActivityResult(SettingsActivityContract { this }) {
         if (it || checkPermissions()) {
             startMainScreen()
         }
+    }
+
+    private val actions = object : PermissionActions {
+        override fun onGrant() = requestPermissions()
+        override fun onOpenSettings() = openLocationSettings()
+        override fun onContinue() = startMainScreen()
     }
 
     override fun getPermissionsArray(): Array<String> = LOCATION_PERMISSIONS
@@ -33,20 +42,8 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
             startMainScreen()
             return
         }
-        setContentView(R.layout.activity_permissions_request)
-        findViewById<ImageView>(R.id.image).setImageResource(R.drawable.ic_location)
-        findViewById<TextView>(R.id.title).setText(R.string.title_location_permission_request)
-        findViewById<TextView>(R.id.rationale).setText(R.string.rationale_location_permission_text)
-        with(findViewById<Button>(R.id.retry)) {
-            requestPermissionsButton = this
-            setText(R.string.button_location_permissions_retry)
-            setOnClickListener { if (shouldShowRationale) requestPermissions() else openLocationSettings() }
-        }
-        with(findViewById<Button>(R.id.continue_button)) {
-            setText(R.string.button_continue_anyway)
-            continueButton = this
-            continueButton?.visibility = View.GONE
-            setOnClickListener { startMainScreen() }
+        setContent {
+            PdTheme { PermissionScreen(step, actions) }
         }
     }
 
@@ -57,11 +54,7 @@ class PermissionsCheckActivity : AbstractPermissionCheckActivity() {
 
     override fun onPermissionsDenied(shouldShowRationale: Boolean) {
         super.onPermissionsDenied(shouldShowRationale)
-        this.shouldShowRationale = shouldShowRationale
-        if (!shouldShowRationale) {
-            continueButton?.visibility = View.VISIBLE
-            requestPermissionsButton?.setText(R.string.button_provide_location_permissions_never_ask)
-        }
+        step = PermissionStep.afterDenial(shouldShowRationale)
     }
 
     override fun openMainFragment() {

@@ -10,7 +10,6 @@ import androidx.annotation.RequiresPermission
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import com.yuriisurzhykov.pointdetector.presentation.permissions.AbstractPermissionFragment
-import com.yuriisurzhykov.pointdetector.presentation.permissions.LocationPermissionResourceManager
 import com.yuriisurzhykov.pointdetector.presentation.permissions.PermissionDenialFragment
 import java.util.concurrent.Executors
 import com.yuriisurzhykov.pointdetector.R
@@ -75,7 +74,7 @@ abstract class AbstractLocationFragment : AbstractPermissionFragment {
     override fun onPermissionsDenied(shouldShowRationale: Boolean) {
         if (shouldShowRationale) {
             openFragment(
-                PermissionDenialFragment.newInstance(LocationPermissionResourceManager(this)),
+                PermissionDenialFragment.newInstance(getPermissionsArray()),
                 "denial_permission"
             )
         } else {
