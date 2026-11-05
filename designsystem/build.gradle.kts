@@ -33,5 +33,9 @@ dependencies {
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.animation)
 
+    // Previews live in src/debug only: release builds never see them.
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.tooling.preview)
+
     testImplementation(libs.junit)
 }

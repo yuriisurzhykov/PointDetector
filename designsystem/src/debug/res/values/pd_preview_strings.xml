@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings used only by the previews in src/debug; they are not part of the release library. -->
+<resources>
+    <string name="pd_preview_greeting">Welcome to %1$s</string>
+    <string name="pd_preview_closes_at">%1$s closes at %2$s</string>
+    <plurals name="pd_preview_minutes">
+        <item quantity="one">%d minute left</item>
+        <item quantity="other">%d minutes left</item>
+    </plurals>
+</resources>
