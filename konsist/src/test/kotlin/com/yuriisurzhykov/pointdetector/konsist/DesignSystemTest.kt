@@ -7,18 +7,18 @@ import kotlin.test.fail
 /** The contract of the design system, enforced. Every rule here must hold with an empty allowlist. */
 class DesignSystemTest {
 
-    private val root = ProjectSources.DESIGN_SYSTEM_ROOT
+    private val root = ProjectSources.COMPONENTS_ROOT
 
     @Test
     fun `atoms, molecules and organisms only depend downwards`() = holds(
         "atomic layering: particles < atoms < molecules < organisms",
-        DesignSystemRules.layerViolations(ProjectSources.designSystem, root),
+        DesignSystemRules.layerViolations(ProjectSources.components, root),
     )
 
     @Test
     fun `atomic levels are split into group packages`() = holds(
         "atoms/buttons, molecules/status, organisms/surfaces: never a file directly in the level",
-        DesignSystemRules.filesOutsideGroupPackages(ProjectSources.designSystem, root),
+        DesignSystemRules.filesOutsideGroupPackages(ProjectSources.components, root),
     )
 
     @Test
@@ -69,7 +69,7 @@ class DesignSystemTest {
     @Test
     fun `every component class implements a Pd interface`() = holds(
         "a class in atoms / molecules / organisms extends PdBase* or implements Pd*",
-        DesignSystemRules.componentsWithoutInterface(ProjectSources.designSystem, root),
+        DesignSystemRules.componentsWithoutInterface(ProjectSources.components, root),
     )
 
     @Test

@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
@@ -38,6 +39,13 @@ kotlin {
 }
 
 dependencies {
+    // Compose components (Pd*) are built on the theme; Compose itself comes with it as api.
+    api(project(":designsystem"))
+
+    // Previews live in src/debug only: release builds never see them.
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.tooling.preview)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation(libs.kotlin.serialization.json)

@@ -1,6 +1,6 @@
 package com.yuriisurzhykov.pointdetector.toast
 
-import com.yuriisurzhykov.pointdetector.designsystem.resolver.text.PdLiteralText
+import com.yuriisurzhykov.pointdetector.uicomponents.resolver.text.PdLiteralText
 import com.yuriisurzhykov.pointdetector.toast.model.ToastData
 import com.yuriisurzhykov.pointdetector.toast.model.ToastDuration
 import com.yuriisurzhykov.pointdetector.toast.model.ToastResult

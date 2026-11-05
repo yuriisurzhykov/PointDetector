@@ -16,8 +16,18 @@ object ProjectSources {
         Konsist.scopeFromTest().files.map(::toSource).filterNot { it.path.startsWith("konsist/") }
     }
 
-    /** Everything in `:designsystem`. */
-    val designSystem: List<SourceFile> by lazy { production.filter { it.path.startsWith(DESIGN_SYSTEM_PATH) } }
+    /** The theme, `:designsystem`. */
+    val theme: List<SourceFile> by lazy { production.filter { it.path.startsWith(DESIGN_SYSTEM_PATH) } }
+
+    /** The Compose components in `:ui-components`; the old View code of that module is not covered. */
+    val components: List<SourceFile> by lazy {
+        production.filter { file ->
+            file.path.startsWith(COMPONENTS_PATH) && COMPONENT_PACKAGES.any { "/uicomponents/$it/" in file.path }
+        }
+    }
+
+    /** The whole design system: the theme and the components. */
+    val designSystem: List<SourceFile> by lazy { theme + components }
 
     val toast: List<SourceFile> by lazy { production.filter { it.path.startsWith(TOAST_PATH) } }
 
@@ -28,7 +38,7 @@ object ProjectSources {
     val tokenConsumers: List<SourceFile> by lazy {
         (designSystem + toast).filterNot {
             it.path.contains("/designsystem/theme/") ||
-                it.path.contains("/designsystem/icons/") ||
+                it.path.contains("/uicomponents/icons/") ||
                 it.path.contains("/toast/tokens/")
         }
     }
@@ -39,10 +49,13 @@ object ProjectSources {
     }
 
     const val DESIGN_SYSTEM_ROOT = "com.yuriisurzhykov.pointdetector.designsystem"
+    const val COMPONENTS_ROOT = "com.yuriisurzhykov.pointdetector.uicomponents"
     const val TOAST_ROOT = "com.yuriisurzhykov.pointdetector.toast"
     const val APP_ROOT = "com.yuriisurzhykov.pointdetector"
 
     private const val DESIGN_SYSTEM_PATH = "designsystem/src/main/"
+    private const val COMPONENTS_PATH = "ui-components/src/main/"
+    private val COMPONENT_PACKAGES = listOf("atoms", "molecules", "organisms", "component", "resolver", "icons", "model")
     private const val TOAST_PATH = "toast/src/main/"
 
     private fun toSource(file: KoFileDeclaration): SourceFile =

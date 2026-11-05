@@ -30,7 +30,7 @@ kotlin {
 }
 
 dependencies {
-    api(project(":designsystem"))
+    api(project(":ui-components"))
     implementation(libs.kotlin.coroutines.core)
 
     // Previews live in src/debug only: release builds never see them.
