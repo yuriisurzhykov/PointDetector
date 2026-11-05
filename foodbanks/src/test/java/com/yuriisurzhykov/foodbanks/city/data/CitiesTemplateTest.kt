@@ -10,27 +10,56 @@ import org.junit.Test
 import java.io.File
 
 /**
- * The template in firebase/cities.template.json is what gets imported into the cloud,
- * so it must stay readable by the app.
+ * The files in firebase/ are what gets imported into the cloud, so they must stay
+ * readable by the app.
  */
 class CitiesTemplateTest {
 
     private val mapper = ValueCityMapper.Base(ValuePointMapper.Base())
 
     @Test
-    fun `test every city of the template is mapped`() {
-        val cities = File("firebase/cities.template.json").reader().use {
-            Gson().fromJson(it, Map::class.java)
-        }
+    fun `test there are files to import`() {
+        assertTrue(importFiles().any { it.name == "cities.template.json" })
+    }
 
-        assertTrue(cities.isNotEmpty())
-        cities.forEach { (key, value) ->
-            val city = mapper.map(SnapshotValue.Base(value as Map<*, *>))
+    @Test
+    fun `test every city of every file is mapped`() {
+        importFiles().forEach { file ->
+            val cities = file.reader().use { Gson().fromJson(it, Map::class.java) }
 
-            assertEquals("city key must be equal to name_code", key, city.nameCode)
-            assertTrue(city.points.isNotEmpty())
-            assertTrue(city.points.all { it.cityCode == city.nameCode })
-            assertTrue(city.points.all { it.workingHours.isNotEmpty() })
+            assertTrue("${file.name} is empty", cities.isNotEmpty())
+            cities.forEach { (key, value) ->
+                val city = mapper.map(SnapshotValue.Base(value as Map<*, *>))
+
+                assertEquals("${file.name}: city key must be equal to name_code", key, city.nameCode)
+                assertTrue("${file.name}: ${city.name} has no points", city.points.isNotEmpty())
+                assertTrue(city.points.all { it.cityCode == city.nameCode })
+                assertTrue(
+                    "${file.name}: a point has no working hours",
+                    city.points.all { it.workingHours.isNotEmpty() }
+                )
+            }
         }
+    }
+
+    @Test
+    fun `test addresses are unique inside of a city`() {
+        importFiles().forEach { file ->
+            val cities = file.reader().use { Gson().fromJson(it, Map::class.java) }
+
+            cities.values.forEach { value ->
+                val city = mapper.map(SnapshotValue.Base(value as Map<*, *>))
+                val addresses = city.points.map { it.address }
+
+                assertEquals(
+                    "${file.name}: addresses of ${city.name} must be unique",
+                    addresses.size, addresses.toSet().size
+                )
+            }
+        }
+    }
+
+    private fun importFiles(): List<File> {
+        return File("firebase").listFiles { file -> file.extension == "json" }.orEmpty().toList()
     }
 }

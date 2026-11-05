@@ -4,6 +4,14 @@
 that `:foodbanks` reads (`CityCloudDataSource`). Replace the example city and its points with real
 data, keep the structure.
 
+## Files
+
+- `cities.sacramento.json` is ready to import: the real data of Sacramento (20 points), converted
+  from `points-grouped` of `app/src/main/assets/sample1.json`.
+- `cities.template.json` is the template for a new city, two points as an example.
+
+Every file here is checked by `CitiesTemplateTest`.
+
 ## Importing
 
 Realtime Database console → open the `cities` node → ⋮ → **Import JSON** and choose the file.
