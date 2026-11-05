@@ -22,7 +22,8 @@ interface UserPointsUseCase {
         placeName: String,
         address: String,
         coordinates: LatLng,
-        workingHours: List<WorkingHour>
+        workingHours: List<WorkingHour>,
+        help: Map<String, Boolean> = emptyMap()
     )
 
     /**
@@ -39,10 +40,11 @@ interface UserPointsUseCase {
             placeName: String,
             address: String,
             coordinates: LatLng,
-            workingHours: List<WorkingHour>
+            workingHours: List<WorkingHour>,
+            help: Map<String, Boolean>
         ) {
             val cityCode = preference.getPrefValue()
-            repository.add(UserPoint(cityCode, placeName, address, coordinates, workingHours))
+            repository.add(UserPoint(cityCode, placeName, address, coordinates, workingHours, help))
         }
 
         override suspend fun remove(pointId: Long) = repository.remove(pointId)

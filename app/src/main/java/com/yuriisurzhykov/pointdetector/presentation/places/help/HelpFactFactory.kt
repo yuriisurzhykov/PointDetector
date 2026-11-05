@@ -13,6 +13,9 @@ interface HelpFactFactory {
     /** The key in the data, e.g. "appointment". */
     val type: String
 
+    /** How the form of a new place asks about this kind. */
+    val question: HelpQuestion
+
     fun item(fact: HelpFact): PdHelpItem
 
     /** Short marks for a card; empty when the fact does not deserve one. */

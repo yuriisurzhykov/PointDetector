@@ -36,7 +36,7 @@
     <string name="button_create_new_point_label">Add new point!</string>
     <string name="title_empty_points_list">No data found</string>
     <string name="description_empty_points_list">No records found in local data base. To see any items try to add record by click the button below.</string>
-    <string name="label_description_search_address">Try to start type location address into field upper and suggested places will be shown in the list</string>
+    <string name="label_description_search_address">Start typing an address in the field above and the possible places will appear in the list</string>
     <string name="label_empty_search_data">Not found any data</string>
     <string name="title_location_permission_request">Location permissions not granted</string>
     <string name="button_continue_anyway">Continue anyway</string>
@@ -51,7 +51,7 @@
     <string name="label_sorting_type">Sorting type</string>
     <string name="label_measure_type">Measure units</string>
     <string name="button_apply_filters">Apply filters</string>
-    <string name="label_nothing_selected">Empty options</string>
+    <string name="label_nothing_selected">Nothing is set</string>
     <string name="title_filter_screen">Filters</string>
     <string name="title_working_hours_input">Select working hours</string>
 
@@ -103,4 +103,21 @@
     <string name="city_no_matches">No city with this name</string>
     <string name="filters_reset">Reset</string>
     <string name="filters_sort_name_hint">A to Z</string>
+    <string name="add_step_of">Step %1$s of %2$s</string>
+    <string name="add_city_label">City</string>
+    <string name="add_hours_change">Change the hours</string>
+    <string name="add_fact_unknown">I do not know</string>
+    <string name="add_saving">Saving…</string>
+    <string name="add_address_not_found">The address was not found. Check it and try again.</string>
+    <string name="add_error_generic">Could not save the place. Try again.</string>
+    <string name="add_days">Days</string>
+    <string name="add_time_from">From</string>
+    <string name="add_time_to">To</string>
+    <string name="add_choose_days">Choose the working days</string>
+    <string name="add_hours_added">Already added</string>
+    <string name="add_hours_add">Add</string>
+    <string name="add_hours_remove">Delete %1$s</string>
+    <string name="add_show_on_map">Show on the map</string>
+    <string name="add_another">Add another one</string>
+    <string name="add_no_hours">Hours are not set</string>
 </resources>

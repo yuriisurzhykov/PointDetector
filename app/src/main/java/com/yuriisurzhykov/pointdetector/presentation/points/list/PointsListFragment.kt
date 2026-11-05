@@ -1,7 +1,6 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.list
 
 import android.content.Context
-import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +17,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.yuriisurzhykov.pointdetector.R
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
+import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.presentation.add.AddPlaceActions
+import com.yuriisurzhykov.pointdetector.presentation.add.AddPlaceMapper
+import com.yuriisurzhykov.pointdetector.presentation.add.AddPlaceScreen
+import com.yuriisurzhykov.pointdetector.presentation.add.AddPlaceViewModel
+import com.yuriisurzhykov.pointdetector.presentation.add.FactAnswer
 import com.yuriisurzhykov.pointdetector.presentation.city.CityPickerActions
 import com.yuriisurzhykov.pointdetector.presentation.city.CityPickerSheet
 import com.yuriisurzhykov.pointdetector.presentation.city.CityViewModel
@@ -35,12 +40,12 @@ import com.yuriisurzhykov.pointdetector.presentation.places.PlacesOverlay
 import com.yuriisurzhykov.pointdetector.presentation.places.PlacesScreen
 import com.yuriisurzhykov.pointdetector.presentation.places.PlacesTab
 import com.yuriisurzhykov.pointdetector.presentation.places.PlacesViewModel
-import com.yuriisurzhykov.pointdetector.presentation.points.create.PointsCreateActivity
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PointDetailsFragment
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PdSheetState
 import com.yuriisurzhykov.pointdetector.uicomponents.organisms.map.PdMapFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import javax.inject.Inject
 
 /**
@@ -54,6 +59,7 @@ class PointsListFragment : AbstractLocationFragment() {
     private val viewModel: PlacesViewModel by viewModels()
     private val cityViewModel: CityViewModel by viewModels()
     private val filtersViewModel: FiltersViewModel by viewModels()
+    private val addViewModel: AddPlaceViewModel by viewModels()
 
     @Inject
     lateinit var mapFactory: PdMapFactory
@@ -63,6 +69,9 @@ class PointsListFragment : AbstractLocationFragment() {
 
     @Inject
     lateinit var statusMapper: PlaceStatusMapper
+
+    @Inject
+    lateinit var addMapper: AddPlaceMapper
 
     private var navigationCallback: NavigationCallback? = null
 
@@ -87,8 +96,45 @@ class PointsListFragment : AbstractLocationFragment() {
         override fun onCity() = viewModel.onOverlay(PlacesOverlay.City)
 
         override fun onAdd() {
-            startActivity(Intent(activity, PointsCreateActivity::class.java))
+            addViewModel.onAnother()
+            viewModel.onOverlay(PlacesOverlay.AddPlace)
         }
+    }
+
+    private val addActions = object : AddPlaceActions {
+        override fun onBack() {
+            if (!addViewModel.onBack()) viewModel.onOverlay(PlacesOverlay.None)
+        }
+
+        override fun onQuery(text: String) = addViewModel.onQuery(text)
+        override fun onPick(point: Point) = addViewModel.onPick(point)
+        override fun onManual() = addViewModel.onManual()
+        override fun onName(text: String) = addViewModel.onName(text)
+        override fun onAddress(text: String) = addViewModel.onAddress(text)
+        override fun onAnswer(type: String, answer: FactAnswer) = addViewModel.onAnswer(type, answer)
+        override fun onCity() = addViewModel.onCitySheet(true)
+        override fun onOpenHours() = addViewModel.onOpenHours()
+        override fun onCloseHours() = addViewModel.onCloseHours()
+        override fun onDay(day: DayOfWeek) = addViewModel.onDay(day)
+        override fun onFrom(digits: String) = addViewModel.onFrom(digits)
+        override fun onTo(digits: String) = addViewModel.onTo(digits)
+        override fun onAddHours() = addViewModel.onAddHours()
+        override fun onRemoveHours(index: Int) = addViewModel.onRemoveHours(index)
+        override fun onSave() = addViewModel.onSave()
+        override fun onAnother() = addViewModel.onAnother()
+
+        override fun onShowOnMap() {
+            val saved = addViewModel.state.value.saved ?: return viewModel.onOverlay(PlacesOverlay.None)
+            viewModel.onShowPlace(saved.latitude, saved.longitude)
+        }
+    }
+
+    /** The city sheet over the form of a new place: it closes back to the form, not to the main screen. */
+    private val addCityActions = object : CityPickerActions {
+        override fun onSelect(city: CityUi) = cityViewModel.select(city)
+        override fun onDetect() = cityViewModel.detect()
+        override fun onRetry() = cityViewModel.retry()
+        override fun onClose() = addViewModel.onCitySheet(false)
     }
 
     private val cityActions = object : CityPickerActions {
@@ -146,6 +192,16 @@ class PointsListFragment : AbstractLocationFragment() {
                             viewModel.onOverlay(PlacesOverlay.None)
                             viewModel.reload()
                         }
+                    }
+
+                    PlacesOverlay.AddPlace -> {
+                        val add by addViewModel.state.collectAsStateWithLifecycle()
+                        val list by cityViewModel.list.collectAsStateWithLifecycle()
+                        val selected by cityViewModel.selected.collectAsStateWithLifecycle()
+                        val failed by cityViewModel.detectionFailed.collectAsStateWithLifecycle()
+                        BackHandler { addActions.onBack() }
+                        AddPlaceScreen(add, selected, addMapper, addActions)
+                        if (add.citySheet) CityPickerSheet(list, selected?.code, failed, addCityActions)
                     }
 
                     PlacesOverlay.None -> Unit

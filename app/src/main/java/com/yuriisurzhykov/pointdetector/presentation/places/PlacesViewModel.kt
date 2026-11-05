@@ -75,6 +75,12 @@ class PlacesViewModel @Inject constructor(
 
     fun onOverlay(overlay: PlacesOverlay) = mutableState.update { it.copy(overlay = overlay) }
 
+    /** Closes the sheet or the flow that lies over the screen and shows a place on the map, e.g. the one just added. */
+    fun onShowPlace(latitude: Double, longitude: Double) {
+        mutableState.update { it.copy(overlay = PlacesOverlay.None, camera = cameraAt(latitude, longitude)) }
+        reload()
+    }
+
     fun onCityChanged(city: CityUi?) {
         val changed = mutableState.value.city?.code != city?.code
         mutableState.update { it.copy(city = city) }

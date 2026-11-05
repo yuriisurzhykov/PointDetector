@@ -14,6 +14,14 @@ class AppointmentFactFactory @Inject constructor() : HelpFactFactory {
 
     override val type: String = "appointment"
 
+    override val question = HelpQuestion(
+        order = 0,
+        icon = PdIcons.Calendar,
+        label = PdStringText(R.string.help_appointment),
+        yes = PdStringText(R.string.help_appointment_required),
+        no = PdStringText(R.string.help_appointment_not_required),
+    )
+
     override fun item(fact: HelpFact): PdHelpItem = PdFactItem(
         icon = PdIcons.Calendar,
         label = PdStringText(R.string.help_appointment),
