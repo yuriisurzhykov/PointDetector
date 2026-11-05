@@ -1,6 +1,8 @@
 package com.yuriisurzhykov.pointdetector.presentation.main
 
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.presentation.add.AddPlaceMapper
+import com.yuriisurzhykov.pointdetector.presentation.messages.ToastMessages
 import com.yuriisurzhykov.pointdetector.presentation.places.PlaceCardMapper
 import com.yuriisurzhykov.pointdetector.presentation.places.PlaceStatusMapper
 import com.yuriisurzhykov.pointdetector.presentation.points.details.PlaceDetailsMapper
@@ -14,4 +16,6 @@ class UiDependencies @Inject constructor(
     val statuses: PlaceStatusMapper,
     val addMapper: AddPlaceMapper,
     val details: PlaceDetailsMapper,
+    val messages: AppMessages,
+    val toasts: ToastMessages,
 )

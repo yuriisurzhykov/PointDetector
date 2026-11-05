@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
+import com.yuriisurzhykov.pointdetector.domain.messages.postFavoriteChange
+import com.yuriisurzhykov.pointdetector.presentation.entities.FavoriteState
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.places.toggledFavorite
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +21,7 @@ import javax.inject.Inject
 class PointDetailsViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val favoritesApply: FavoritesApplyUseCase,
+    private val messages: AppMessages,
 ) : ViewModel() {
 
     private val mutablePoint = MutableStateFlow<PointUi?>(null)
@@ -33,6 +37,7 @@ class PointDetailsViewModel @Inject constructor(
     fun onFavorite() {
         val current = mutablePoint.value ?: return
         dispatchers.launchBackground(viewModelScope) { favoritesApply.applyFavorite(current) }
+        messages.postFavoriteChange(wasFavorite = current.favoriteState == FavoriteState.FavoriteEnabled)
         mutablePoint.update { it?.toggledFavorite() }
     }
 }

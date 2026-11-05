@@ -4,9 +4,13 @@ import com.yuriisurzhykov.foodbanks.domain.city.CityNotDetectedException
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessage
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -28,6 +32,8 @@ class AddPlaceViewModelTest {
     private val dispatchers = object : Dispatchers.Abstract(test, test) {}
     private val suggested = FakeSuggestions()
     private val saver = FakeSaver()
+    private val messages = AppMessages()
+    private val told = mutableListOf<AppMessage>()
     private lateinit var viewModel: AddPlaceViewModel
 
     private val capitol = Point("2210 Capitol Ave", LatLng(38.57, -121.47), "Capitol Pantry")
@@ -35,7 +41,8 @@ class AddPlaceViewModelTest {
     @Before
     fun setUp() {
         kotlinx.coroutines.Dispatchers.setMain(test)
-        viewModel = AddPlaceViewModel(suggested, saver, dispatchers)
+        CoroutineScope(test).launch { messages.events.collect { told += it } }
+        viewModel = AddPlaceViewModel(suggested, saver, dispatchers, messages)
     }
 
     @After
@@ -117,6 +124,7 @@ class AddPlaceViewModelTest {
         assertEquals(mapOf("appointment" to true), point.help)
         assertEquals(listOf("Mon"), point.workingHours.map { it.dayName })
         assertEquals(capitol.coordinates, point.coordinates)
+        assertEquals(listOf<AppMessage>(AppMessage.PlaceAdded("Capitol Pantry")), told)
     }
 
     @Test
@@ -140,6 +148,7 @@ class AddPlaceViewModelTest {
         viewModel.onSave()
 
         assertEquals(SaveProblem.AddressNotFound, viewModel.state.value.problem)
+        assertEquals(listOf<AppMessage>(AppMessage.PlaceNotSaved(AppMessage.PlaceNotSaved.Reason.AddressNotFound)), told)
         assertFalse(viewModel.state.value.saving)
         assertTrue(saver.saved.isEmpty())
     }
@@ -153,6 +162,7 @@ class AddPlaceViewModelTest {
         viewModel.onSave()
 
         assertEquals(SaveProblem.CityNotSelected, viewModel.state.value.problem)
+        assertEquals(listOf<AppMessage>(AppMessage.PlaceNotSaved(AppMessage.PlaceNotSaved.Reason.CityNotSelected)), told)
         assertEquals(AddStep.Details, viewModel.state.value.step)
         assertFalse(viewModel.state.value.saving)
     }

@@ -6,12 +6,15 @@ import com.yuriisurzhykov.foodbanks.domain.city.SelectedCityUseCase
 import com.yuriisurzhykov.foodbanks.domain.points.Point
 import com.yuriisurzhykov.foodbanks.domain.points.PointsListUseCase
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessage
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 interface FetchAllPointsUseCase {
@@ -26,13 +29,15 @@ interface FetchAllPointsUseCase {
     open class Base @Inject constructor(
         private val selectedCityUseCase: SelectedCityUseCase,
         private val pointsListUseCase: PointsListUseCase,
-        private val mapper: SuspendMapper<List<Point>, List<PointUi>>
+        private val mapper: SuspendMapper<List<Point>, List<PointUi>>,
+        private val messages: AppMessages
     ) : FetchAllPointsUseCase {
 
         override suspend fun fetchPoints(): Flow<List<PointUi>> = flow {
             if (hasCity()) {
                 emitAll(
                     pointsListUseCase.points()
+                        .onEach { tell(it) }
                         .mapNotNull { it.points() }
                         .map { mapper.map(it) }
                 )
@@ -47,6 +52,15 @@ interface FetchAllPointsUseCase {
                 true
             } catch (e: CityNotDetectedException) {
                 false
+            }
+        }
+
+        /** The cached points are shown either way; the person is told why the cloud did not answer. */
+        private fun tell(response: UseCaseResponse<List<Point>>) {
+            when (response) {
+                is UseCaseResponse.NoNetwork -> messages.post(AppMessage.NoConnection)
+                is UseCaseResponse.NetworkError -> messages.post(AppMessage.SyncFailed)
+                else -> Unit
             }
         }
 

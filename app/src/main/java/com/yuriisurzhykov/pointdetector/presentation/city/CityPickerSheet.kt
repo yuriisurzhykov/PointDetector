@@ -17,7 +17,6 @@ import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdTextRole
 import com.yuriisurzhykov.pointdetector.uicomponents.component.PdComponent
 import com.yuriisurzhykov.pointdetector.uicomponents.icons.PdIcons
 import com.yuriisurzhykov.pointdetector.uicomponents.molecules.fields.PdSearchField
-import com.yuriisurzhykov.pointdetector.uicomponents.molecules.notice.PdWarningNotice
 import com.yuriisurzhykov.pointdetector.uicomponents.molecules.rows.PdIconListRow
 import com.yuriisurzhykov.pointdetector.uicomponents.molecules.rows.PdSkeletonListRow
 import com.yuriisurzhykov.pointdetector.uicomponents.organisms.rows.PdBorderedRows
@@ -45,12 +44,11 @@ fun CityPickerSheet(
     list: CityListState,
     selectedCode: String?,
     automatic: Boolean,
-    detectionFailed: Boolean,
     actions: CityPickerActions,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
-    val body = remember(list, selectedCode, automatic, detectionFailed, query, actions) {
-        body(list, selectedCode, automatic, detectionFailed, query, actions) { query = it }
+    val body = remember(list, selectedCode, automatic, query, actions) {
+        body(list, selectedCode, automatic, query, actions) { query = it }
     }
     remember(body, actions) {
         PdModalSheet(
@@ -66,7 +64,6 @@ private fun body(
     list: CityListState,
     selectedCode: String?,
     automatic: Boolean,
-    detectionFailed: Boolean,
     query: String,
     actions: CityPickerActions,
     onQuery: (String) -> Unit,
@@ -81,7 +78,7 @@ private fun body(
     return when (list) {
         is CityListState.Loading -> listOf(search, PdBorderedRows(List(SKELETON_ROWS) { PdSkeletonListRow }))
         is CityListState.Failed -> listOf(search, PdLoadErrorPanel(PdStringText(R.string.message_cities_not_loaded), actions::onRetry))
-        is CityListState.Loaded -> loaded(search, list.cities, selectedCode, automatic, detectionFailed, query, actions)
+        is CityListState.Loaded -> loaded(search, list.cities, selectedCode, automatic, query, actions)
     }
 }
 
@@ -90,7 +87,6 @@ private fun loaded(
     cities: List<CityUi>,
     selectedCode: String?,
     automatic: Boolean,
-    detectionFailed: Boolean,
     query: String,
     actions: CityPickerActions,
 ): List<PdComponent> {
@@ -109,7 +105,6 @@ private fun loaded(
     )
     val shown = CityRows.matching(cities, query)
     val result = mutableListOf(search, PdBorderedRows(listOf(auto)))
-    if (detectionFailed) result += PdWarningNotice(PdIcons.Warning, PdStringText(R.string.city_auto_failed))
     result += if (shown.isEmpty()) {
         PdPlainText(PdStringText(R.string.city_no_matches), PdTextRole.BodyMedium, PdContentTone.Secondary)
     } else {

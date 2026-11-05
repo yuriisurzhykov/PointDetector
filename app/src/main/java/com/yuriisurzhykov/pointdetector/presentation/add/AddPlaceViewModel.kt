@@ -6,6 +6,8 @@ import com.yuriisurzhykov.foodbanks.domain.city.CityNotDetectedException
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.data.cache.entities.LatLng
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessage
+import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,7 @@ class AddPlaceViewModel @Inject constructor(
     private val suggestedPlaces: SuggestedPlacesUseCase,
     private val savePoint: SavePointUseCase,
     private val dispatchers: Dispatchers,
+    private val messages: AppMessages,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow(AddPlaceState())
@@ -130,6 +133,7 @@ class AddPlaceViewModel @Inject constructor(
         )
         try {
             savePoint.save(point)
+            messages.post(AppMessage.PlaceAdded(current.name))
             mutableState.update {
                 it.copy(
                     step = AddStep.Done,
@@ -151,7 +155,16 @@ class AddPlaceViewModel @Inject constructor(
         return suggestedPlaces.getSuggestedPlaces(current.address).firstOrNull()?.coordinates
     }
 
-    private fun fail(problem: SaveProblem) = mutableState.update { it.copy(saving = false, problem = problem) }
+    private fun fail(problem: SaveProblem) {
+        messages.post(AppMessage.PlaceNotSaved(problem.toReason()))
+        mutableState.update { it.copy(saving = false, problem = problem) }
+    }
+
+    private fun SaveProblem.toReason() = when (this) {
+        SaveProblem.CityNotSelected -> AppMessage.PlaceNotSaved.Reason.CityNotSelected
+        SaveProblem.AddressNotFound -> AppMessage.PlaceNotSaved.Reason.AddressNotFound
+        SaveProblem.Failed -> AppMessage.PlaceNotSaved.Reason.Failed
+    }
 
     private fun updateDraft(change: (HoursDraft) -> HoursDraft) =
         mutableState.update { current -> current.draft?.let { current.copy(draft = change(it)) } ?: current }
