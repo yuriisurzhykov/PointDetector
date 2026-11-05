@@ -49,8 +49,10 @@ cities
             ├── placeName       required
             ├── address         required, unique inside of the city
             ├── coordinates     required {lat, lng}
-            └── workingHours    list or keyed object, optional
-                └── (hour)      dayName, dayValue, hoursFrom, hoursTo, all required
+            ├── workingHours    list or keyed object, optional
+            │   └── (hour)      dayName, dayValue, hoursFrom, hoursTo, all required
+            └── help            object, optional: fact type -> true / false
+                                e.g. { "appointment": true, "documents": false }
 ```
 
 ## Rules the app relies on
@@ -63,4 +65,9 @@ cities
   point (favorites stay), a new address is a new point. Points removed from the cloud are not
   removed from the devices that already cached them.
 - A point has no city code, it takes it from the city it is in.
+- `help` answers "how to get help". Today the types are `appointment` (an appointment is
+  required) and `documents` (documents are required). A type that is missing means "not
+  known" and the app shows nothing for it; do not write `false` when you do not know. A value
+  that is not `true` / `false` is ignored, and so is a type the app has no text for yet, so a
+  new type can be added to the data before the app learns it.
 - Fields that are not listed (`distance`, `isPointAvailable` from `sample1.json`) are ignored.
