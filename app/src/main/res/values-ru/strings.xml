@@ -98,4 +98,12 @@
     <string name="place_minutes">%1$s мин</string>
     <string name="place_hours_minutes">%1$s ч %2$s мин</string>
     <string name="place_hours_only">%1$s ч</string>
+    <string name="sheet_close">Закрыть</string>
+    <string name="city_search_hint">Найти город</string>
+    <string name="city_auto">Определить автоматически</string>
+    <string name="city_auto_hint">По вашей геолокации</string>
+    <string name="city_auto_failed">Не удалось определить город. Включите геолокацию или выберите город из списка.</string>
+    <string name="city_no_matches">Города с таким названием нет</string>
+    <string name="filters_reset">Сбросить</string>
+    <string name="filters_sort_name_hint">От А до Я</string>
 </resources>

@@ -93,4 +93,12 @@
     <string name="place_minutes">%1$s хв</string>
     <string name="place_hours_minutes">%1$s год %2$s хв</string>
     <string name="place_hours_only">%1$s год</string>
+    <string name="sheet_close">Закрити</string>
+    <string name="city_search_hint">Знайти місто</string>
+    <string name="city_auto">Визначити автоматично</string>
+    <string name="city_auto_hint">За вашою геолокацією</string>
+    <string name="city_auto_failed">Не вдалося визначити місто. Увімкніть геолокацію або оберіть місто зі списку.</string>
+    <string name="city_no_matches">Міста з такою назвою немає</string>
+    <string name="filters_reset">Скинути</string>
+    <string name="filters_sort_name_hint">Від А до Я</string>
 </resources>

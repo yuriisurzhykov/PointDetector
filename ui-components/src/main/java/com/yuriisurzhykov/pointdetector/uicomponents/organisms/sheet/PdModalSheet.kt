@@ -49,6 +49,7 @@ class PdModalSheet(
     private val onClose: () -> Unit,
     private val content: PdComponent,
     private val footer: PdComponent = PdNoComponent,
+    private val action: PdComponent = PdNoComponent,
 ) : PdBaseComponent(), PdBottomSheet {
 
     @Composable
@@ -96,7 +97,10 @@ class PdModalSheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     PdBasicText(title, PdTextRole.HeadingSmall.style(), colors.content.primary, Modifier.weight(1f), maxLines = 1)
-                    PdFlatIconButton(PdIcons.Close, closeDescription, onClose).Content(Modifier)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        action.Content(Modifier)
+                        PdFlatIconButton(PdIcons.Close, closeDescription, onClose).Content(Modifier)
+                    }
                 }
                 Box(Modifier.weight(1f, fill = false)) { content.Content(Modifier) }
                 footer.Content(Modifier)

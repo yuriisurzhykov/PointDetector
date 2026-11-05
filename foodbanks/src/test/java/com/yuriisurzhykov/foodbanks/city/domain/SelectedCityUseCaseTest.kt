@@ -124,6 +124,25 @@ class SelectedCityUseCaseTest {
         assertTrue(failure is CityNotDetectedException)
     }
 
+    @Test
+    fun `test detecting by hand replaces the chosen city with the one where the user is`(): Unit = runBlocking {
+        preference.value = oakland.nameCode
+
+        assertEquals(sacramento.nameCode, useCase.detect().code())
+        assertEquals(sacramento.nameCode, preference.value)
+    }
+
+    @Test
+    fun `test failed detecting by hand keeps the chosen city`(): Unit = runBlocking {
+        preference.value = oakland.nameCode
+        location.location = null
+
+        val failure = runCatching { useCase.detect() }.exceptionOrNull()
+
+        assertTrue(failure is CityNotDetectedException)
+        assertEquals(oakland.nameCode, preference.value)
+    }
+
     private fun createUseCase(): SelectedCityUseCase {
         val detector = CityDetector.Base(
             location, geocoder, cache, repository, CityMatcher.Base(DistanceCalculator.Base())

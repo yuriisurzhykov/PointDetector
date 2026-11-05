@@ -1,48 +1,70 @@
 package com.yuriisurzhykov.pointdetector.presentation.permissions
 
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.yuriisurzhykov.pointdetector.R
-import com.yuriisurzhykov.pointdetector.core.TAG
+import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 
-class PermissionDenialFragment : AbstractPermissionFragment(R.layout.fragment_info) {
+/**
+ * Shown over a screen that needs the permissions after they were refused: the same page as on
+ * the first start. It asks again, or leads to the settings once the system stops asking.
+ */
+class PermissionDenialFragment : AbstractPermissionFragment() {
 
-    private var dataSource: PermissionResourceManager? = null
+    private var step by mutableStateOf(PermissionStep.Request)
 
-    override fun getPermissionsArray(): Array<String> {
-        return dataSource?.getPermissionsArray()!!
+    private val actions = object : PermissionActions {
+        override fun onGrant() = requestPermissions()
+        override fun onOpenSettings() = openSettingsScreen()
+        override fun onContinue() = removeCurrentFragment()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val context = view.context
-        view.findViewById<TextView>(R.id.title).text = dataSource?.getInfoTitle(context)
-        view.findViewById<TextView>(R.id.rationale).text = dataSource?.getDescriptionRationaleText(context)
-        view.findViewById<ImageView>(R.id.image)
-            .setImageDrawable(dataSource?.getInfoImage(context))
-        with(view.findViewById<Button>(R.id.retry)) {
-            text = dataSource?.getRetryButtonText(context)
-            setOnClickListener { requestPermissions() }
+    override fun getPermissionsArray(): Array<String> = requireArguments().getStringArray(ARG_PERMISSIONS)?.copyOf() ?: emptyArray()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            PdTheme { PermissionScreen(step, actions) }
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        toolbar()?.visibility = View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        toolbar()?.visibility = View.VISIBLE
+    }
+
     override fun onPermissionsGranted() {
-        dataSource?.onPermissionsGranted()
+        removeCurrentFragment()
     }
 
     override fun onPermissionsDenied(shouldShowRationale: Boolean) {
-        Log.e(TAG, "onPermissionsDenied: ")
+        step = PermissionStep.afterDenial(shouldShowRationale)
     }
 
+    /** The page draws its own bars under the system ones, so the shared toolbar is hidden. */
+    private fun toolbar(): View? = activity?.findViewById(R.id.toolbar)
+
     companion object {
-        fun newInstance(source: PermissionResourceManager): PermissionDenialFragment {
-            val fragment = PermissionDenialFragment()
-            fragment.dataSource = source
-            return fragment
+        private const val ARG_PERMISSIONS = "permissions"
+
+        fun newInstance(permissions: Array<String>) = PermissionDenialFragment().apply {
+            arguments = Bundle().apply { putStringArray(ARG_PERMISSIONS, permissions) }
         }
     }
 }
