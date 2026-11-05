@@ -3,6 +3,7 @@ package com.yuriisurzhykov.pointdetector.uicomponents.organisms.help
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ class PdHelpList(
             PdBasicText(title, PdTextRole.TitleMedium.style(), PdTheme.colors.content.secondary)
             Column(
                 Modifier
+                    .fillMaxWidth()
                     .clip(shape)
                     .border(PdTheme.dimensions.stroke.thin, PdTheme.colors.divider, shape),
             ) {
