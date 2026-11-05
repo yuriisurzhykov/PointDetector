@@ -73,9 +73,13 @@ class FavoriteSwipeCallback(
         favoriteIcon.draw(canvas)
     }
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder) = 1f
-
-    override fun getSwipeVelocityThreshold(defaultValue: Float) = 0f
-
-    override fun getSwipeEscapeVelocity(defaultValue: Float) = defaultValue * 10
+    /**
+     * The swipe is done when the item is dragged as far as the vibration says it is, no matter
+     * how fast. The speed thresholds are the defaults, so a quick fling works as well.
+     */
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
+        val width = viewHolder.itemView.width
+        if (width == 0) return super.getSwipeThreshold(viewHolder)
+        return (maxFavoriteSwipeThreshold.toFloat() / width).coerceAtMost(1f)
+    }
 }
