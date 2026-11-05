@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
@@ -26,6 +27,18 @@ abstract class PdBaseStatusLine(
 
     @Composable
     protected open fun ColumnScope.Hint() = Unit
+
+    /** A secondary line under the title, aligned with the title text and not with the mark. */
+    @Composable
+    protected fun ColumnScope.HintText(hint: PdTextResolver) {
+        val dimensions = PdTheme.dimensions
+        PdBasicText(
+            text = hint,
+            style = PdTextRole.BodySmall.style(),
+            color = PdTheme.colors.content.secondary,
+            modifier = Modifier.padding(start = dimensions.component.statusMarkSize + dimensions.spacing.small),
+        )
+    }
 
     @Composable
     final override fun Render(modifier: Modifier) {

@@ -25,4 +25,10 @@ data class ComponentDimensions(
     val burstDistance: Dp,
     val toastMinHeight: Dp,
     val toastSwipeThreshold: Dp,
+    val timelineHeight: Dp,
+    val timelineTrackTop: Dp,
+    val timelineTrackHeight: Dp,
+    val timelineLineTop: Dp,
+    val timelineKnobSize: Dp,
+    val timelineKnobStroke: Dp,
 )

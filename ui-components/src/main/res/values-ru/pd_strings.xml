@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pd_status_open_until">Открыто до %1$s</string>
+    <string name="pd_status_closing_soon">Закроется через %1$s мин</string>
+    <string name="pd_status_closed">Закрыто</string>
+    <string name="pd_status_opens_today">Откроется сегодня в %1$s</string>
+    <string name="pd_status_next">Ближайшее: %1$s %2$s</string>
+    <string name="pd_status_unknown">Часы не указаны</string>
+    <string name="pd_hours_range">%1$s – %2$s</string>
+    <string name="pd_day_off">Выходной</string>
+    <string name="pd_open_all_day">Круглосуточно</string>
+    <string name="pd_today_format">%1$s · сегодня</string>
+    <string name="pd_hours_description">Часы работы: %1$s</string>
+    <string name="pd_hours_now_description">Время суток: %1$s</string>
+</resources>

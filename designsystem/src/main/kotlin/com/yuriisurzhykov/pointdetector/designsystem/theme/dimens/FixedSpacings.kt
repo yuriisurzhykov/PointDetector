@@ -46,4 +46,10 @@ internal val FixedComponentDimensions = ComponentDimensions(
     burstDistance = 21.dp,
     toastMinHeight = 48.dp,
     toastSwipeThreshold = 56.dp,
+    timelineHeight = 60.dp,
+    timelineTrackTop = 30.dp,
+    timelineTrackHeight = 12.dp,
+    timelineLineTop = 20.dp,
+    timelineKnobSize = 12.dp,
+    timelineKnobStroke = 3.dp,
 )
