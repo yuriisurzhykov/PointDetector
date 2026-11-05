@@ -15,4 +15,14 @@
     <string name="pd_sheet_handle">Изменить высоту списка</string>
     <string name="pd_sheet_expand">Развернуть список</string>
     <string name="pd_sheet_collapse">Свернуть список</string>
+    <string name="pd_retry">Повторить</string>
+    <string name="pd_empty_places_title">Здесь пока ничего нет</string>
+    <string name="pd_empty_places_message">В выбранном городе нет мест. Добавьте первое или выберите другой город.</string>
+    <string name="pd_empty_places_add">Добавить новую запись</string>
+    <string name="pd_empty_places_city">Выбрать город</string>
+    <string name="pd_empty_favorites_title">В избранном пока пусто</string>
+    <string name="pd_empty_favorites_message">Нажмите на сердце у места, и оно появится здесь.</string>
+    <string name="pd_empty_matches_title">Ничего не найдено по запросу «%1$s»</string>
+    <string name="pd_empty_matches_message">Проверьте написание или добавьте место вручную.</string>
+    <string name="pd_offline_notice">Нет подключения. Показаны сохранённые места.</string>
 </resources>

@@ -16,4 +16,14 @@
     <string name="pd_sheet_handle">Change list height</string>
     <string name="pd_sheet_expand">Expand the list</string>
     <string name="pd_sheet_collapse">Collapse the list</string>
+    <string name="pd_retry">Retry</string>
+    <string name="pd_empty_places_title">Nothing here yet</string>
+    <string name="pd_empty_places_message">There are no places in the selected city. Add the first one or choose another city.</string>
+    <string name="pd_empty_places_add">Add a new place</string>
+    <string name="pd_empty_places_city">Choose a city</string>
+    <string name="pd_empty_favorites_title">No favorites yet</string>
+    <string name="pd_empty_favorites_message">Tap the heart on a place and it will appear here.</string>
+    <string name="pd_empty_matches_title">Nothing found for “%1$s”</string>
+    <string name="pd_empty_matches_message">Check the spelling or add the place yourself.</string>
+    <string name="pd_offline_notice">No connection. Showing saved places.</string>
 </resources>
