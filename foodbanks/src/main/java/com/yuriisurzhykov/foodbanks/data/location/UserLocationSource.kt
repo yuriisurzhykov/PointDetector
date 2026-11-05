@@ -1,0 +1,46 @@
+package com.yuriisurzhykov.foodbanks.data.location
+
+import android.annotation.SuppressLint
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.yuriisurzhykov.foodbanks.data.point.LatLng
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+
+interface UserLocationSource {
+
+    @kotlin.jvm.Throws(LocationUnavailableException::class)
+    suspend fun location(): LatLng
+
+    /**
+     * The city is a coarse value, so the last known location is good enough and is much
+     * faster than waiting for a fresh one.
+     */
+    abstract class Abstract(
+        private val locationClient: FusedLocationProviderClient
+    ) : UserLocationSource {
+
+        @SuppressLint("MissingPermission")
+        override suspend fun location(): LatLng {
+            try {
+                val location = locationClient.lastLocation.await()
+                    ?: locationClient.getCurrentLocation(
+                        Priority.PRIORITY_BALANCED_POWER_ACCURACY, null
+                    ).await()
+                    ?: throw LocationUnavailableException("there is no known location")
+                return LatLng(location.latitude, location.longitude)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: LocationUnavailableException) {
+                throw e
+            } catch (e: Exception) {
+                throw LocationUnavailableException(e.toString(), e)
+            }
+        }
+    }
+
+    class Base @Inject constructor(
+        locationClient: FusedLocationProviderClient
+    ) : Abstract(locationClient)
+}
