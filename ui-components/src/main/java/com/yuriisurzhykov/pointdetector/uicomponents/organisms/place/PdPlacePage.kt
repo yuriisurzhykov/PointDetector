@@ -60,7 +60,7 @@ class PdPlacePage(
                         ),
                     verticalArrangement = Arrangement.spacedBy(spacing.xLarge),
                 ) {
-                    sections.forEachIndexed { index, section -> section.Content(Modifier.pdRiseIn(index)) }
+                    sections.forEachIndexed { index, section -> section.Content(Modifier.fillMaxWidth().pdRiseIn(index)) }
                 }
             }
             Column(Modifier.align(Alignment.BottomCenter).zIndex(2f)) {

@@ -9,7 +9,19 @@ import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.presentation.places.PlaceStatusMapper
 import com.yuriisurzhykov.pointdetector.presentation.places.PlacesClock
 import com.yuriisurzhykov.pointdetector.presentation.places.help.HelpSectionMapper
+import com.yuriisurzhykov.pointdetector.designsystem.theme.color.semantic.PdContentTone
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.icons.PdDecorativeIcon
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdPlainText
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.texts.PdTextRole
 import com.yuriisurzhykov.pointdetector.uicomponents.component.PdComponent
+import com.yuriisurzhykov.pointdetector.uicomponents.component.PdNoComponent
+import com.yuriisurzhykov.pointdetector.uicomponents.icons.PdIcons
+import com.yuriisurzhykov.pointdetector.uicomponents.molecules.buttons.PdDangerButton
+import com.yuriisurzhykov.pointdetector.uicomponents.molecules.buttons.PdOutlineButton
+import com.yuriisurzhykov.pointdetector.uicomponents.molecules.layout.PdStack
+import com.yuriisurzhykov.pointdetector.uicomponents.organisms.sheet.PdModalSheet
+import com.yuriisurzhykov.pointdetector.uicomponents.organisms.sheet.PdSheetBody
+import com.yuriisurzhykov.pointdetector.uicomponents.organisms.sheet.PdSheetFooter
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PlaceStatus
 import com.yuriisurzhykov.pointdetector.uicomponents.model.hours.PdScrub
 import com.yuriisurzhykov.pointdetector.uicomponents.molecules.place.PdPlaceHeader
@@ -30,7 +42,8 @@ class PlaceDetailsMapper @Inject constructor(
 
     private val resolver = StandingResolver()
 
-    fun sections(point: PointUi, clock: PlacesClock, scrub: PdScrub): List<PdComponent> {
+    /** The blocks of the place; [onDelete] is the delete button, which only a place of the person has. */
+    fun sections(point: PointUi, clock: PlacesClock, scrub: PdScrub, onDelete: () -> Unit): List<PdComponent> {
         val intervals = intervals(point)
         val standing = standing(intervals, clock)
         val todays = intervals.filter { it.day == clock.day }
@@ -42,8 +55,31 @@ class PlaceDetailsMapper @Inject constructor(
                 content = week.schedule(intervals, clock.day, statuses.status(standing)),
             ),
             help.map(point.help),
+            if (point.isUserPoint) {
+                PdOutlineButton(PdStringText(R.string.place_delete), PdDecorativeIcon(PdIcons.Delete), onDelete)
+            } else {
+                PdNoComponent
+            },
         )
     }
+
+    /** The question before a place is deleted: it cannot be taken back. */
+    fun confirmDelete(point: PointUi, onConfirm: () -> Unit, onCancel: () -> Unit): PdComponent = PdModalSheet(
+        title = PdStringText(R.string.place_delete_title),
+        closeDescription = PdStringText(R.string.sheet_close),
+        onClose = onCancel,
+        content = PdSheetBody(
+            listOf(PdPlainText(PdStringText(R.string.place_delete_message, listOf(PdLiteralText(point.placeName))), PdTextRole.BodyMedium, PdContentTone.Secondary)),
+        ),
+        footer = PdSheetFooter(
+            PdStack(
+                listOf(
+                    PdDangerButton(PdStringText(R.string.place_delete_confirm), PdDecorativeIcon(PdIcons.Delete), onConfirm),
+                    PdOutlineButton(PdStringText(R.string.place_delete_cancel), onClick = onCancel),
+                ),
+            ),
+        ),
+    )
 
     /** The colour state of the place at [clock]; the marker on the hero map uses it. */
     fun status(point: PointUi, clock: PlacesClock): PlaceStatus =

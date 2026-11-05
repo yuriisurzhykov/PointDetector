@@ -33,6 +33,12 @@ class ToastMessagesTest {
     }
 
     @Test
+    fun `test a deleted place is a success and one that stayed is an error`() {
+        assertEquals(ToastType.Success, typeOf(AppMessage.PlaceDeleted))
+        assertEquals(ToastType.Error, typeOf(AppMessage.PlaceNotDeleted))
+    }
+
+    @Test
     fun `test the heart and a city that was not found are quiet`() {
         assertEquals(ToastType.Info, typeOf(AppMessage.FavoriteAdded))
         assertEquals(ToastType.Info, typeOf(AppMessage.FavoriteRemoved))
@@ -44,7 +50,7 @@ class ToastMessagesTest {
         val messages = listOf(
             AppMessage.NoConnection, AppMessage.SyncFailed, AppMessage.PlaceAdded("A"),
             AppMessage.PlaceNotSaved(Reason.Failed), AppMessage.FavoriteAdded, AppMessage.FavoriteRemoved,
-            AppMessage.CityNotDetected,
+            AppMessage.CityNotDetected, AppMessage.PlaceDeleted, AppMessage.PlaceNotDeleted,
         )
 
         messages.forEach { assertTrue("$it", toasts.toast(it).duration is ToastDuration.Timed) }

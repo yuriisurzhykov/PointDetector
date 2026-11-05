@@ -25,6 +25,8 @@ class ToastMessages @Inject constructor() {
         is AppMessage.SyncFailed -> toast(ToastType.Warning, R.string.toast_sync_failed, LONG)
         is AppMessage.PlaceAdded -> toast(ToastType.Success, R.string.label_point_successfully_created, LONG)
         is AppMessage.PlaceNotSaved -> toast(ToastType.Error, reason(message.reason), LONG)
+        is AppMessage.PlaceDeleted -> toast(ToastType.Success, R.string.toast_place_deleted, SHORT)
+        is AppMessage.PlaceNotDeleted -> toast(ToastType.Error, R.string.toast_place_not_deleted, LONG)
         is AppMessage.FavoriteAdded -> toast(ToastType.Info, R.string.toast_favorite_added, SHORT)
         is AppMessage.FavoriteRemoved -> toast(ToastType.Info, R.string.toast_favorite_removed, SHORT)
         is AppMessage.CityNotDetected -> toast(ToastType.Warning, R.string.city_auto_failed, LONG)

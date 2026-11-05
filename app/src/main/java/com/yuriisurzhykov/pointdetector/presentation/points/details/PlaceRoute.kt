@@ -7,6 +7,9 @@ import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,11 +32,17 @@ fun PlaceRoute(
     LaunchedEffect(point.id) { viewModel.show(point) }
     val current by viewModel.point.collectAsStateWithLifecycle()
     val shown = current ?: point
-    val actions = remember(viewModel, onBack, context) { placeActions(context, viewModel, onBack) }
-    PlaceScreen(shown, actions, ui.mapFactory, ui.details)
+    var deleting by rememberSaveable { mutableStateOf(false) }
+    val actions = remember(viewModel, onBack, context) { placeActions(context, viewModel, onBack) { deleting = it } }
+    PlaceScreen(shown, actions, ui.mapFactory, ui.details, deleting)
 }
 
-private fun placeActions(context: Context, viewModel: PointDetailsViewModel, onBack: () -> Unit) = object : PlaceDetailsActions {
+private fun placeActions(
+    context: Context,
+    viewModel: PointDetailsViewModel,
+    onBack: () -> Unit,
+    deleting: (Boolean) -> Unit,
+) = object : PlaceDetailsActions {
 
     override fun onBack() = onBack()
 
@@ -54,6 +63,16 @@ private fun placeActions(context: Context, viewModel: PointDetailsViewModel, onB
     }
 
     override fun onFavorite() = viewModel.onFavorite()
+
+    override fun onDelete() = deleting(true)
+
+    override fun onDeleteCancel() = deleting(false)
+
+    /** The place is gone: the screen closes itself, the list reloads and the person is told. */
+    override fun onDeleteConfirm() {
+        deleting(false)
+        viewModel.delete(onDeleted = onBack)
+    }
 
     /** There may be no app that can show a route or share text; that is not a reason to crash. */
     private fun startSafely(intent: Intent) {

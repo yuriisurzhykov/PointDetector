@@ -16,6 +16,7 @@ import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
 import com.yuriisurzhykov.pointdetector.domain.messages.AppMessages
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
+import com.yuriisurzhykov.pointdetector.domain.usecase.RemoveUserPointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.GeoDecodeUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
@@ -42,6 +43,12 @@ object UseCaseModule {
         messages: AppMessages,
     ): FetchAllPointsUseCase {
         return FetchAllPointsUseCase.Base(selectedCityUseCase, pointsListUseCase, mapper, messages)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoveUserPointUseCase(userPointsUseCase: UserPointsUseCase): RemoveUserPointUseCase {
+        return RemoveUserPointUseCase.Base(userPointsUseCase)
     }
 
     @Provides

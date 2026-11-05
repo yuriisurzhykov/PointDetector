@@ -27,6 +27,10 @@ sealed interface AppMessage {
         enum class Reason { CityNotSelected, AddressNotFound, Failed }
     }
 
+    data object PlaceDeleted : AppMessage
+
+    data object PlaceNotDeleted : AppMessage
+
     data object FavoriteAdded : AppMessage
 
     data object FavoriteRemoved : AppMessage
