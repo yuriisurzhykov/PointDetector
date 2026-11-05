@@ -20,7 +20,8 @@ If the user sends their own reference path, read it before writing code: the pri
 2. Modules: `:designsystem` (the theme and all components, depends on nothing), `:toast` (depends only on `:designsystem`), `:konsist` (JVM tests of the rules).
 3. Theme → base layer (interfaces, resolvers, models) → atoms → molecules → organisms → toasts → rules → documentation. Compile after each block.
 4. Rules and tests are written together with the code, not after. Mutation check: temporarily put `16.dp` into a component, the test must fail, then revert.
-5. All changes in a worktree, commits in Conventional Commits without `Co-Authored-By` (as in the project's CLAUDE.md).
+5. Every component gets a preview in the `src/debug` source set of its module (section 10, "Previews") in the same change as the component.
+6. All changes in a worktree, commits in Conventional Commits without `Co-Authored-By` (as in the project's CLAUDE.md).
 
 ## 1. Theme: the `<Name>Theme` object
 
@@ -216,6 +217,14 @@ Growing metrics: `interfaces`, `implementations`, `abstractBases` (from `metrics
 
 ## 10. Pitfalls (learned in practice)
 
+### Previews
+
+- One `@PdPreviews` function per component class (annotation = Light, Dark, Large font at 360 dp), in `preview/<level>/`, wrapped in `PdPreviewFrame` (theme, background, padding). A component with several states shows them together; a component with behaviour is interactive: keep the state in `remember { mutableStateOf(...) }` and pass real callbacks, so "Interactive mode" in Android Studio works.
+- Show what makes each class different: Null Objects next to the neighbour that proves they take no space, a state class next to the plain class it replaces (`PdLoadingButton` vs `PdPrimaryButton`).
+- Previews use English sample texts and the same rules as the design system; `LazyColumn` in a preview needs a fixed height.
+
+### Other pitfalls
+
 - `internal abstract fun` in a public base class makes it non-extendable outside the module. If the scaffold must be extended from other modules, make the hooks `protected`.
 - `@get:[Composable ReadOnlyComposable]` needs the same annotations on the getter in a `data object`.
 - A `Float` with `alpha =` and a digit right after `=` is caught by the rule; put the value into a named constant or a token.
@@ -223,7 +232,8 @@ Growing metrics: `interfaces`, `implementations`, `abstractBases` (from `metrics
 - The `HapticFeedbackType.Confirm/Reject/ToggleOn/ToggleOff/SegmentTick` types depend on the Compose BOM version, check by compiling.
 - `buildAnnotatedString` in `PdEmphasisText` loses spans if the result is passed as an argument to `stringResource(formatArgs)`: arguments are converted to a string.
 - The project's real fonts are wired in as a separate step; until then `FontFamily.Default` is used, and the `headings` token lets you change the heading font without touching the text.
-- Visual checks (Preview / screenshot tests for every implementation, day and night, fontScale 2.0) are added as a separate layer: Roborazzi or Paparazzi.
+- Previews are `src/debug` only. `ui-tooling` and `ui-tooling-preview` are `debugImplementation`, strings that previews need go to `src/debug/res`, and a debug source set is not shared between modules, so `:toast` repeats the small `@ToastPreviews` annotation and frame.
+- Screenshot tests for every implementation (day and night, fontScale 2.0) are a separate layer: Roborazzi or Paparazzi.
 
 ## 11. How to create a new design system (checklist)
 

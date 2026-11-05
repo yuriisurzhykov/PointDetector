@@ -73,6 +73,8 @@ Commands:
 ./gradlew :konsist:test            # architecture rules + metrics report (hardcodedTokens, nullableStructures, interfaces, …)
 ```
 
+**Previews.** Every component has a `@PdPreviews` preview (light, dark, large font) in the `src/debug` source set of its module, never in `src/main`: `designsystem/src/debug/.../preview/{atoms,molecules,organisms,resolver}` and `toast/src/debug/.../toast/preview`. Open a file in Android Studio and switch a card to "Interactive mode" to click, toggle and swipe the component. Preview-only dependencies (`ui-tooling`) are `debugImplementation`, and sample strings live in `designsystem/src/debug/res`, so release builds contain none of it. A new component is not done until it has a preview.
+
 ### Room schemas
 
 `CacheDatabase` (version 3, `autoMigrations` 2→3 plus a `MigrationV1ToV2Spec`) exports schemas to `app/schemas/`; `FoodbankDatabase` to `foodbanks/room-schemas/`. Schema JSONs are tracked in git — when changing an entity, bump the version, add a migration, and commit the regenerated JSON.
