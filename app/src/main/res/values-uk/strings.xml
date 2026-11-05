@@ -105,4 +105,11 @@
     <string name="toast_sync_failed">Не вдалося оновити місця. Показано збережені.</string>
     <string name="toast_favorite_added">Додано до обраного</string>
     <string name="toast_favorite_removed">Прибрано з обраного</string>
+    <string name="place_delete">Видалити це місце</string>
+    <string name="place_delete_title">Видалити місце?</string>
+    <string name="place_delete_message">«%1$s» додано вами. Його буде видалено з ваших місць і з обраного. Це не можна скасувати.</string>
+    <string name="place_delete_confirm">Видалити</string>
+    <string name="place_delete_cancel">Скасувати</string>
+    <string name="toast_place_deleted">Місце видалено</string>
+    <string name="toast_place_not_deleted">Не вдалося видалити місце. Спробуйте ще раз.</string>
 </resources>

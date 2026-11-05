@@ -6,4 +6,9 @@ interface PlaceDetailsActions {
     fun onShare()
     fun onRoute()
     fun onFavorite()
+
+    /** The person asks to delete the place: the screen asks to confirm. */
+    fun onDelete()
+    fun onDeleteConfirm()
+    fun onDeleteCancel()
 }

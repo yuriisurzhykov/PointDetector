@@ -47,6 +47,13 @@ object PdIcons {
     val Plus: PdDrawableResolver = strokeIcon("Plus", "M12 5v14M5 12h14")
     val Chevron: PdDrawableResolver = strokeIcon("Chevron", "M9 5l7 7-7 7")
     val Clock: PdDrawableResolver = strokeIcon("Clock", CIRCLE, "M12 7v5l3 2")
+    val Delete: PdDrawableResolver = strokeIcon(
+        "Delete",
+        "M4 7h16",
+        "M9 7V4.5h6V7",
+        "M6 7l1 12.2a1.8 1.8 0 0 0 1.8 1.8h6.4a1.8 1.8 0 0 0 1.8-1.8L18 7",
+        "M10 11v6M14 11v6",
+    )
     val WifiOff: PdDrawableResolver = strokeIcon(
         "WifiOff",
         "M3 3l18 18",

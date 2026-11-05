@@ -107,4 +107,11 @@
     <string name="toast_sync_failed">Could not update the places. Showing the saved ones.</string>
     <string name="toast_favorite_added">Added to favorites</string>
     <string name="toast_favorite_removed">Removed from favorites</string>
+    <string name="place_delete">Delete this place</string>
+    <string name="place_delete_title">Delete the place?</string>
+    <string name="place_delete_message">“%1$s” was added by you. It will be removed from your places and from the favorites. This cannot be undone.</string>
+    <string name="place_delete_confirm">Delete</string>
+    <string name="place_delete_cancel">Cancel</string>
+    <string name="toast_place_deleted">The place was deleted</string>
+    <string name="toast_place_not_deleted">Could not delete the place. Try again.</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.yuriisurzhykov.pointdetector.presentation.points.details
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +46,7 @@ fun PlaceScreen(
     actions: PlaceDetailsActions,
     mapFactory: PdMapFactory,
     mapper: PlaceDetailsMapper,
+    deleting: Boolean = false,
     clock: PlacesClock = rememberPlacesClock(),
 ) {
     var scrubMinute by rememberSaveable { mutableStateOf(NOT_SCRUBBED) }
@@ -51,7 +54,7 @@ fun PlaceScreen(
         if (scrubMinute == NOT_SCRUBBED) clock else PlacesClock(clock.day, scrubMinute)
     }
     val scrub = remember { PdScrubTo { fraction -> scrubMinute = AxisTime.minuteOf(fraction) } }
-    val sections = remember(point, shown, scrub) { mapper.sections(point, shown, scrub) }
+    val sections = remember(point, shown, scrub, actions) { mapper.sections(point, shown, scrub, actions::onDelete) }
 
     val status = remember(point, clock) { mapper.status(point, clock) }
     val hero = remember(point.id, status) {
@@ -76,7 +79,13 @@ fun PlaceScreen(
             ),
         )
     }
-    PdPlacePage(hero, sections, bar).Content(Modifier)
+    val confirm = remember(point, deleting, actions) {
+        if (deleting) mapper.confirmDelete(point, actions::onDeleteConfirm, actions::onDeleteCancel) else null
+    }
+    Box(Modifier.fillMaxSize()) {
+        PdPlacePage(hero, sections, bar).Content(Modifier)
+        confirm?.Content(Modifier)
+    }
 }
 
 private const val NOT_SCRUBBED = -1

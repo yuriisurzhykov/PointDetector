@@ -110,4 +110,11 @@
     <string name="toast_sync_failed">Не удалось обновить места. Показаны сохранённые.</string>
     <string name="toast_favorite_added">Добавлено в избранное</string>
     <string name="toast_favorite_removed">Убрано из избранного</string>
+    <string name="place_delete">Удалить это место</string>
+    <string name="place_delete_title">Удалить место?</string>
+    <string name="place_delete_message">«%1$s» добавлено вами. Оно будет удалено из ваших мест и из избранного. Это нельзя отменить.</string>
+    <string name="place_delete_confirm">Удалить</string>
+    <string name="place_delete_cancel">Отмена</string>
+    <string name="toast_place_deleted">Место удалено</string>
+    <string name="toast_place_not_deleted">Не удалось удалить место. Попробуйте ещё раз.</string>
 </resources>
