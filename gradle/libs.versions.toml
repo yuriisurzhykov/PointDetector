@@ -46,6 +46,7 @@ firebase-app-distribution-plugin = "5.3.1"
 
 # Google Maps and Location
 google-maps-utils = "7.0.0"
+maplibre = "13.7.1"
 google-places = "6.0.2"
 google-play-services-location = "21.4.0"
 google-play-services-places = "17.1.0"
@@ -94,6 +95,7 @@ androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref
 androidx-lifecycle-viewmodel-kotlin-extensions = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-kotlin-extensions = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "androidx-lifecycle" }
 
 # --- Jetpack Compose ---
@@ -155,6 +157,7 @@ androidx-recyclerview-selection = { module = "androidx.recyclerview:recyclerview
 # --- Maps & Location ---
 # Google Maps SDK, Places API and Location services integration
 google-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "google-maps-utils" }
+maplibre-android = { module = "org.maplibre.gl:android-sdk", version.ref = "maplibre" }
 google-places = { module = "com.google.android.libraries.places:places", version.ref = "google-places" }
 google-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-play-services-location" }
 google-play-services-places = { module = "com.google.android.gms:play-services-places", version.ref = "google-play-services-places" }
