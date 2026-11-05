@@ -84,4 +84,13 @@
         <item quantity="many">%d місць поруч</item>
         <item quantity="other">%d місця поруч</item>
     </plurals>
+    <string name="place_back">Назад</string>
+    <string name="place_share">Поділитися</string>
+    <string name="place_route">Побудувати маршрут</string>
+    <string name="place_hours_title">Години роботи</string>
+    <string name="place_day_off">Вихідний</string>
+    <string name="place_meta">%1$s · %2$s пішки · %3$s на авто</string>
+    <string name="place_minutes">%1$s хв</string>
+    <string name="place_hours_minutes">%1$s год %2$s хв</string>
+    <string name="place_hours_only">%1$s год</string>
 </resources>

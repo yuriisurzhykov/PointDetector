@@ -3,6 +3,7 @@ package com.yuriisurzhykov.pointdetector.di
 import com.yuriisurzhykov.pointdetector.presentation.places.help.AppointmentFactFactory
 import com.yuriisurzhykov.pointdetector.presentation.places.help.DocumentsFactFactory
 import com.yuriisurzhykov.pointdetector.presentation.places.help.HelpFactFactory
+import com.yuriisurzhykov.pointdetector.presentation.places.help.HelpSectionMapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +22,7 @@ interface HelpFactsModule {
     @Binds
     @IntoSet
     fun documents(factory: DocumentsFactFactory): HelpFactFactory
+
+    @Binds
+    fun helpSection(mapper: HelpSectionMapper.Base): HelpSectionMapper
 }

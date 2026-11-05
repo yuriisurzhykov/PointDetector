@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.yuriisurzhykov.pointdetector.designsystem.theme.PdTheme
 import com.yuriisurzhykov.pointdetector.uicomponents.atoms.icons.PdDecorativeIcon
-import com.yuriisurzhykov.pointdetector.uicomponents.atoms.status.PdNumberedMapMarker
+import com.yuriisurzhykov.pointdetector.uicomponents.atoms.status.PdPinMapMarker
 import com.yuriisurzhykov.pointdetector.uicomponents.icons.PdIcons
 import com.yuriisurzhykov.pointdetector.uicomponents.model.PlaceStatus
 import com.yuriisurzhykov.pointdetector.uicomponents.model.hours.PdAxisMark
@@ -57,7 +57,7 @@ private val PAGE_HEIGHT = 640.dp
 private fun sampleHero(): PdMapHero {
     val point = PdGeoPoint(SAMPLE_LATITUDE, SAMPLE_LONGITUDE)
     val scene = PdMapScene(
-        places = listOf(PdMapPlace(1L, point, PdNumberedMapMarker(1, PlaceStatus.Open, selected = true))),
+        places = listOf(PdMapPlace(1L, point, PdPinMapMarker(PlaceStatus.Open))),
         user = PdNoUser,
         focus = PdFocusOn(point),
         coveredBottom = 0.dp,

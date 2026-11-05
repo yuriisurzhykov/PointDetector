@@ -224,7 +224,7 @@ private fun geoPoint(latitude: Double, longitude: Double): PdGeoPoint? =
     runCatching { PdGeoPoint(latitude, longitude) }.getOrNull()
 
 @Composable
-private fun rememberPlacesClock(): PlacesClock {
+internal fun rememberPlacesClock(): PlacesClock {
     var clock by remember { mutableStateOf(PlacesClock.now()) }
     LaunchedEffect(Unit) {
         while (true) {
