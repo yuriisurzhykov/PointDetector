@@ -2,26 +2,20 @@ package com.yuriisurzhykov.pointdetector.di
 
 import android.content.Context
 import android.location.Address
-import com.google.firebase.Firebase
-import com.google.firebase.database.database
+import com.yuriisurzhykov.foodbanks.domain.city.SelectedCityUseCase
+import com.yuriisurzhykov.foodbanks.domain.favorites.FavoritesUseCase
+import com.yuriisurzhykov.foodbanks.domain.points.PointsListUseCase
+import com.yuriisurzhykov.foodbanks.domain.points.UserPointsUseCase
 import com.yuriisurzhykov.pointdetector.core.Mapper
 import com.yuriisurzhykov.pointdetector.core.SuspendMapper
-import com.yuriisurzhykov.pointdetector.data.cache.entities.PointCache
-import com.yuriisurzhykov.pointdetector.data.repository.FavoritesRepository
-import com.yuriisurzhykov.pointdetector.data.repository.PointsRepository
 import com.yuriisurzhykov.pointdetector.domain.entities.Point
-import com.yuriisurzhykov.pointdetector.domain.services.JsonAssetListFileReader
 import com.yuriisurzhykov.pointdetector.domain.source.DateFormatterType
 import com.yuriisurzhykov.pointdetector.domain.usecase.CheckTimeAvailabilityUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesApplyUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesFetchUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FavoritesRemoveUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.GeoDecodeUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.ImportAssetsPointsUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.PointsFetchValueListener
-import com.yuriisurzhykov.pointdetector.domain.usecase.SaveImportsUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SuggestedPlacesUseCase
@@ -32,6 +26,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.yuriisurzhykov.foodbanks.domain.points.Point as FoodbankPoint
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -40,10 +35,11 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideFetchAllPointsUseCase(
-        pointsRepository: PointsRepository,
-        mapper: SuspendMapper<List<PointCache>, List<PointUi>>,
+        selectedCityUseCase: SelectedCityUseCase,
+        pointsListUseCase: PointsListUseCase,
+        mapper: SuspendMapper<List<FoodbankPoint>, List<PointUi>>,
     ): FetchAllPointsUseCase {
-        return FetchAllPointsUseCase.Base(pointsRepository, mapper)
+        return FetchAllPointsUseCase.Base(selectedCityUseCase, pointsListUseCase, mapper)
     }
 
     @Provides
@@ -66,18 +62,18 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSavePointUseCase(
-        repository: PointsRepository,
+        selectedCityUseCase: SelectedCityUseCase,
+        userPointsUseCase: UserPointsUseCase,
     ): SavePointUseCase {
-        return SavePointUseCase.Base(repository)
+        return SavePointUseCase.Base(selectedCityUseCase, userPointsUseCase)
     }
 
     @Provides
     @Singleton
     fun provideSearchPointUseCase(
-        repository: PointsRepository,
-        mapper: SuspendMapper<List<PointCache>, List<PointUi>>,
+        fetchAllPointsUseCase: FetchAllPointsUseCase,
     ): SearchPointUseCase {
-        return SearchPointUseCase.Base(mapper, repository)
+        return SearchPointUseCase.Base(fetchAllPointsUseCase)
     }
 
     @Provides
@@ -90,62 +86,26 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideDeletePointUseCase(
-        repository: PointsRepository,
-    ): DeletePointUseCase {
-        return DeletePointUseCase.Base(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideImportAssetsPointsUseCase(
-        jsonAssetListFileReader: JsonAssetListFileReader,
-    ): ImportAssetsPointsUseCase {
-        return ImportAssetsPointsUseCase.Base(jsonAssetListFileReader)
-    }
-
-    /*@Provides
-    @Singleton
-    fun provideSaveImportsUseCase(
-        importAssetsPointsUseCase: ImportAssetsPointsUseCase,
-        savePointUseCase: SavePointUseCase
-    ): SaveImportsUseCase<List<Point>> {
-        return SaveImportsUseCase.SavePoints(importAssetsPointsUseCase, savePointUseCase)
-    }*/
-
-    @Provides
-    @Singleton
-    fun provideSaveImportsUseCase(
-        fetchListener: PointsFetchValueListener,
-    ): SaveImportsUseCase<List<Point>> {
-        return SaveImportsUseCase.FirebaseImportPoints(Firebase.database, fetchListener)
-    }
-
-    @Provides
-    @Singleton
     fun provideFavoritesFetchUseCase(
-        pointsRepository: FavoritesRepository,
-        mapper: SuspendMapper<PointCache, PointUi>,
+        fetchAllPointsUseCase: FetchAllPointsUseCase,
     ): FavoritesFetchUseCase {
-        return FavoritesFetchUseCase.Base(mapper, pointsRepository)
+        return FavoritesFetchUseCase.Base(fetchAllPointsUseCase)
     }
 
     @Provides
     @Singleton
     fun provideFavoritesRemoveUseCase(
-        pointsRepository: FavoritesRepository,
-        mapper: Mapper<PointUi, PointCache>,
+        favoritesUseCase: FavoritesUseCase,
     ): FavoritesRemoveUseCase {
-        return FavoritesRemoveUseCase.Base(mapper, pointsRepository)
+        return FavoritesRemoveUseCase.Base(favoritesUseCase)
     }
 
     @Provides
     @Singleton
     fun provideFavoritesApplyUseCase(
-        pointsRepository: FavoritesRepository,
-        mapper: Mapper<PointUi, PointCache>,
+        favoritesUseCase: FavoritesUseCase,
     ): FavoritesApplyUseCase {
-        return FavoritesApplyUseCase.Base(mapper, pointsRepository)
+        return FavoritesApplyUseCase.Base(favoritesUseCase)
     }
 
 }

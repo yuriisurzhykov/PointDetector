@@ -2,6 +2,7 @@ package com.yuriisurzhykov.foodbanks.di.data
 
 import com.google.gson.Gson
 import com.yuriisurzhykov.foodbanks.core.data.DataStringConverter
+import com.yuriisurzhykov.foodbanks.data.city.CloudToCacheMapper
 import com.yuriisurzhykov.foodbanks.data.city.cloud.SnapshotCityMapper
 import com.yuriisurzhykov.foodbanks.data.city.cloud.ValueCityMapper
 import com.yuriisurzhykov.foodbanks.data.favorites.PointToFavoriteMapper
@@ -21,6 +22,12 @@ class MappersModule {
     @Singleton
     fun provideCitySnapshotMapper(valueMapper: ValueCityMapper): SnapshotCityMapper {
         return SnapshotCityMapper.Base(valueMapper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCloudToCacheMapper(): CloudToCacheMapper {
+        return CloudToCacheMapper.Base()
     }
 
     @Provides

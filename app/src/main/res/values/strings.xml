@@ -8,7 +8,6 @@
     <string name="title_points_add_screen">Looking for place</string>
     <string name="title_points_add_info_screen">Saving new place</string>
     <string name="button_add_point">Add new point</string>
-    <string name="menu_button_import_data">Import points</string>
     <string name="hint_place_name">Place name</string>
     <string name="hint_place_address">Place address</string>
     <string name="hint_place_working_hours">Working hours</string>
@@ -25,6 +24,9 @@
     <string name="button_save">Save</string>
     <string name="error_incorrect_selected_days">Incorrect time format for selected dates</string>
     <string name="error_days_not_selected">Working days not selected</string>
+    <string name="error_city_not_selected">Cannot save the point, choose a city first</string>
+    <string name="city_not_selected">Choose city</string>
+    <string name="title_dialog_choose_city">Choose city</string>
 
     <string name="label_point_open">Open</string>
     <string name="label_point_closed">Closed</string>
@@ -50,7 +52,5 @@
     <string name="button_apply_filters">Apply filters</string>
     <string name="label_nothing_selected">Empty options</string>
     <string name="title_filter_screen">Filters</string>
-    <string name="message_dialog_import_places">There is nothing in your local database. Do you want to fetch places from remote source?</string>
-    <string name="title_dialog_import_data">Empty local storage</string>
     <string name="title_working_hours_input">Select working hours</string>
 </resources>

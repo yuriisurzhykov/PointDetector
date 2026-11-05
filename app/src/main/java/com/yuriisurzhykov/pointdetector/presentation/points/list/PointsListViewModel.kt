@@ -8,11 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuriisurzhykov.pointdetector.core.Dispatchers
 import com.yuriisurzhykov.pointdetector.domain.config.ProjectSortTypeBuilder
-import com.yuriisurzhykov.pointdetector.domain.mappers.PointUiToCacheMapper
 import com.yuriisurzhykov.pointdetector.domain.services.LocationManager
-import com.yuriisurzhykov.pointdetector.domain.usecase.DeletePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.FetchAllPointsUseCase
-import com.yuriisurzhykov.pointdetector.domain.usecase.SavePointUseCase
 import com.yuriisurzhykov.pointdetector.domain.usecase.SearchPointUseCase
 import com.yuriisurzhykov.pointdetector.presentation.entities.PointUi
 import com.yuriisurzhykov.pointdetector.uicomponents.list.EmptyStateData
@@ -33,10 +30,7 @@ class PointsListViewModel @Inject constructor(
     private val dispatchers: Dispatchers,
     private val pointsListUseCase: FetchAllPointsUseCase,
     private val searchPointUseCase: SearchPointUseCase,
-    private val removePointUseCase: DeletePointUseCase,
-    private val insertPointUserCase: SavePointUseCase,
-    private val pointsSorter: ProjectSortTypeBuilder,
-    private val uiPointMapper: PointUiToCacheMapper
+    private val pointsSorter: ProjectSortTypeBuilder
 ) : ViewModel() {
 
     private var searchCondition: String = emptyString()
@@ -100,17 +94,5 @@ class PointsListViewModel @Inject constructor(
 
     fun getSearchCondition(): CharSequence {
         return searchCondition
-    }
-
-    fun removeItem(item: PointUi) {
-        dispatchers.launchBackground(viewModelScope) {
-            removePointUseCase.delete(uiPointMapper.map(item))
-        }
-    }
-
-    fun insertItem(point: PointUi) {
-        dispatchers.launchBackground(viewModelScope) {
-            insertPointUserCase.save(uiPointMapper.map(point))
-        }
     }
 }
