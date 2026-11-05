@@ -109,8 +109,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.google.maps.utils)
-    implementation(libs.google.maps.utils.ktx)
-    implementation(libs.google.maps.ktx)
 
     implementation(libs.google.play.services.places)
     implementation(libs.google.places)
